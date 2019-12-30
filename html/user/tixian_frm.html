@@ -1,0 +1,290 @@
+
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="../../css/api.css"/>
+    <script src="../../script/api.js"></script>
+<style>
+/*提现样式*/
+#mainhtml{background: #F5F5F5; height: 100%}
+i,em{
+    font-style: normal;
+}
+.fl{
+    float: left;
+}
+.fr{
+    float: right;
+}
+.clear{
+    clear: both;
+}
+.tixian_tab{
+    width: 60%;
+    margin:auto;
+}
+.tixian_tab .taxx{
+    display: flex;
+    margin: 0 auto;
+}
+.tixian_tab .taxx i{font-style: normal;}
+.tixian_tab .taxx span{
+    flex: 1;
+    text-align: center;
+    padding: 13px 0;
+    border-bottom: 2px solid #fff;
+}
+.tixian_tab .taxx span.current{
+    color: #eb5a72;
+    border-bottom: 2px solid #eb5a72;
+    font-weight: 600;
+}
+.alipaycg{
+    margin: 16px 0;
+    padding: 12px;
+    background: #fff;
+    color: #666;
+    font-size: 16px;
+}
+.alipaycg img{
+    width: 20px;
+    margin-right: 8px;
+}
+.alipaycg em{
+    color: #666666;
+}
+.alipaycg i{
+    font-size: 20px;
+}
+.jifenbao{
+    background: #fff;
+    padding: 12px;
+    font-size: 14px;
+    border-bottom: 1px solid #EAEAEA;
+    padding-bottom:0;
+}
+.shuzhiNum{
+    margin: 20px 8px;
+}
+.shuzhiNum img{
+    width: 32px;
+    margin-bottom: -8px;
+}
+.shuzhiNum input[type="text"]{
+    font-size: 24px;
+    border: 0 none;
+    outline:none;
+    text-indent:8px;
+    display:inline-block;
+    width:80%;
+}
+.keyong{
+    background: #fff;
+    padding: 12px;
+}
+.querenbtn{
+    background: #eb5a72;
+    color: #fff;
+    margin: 32px auto 12px;
+    text-align: center;
+    display: block;
+    font-size: 16px;
+    border: 0 none;
+    border-radius: 160px;
+    padding: 12px 40px;
+    width:80%;
+}
+input{ outline:none}
+.jilu{
+    color: #666;
+    margin-top: 20px
+}
+.fa-angle-right,#whyFreeze{display: none}
+</style>
+</head>
+<body>
+<div id="mainhtml">
+<div style="background: #ffffff; position: relative;border-bottom: 1px #EFEAEA solid;">
+<div style="position: absolute; padding: 11px 0;min-width: 64px;text-align: center;" tapmode onclick="closeWin()">
+    <span class="iconfont" style="color:#5f646d;font-size:20px">&#xe607;</span>
+</div>
+
+<div class="tixian_tab"><div class="taxx"><!--<span tapmode onclick="jifenbao()" id="jifenbao_se" class="current"><i class="tbmoney">&nbsp;&nbsp;</i>提取</span>--><span tapmode onclick="yue()" id="yue_se">余额提取</span></div></div>
+</div>
+<form id="subfrom" onsubmit="return sub()">
+<div class="ub-f1 tx-l lenren_main" id="page_index">
+
+            </div>
+            </form>
+        </div>
+        <div id="jfbtip" style="position:fixed; bottom:10px;line-height:1.5;color:#ffffff;text-align:center; width:100%; color:#666;display:none">
+            温馨提示： <br/>集分宝提现直接转金额，100集分宝=1元人民币
+        </div>
+        </body>
+        </html>
+<script>
+var safeAreaTop = parseInt(localStorage.getItem('safeAreaTop'));
+if(safeAreaTop>0){
+    document.body.style.paddingTop=safeAreaTop+'px';
+}
+
+function jifenbaoTpl(){/*
+<div class="alipaycg" onclick="setAlipay()" style="margin-top:3em;">
+                    <img onerror="alert($(this).attr('src'))" src="../../img/alipay.png">
+                    <span>提取支付宝：<em id="alipay"></em></span>
+                    <div class="clear"></div>
+                </div>
+                <div class="jifenbao">
+                    提取要求（最低提取<font style="color:#f00" id="tx_limit_jifenbao">0</font><%siteInfo.TBMONEY%><span id="beishu_jifenbao">，且为<span style="color:#f00" id="txxz_jifenbao">0</span>的整倍数</span>）
+                    <p class="shuzhiNum">
+                        <img src="../../img/jifenbao.png">
+                        <input type="text" id="tb_most" value="" class="tixianedu" name="jifenbao">
+                    </p>
+                </div>
+                <div class="keyong">可用<font color="#f00" id="live_jifenbao">0</font>个 &nbsp;冻结<font color="#f00" id="freeze_jifenbao">0</font>个</div>
+                <div onclick="whyFreeze()" id="whyFreeze" style="padding-top: 16px;text-align: right;">为什么会冻结？</div>
+                <input type="submit" class="querenbtn submit" value="确认提取">
+                <input type="hidden" name="type" value="1">
+                <p ontouchend="openPage('user','tixianlist')" align="center" class="jilu">查看提取记录</p>
+*/;}
+
+function yueTpl(){/*
+<div class="alipaycg" onclick="setAlipay()" style="margin-top:3em;">
+                    <img src="../../img/alipay.png">
+                    <span>提取支付宝：<em id="alipay"></em></span>
+                    <div class="clear"></div>
+                </div>
+                <div class="jifenbao">
+                    提取要求（最低提取<font style="color:#f00" id="tx_limit_money">0</font>元<span id="beishu_money">，且为<span style="color:#f00" id="txxz_money">0</span>的整倍数</span>）
+                    <p class="shuzhiNum">
+                        <img src="../../img/jinbi.png">
+                        <input type="text" id="money_most" value="" class="tixianedu" name="money">
+                    </p>
+                </div>
+                <div class="keyong">
+                    可用<font color="#f00" id="live_money">0</font>元 &nbsp;<span class="ios_hide_new">冻结<font color="#f00" id="freeze_money">0</font>元</span>
+                </div>
+				<div onclick="whyFreeze()" id="whyFreeze" style="padding-top: 16px;text-align: right;">为什么会冻结？</div>
+                <input type="submit" class="querenbtn submit" value="确认提取">
+                <input type="hidden" name="type" value="2">
+				
+                <p ontouchend="openPage('user','tixianlist')" align="center" class="jilu ios_hide_new">查看提取记录</p>
+*/;}
+
+function whyFreeze(){
+    openAlert('确认收货后16天内，淘宝可以接受退款申请，所以为了保证您的购物安全，会冻结16天内的淘宝订单得到的奖励不予提取','为什么会冻结？');
+}
+
+function setAlipay(){
+	set('from','tixian');
+	openPage('user','alipay');
+}
+
+function getAlipay(){
+    if(typeof user.alipay=='undefined' || user.alipay==''){
+        $('#alipay').html('<span ontouchstart="openPage(\'user\',\'alipay\')">您还未设置支付宝，现在去设置</span>');
+    }else{
+        $('#alipay').html(user.alipay);
+    }
+}
+
+function tiJifenbao(){
+    var h = barretTpl(jifenbaoTpl, {});
+    $('#page_index').html(h);
+    $('#live_jifenbao').html(user.live_jifenbao);
+    $('#freeze_jifenbao').html(user.freeze_jifenbao);
+    $('#tb_most').val(user.tb_most);
+    $('#tx_limit_jifenbao').html(siteInfo.tx_limit_jifenbao);
+    if(siteInfo.txxz_jifenbao>0){
+		$('#txxz_jifenbao').html(siteInfo.txxz_jifenbao);
+	}else{
+		$('#beishu_jifenbao').remove();
+	}
+	
+    if(user.alipay!=''){
+        $('#alipay').html(user.alipay);
+    }else{
+        $('.fa-angle-right').show();
+    }
+    if(user.freeze_jifenbao>0){
+        $('#whyFreeze').show();
+    }
+}
+function tiYue(){
+    var h=getTpl(yueTpl);
+    $('#page_index').html(h);
+    $('#live_money').html(user.live_money);
+	$('#freeze_money').html(user.freeze_money);
+    $('#money_most').val(user.money_most);
+    $('#tx_limit_money').html(siteInfo.tx_limit_money);
+    if(siteInfo.txxz_money>0){
+		$('#txxz_money').html(siteInfo.txxz_money);
+	}else{
+		$('#beishu_money').remove();
+	}
+	if (iosShenhe() == 1) {
+        $('.ios_hide_new').hide();
+    }
+    if(user.alipay!=''){
+        $('#alipay').html(user.alipay);
+    }else{
+        $('.fa-angle-right').show();
+    }
+	if(user.freeze_money>0){
+        $('#whyFreeze').show();
+    }
+}
+
+/*function jifenbao(){
+    $('.tixian_tab span').removeClass('current');
+    $('.tixian_tab #jifenbao_se').addClass('current');
+    tiJifenbao();
+}
+function yue(){
+    $('.tixian_tab span').removeClass('current');
+    $('.tixian_tab #yue_se').addClass('current');
+    tiYue();
+}*/
+
+function sub(){
+    var k=$('.tixianedu').attr('name');
+    var v=$('.tixianedu').val();
+    var url=createUrl('caiwu',{'fun':'tixian','tixian_name':v});
+    url=url.replace('tixian_name',k);
+    getAjax(url,function(data){
+        if(data.s==1){
+			updateUserIndex(1);
+            openAlert(data.r,function(){
+                closeWin();
+            });
+        }else{
+            openAlert(data.r);
+        }
+    },'数据提交中',0);
+    return false;
+}
+
+ready(function(){
+    var url=createUrl('user',{'fun':'userInfo'});
+    getJson(url,'数据更新中',function(data){
+        user=data;
+		tiYue();
+		/*if(appInfo.fanli_type==1){
+			tiYue();
+		}else{
+			tiJifenbao();
+		}*/
+    },0);
+	if(appInfo.fanli_type==1){
+		$('.taxx span').eq(0).hide();
+	}
+    $('.tbmoney').html(siteInfo.TBMONEY);
+    if(siteInfo.TBMONEY=='集分宝'){
+        $('#jfbtip').show();
+    }
+},1);
+</script>

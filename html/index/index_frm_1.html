@@ -1,0 +1,1276 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="../../css/api.css" />
+    <script src="../../script/api.js"></script>
+    <style>
+        ul, ol, li {
+            list-style: none;
+        }
+        #huandeng {
+            height: 72px;
+            overflow: hidden;
+            position: relative;
+            margin-top: 6px; padding: 0 15px;
+        }
+        #huandeng .swiper-slide {
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        .swiper-slide font {
+            font-size: 14px;
+        }
+
+        .swiper-container-horizontal>.swiper-pagination-bullets .swiper-pagination-bullet {
+            margin: 0 4.2px
+        }
+
+        #huandeng .swiper-pagination-bullet-active {
+            background: #ff5662;
+        }
+
+        #huandeng .swiper-pagination-bullet {
+            width: 12px; height: 4px;
+            border-radius: 2px;
+        }
+
+        .swiper-notification {
+            display: none
+        }
+        /*幻灯片结束*/
+
+        .taobao_nav {
+            overflow: hidden;
+        }
+
+        .taobao_nav>a {
+            width: 20%;
+            display: inline-block;
+            color: #666;
+            font-size: 13px;
+            text-align: center;
+            float: left;
+        }
+
+        .taobao_nav>a.cur {
+            opacity: 0.5
+        }
+
+        .taobao_nav>a>span {
+            display: block;
+            margin: 4.8px auto 3.6px auto;
+            border-radius: 100%;
+            color: #fff;
+        }
+
+        .taobao_nav>a>span {
+            font-size: 24px;
+        }
+
+        .taobao_nav>a>span>img {
+            display: block;
+            width: 68%;
+            margin: auto;
+        }
+
+        .taobao_nav a.current span img {
+            box-shadow: none;
+            -webkit-transform: scale(0.95, 0.95);
+        }
+
+        .bgwhite {
+            background: #FFF;
+        }
+
+        .xiexian {
+            display: inline-block;
+            width: 3.6px;
+            height: 14.4px;
+            background: #ffaeb9;
+            border-radius: 1.8px;
+            -webkit-transform: rotate(45deg);
+        }
+
+        .xiexian1 {
+            background: #ff5566
+        }
+
+        .kong {
+            width: 12px;
+            display: inline-block
+        }
+
+        .dakong {
+            width: 84px;
+            display: inline-block
+        }
+
+        #gonggao {
+            position: static;
+            overflow: hidden;
+            width: 95%;
+            margin-left: auto;
+            margin-right: auto;
+            margin-top: 5px;
+            background: #FCF3e2;
+            height: 24px;
+            line-height: 24px;
+            border-radius: 12px;
+            font-size: 14px;
+            color: #FF6A00;
+            margin-bottom: 5px;
+        }
+
+        .arrow-up {
+            width: 0;
+            height: 0;
+            border-left: 7.2px solid transparent;
+            border-right: 7.2px solid transparent;
+            border-bottom: 7.2px solid rgba(255, 255, 255, 0.5);
+            margin-left: 12px;
+        }
+/*头条开始*/
+.toutiao{ padding:4px;padding-left: 0;background:#FFF; overflow: hidden; position:relative;}
+.toutiao .l{color:#ff5662; font-size:14px; font-weight:bold; padding:0 5px; text-align:center;padding-top: 5px}
+.toutiao .l img{width: 48px;}
+.toutiao .r{padding-left:18px; overflow: hidden; font-size:14px;}
+.toutiao .r ul li{text-overflow:ellipsis;white-space:nowrap; overflow:hidden; width:100%; line-height:1.8; color:#666; font-size:16px}
+.toutiao .r ul li .cat{border:1px solid #ff5662;-webkit-border-radius:10%; padding:1px 5px; font-size:13px; color:#ff5662;}
+.toutiao #articleC{ height:26px; overflow:hidden; position: relative;}
+.swiper_toutiao .swiper-wrapper{height: 32px; line-height: 32px;}
+.indextuijian{ overflow:hidden}
+.indextuijian .item{text-align: center;width: 93%; margin: auto; display: block;}
+.indextuijian .item img{display: block; width: 100%}
+.indextuijian .item p{line-height: 1.5; color: #666666; font-size: 13px;overflow : hidden;text-overflow: ellipsis;display: -webkit-box;-webkit-line-clamp: 2;-webkit-box-orient: vertical; text-align: left;}
+.indextuijian .item p .price{color: #fe0000; font-size: 18px}
+.indextuijian .item p .text{color: #cccccc; font-size: 11px}
+.adimg img{display: block;width: 100%}
+.jxxqh{background: linear-gradient(left,#fd1832,#ff564e);background: -webkit-linear-gradient(left,#fd1832,#ff564e);background: -o-linear-gradient(left, #fd1832, #ff564e);background: -moz-linear-gradient(left, #fd1832, #ff564e); color: #fff; padding: 4px 2px; border-radius: 4px; font-size: 14px;}
+/*头条结束*/
+
+/*四格开始*/
+.jxxbanner{width: 100%; background: #fff;}
+.jxxnimgs{width:50%; float: left;}
+.jxxnimgs img{width: 100%;display: block}
+/*四格结束*/
+        /*分类 开始*/
+
+        #ddlanmu .swiper-container .jiantou span {
+            display: inline-block;
+            -webkit-transform: rotate(90deg);
+            transform: rotate(90deg);
+            -webkit-transition: all .3s
+        }
+
+        #ddlanmu .swiper-container .jiantou span.fangxiang {
+            -webkit-transform: rotate(270deg);
+            transform: rotate(270deg);
+        }
+
+        #ddlanmu .swiper-slide {
+            background: #fff;
+            width: auto;
+            padding: 0em 8px;
+            height: 32px;
+            line-height: 32px;
+            font-size: 14px;
+            float: left;
+        }
+
+        #ddlanmu {
+            border-bottom: 1px #EAEAEA solid;
+            background: #FFF;
+            font-size: 14px;
+            color: #616161;
+            padding-top: 3px;
+            background-color: #ffffff;
+            width: 100%;
+        }
+
+        #ddlanmu .swiper-slide.cur {
+            border-bottom: 2px red solid;
+            color: red
+        }
+
+        #ddlanmu .cf_xl .kedian a.cur {
+            border: red 1px solid;
+            color: red
+        }
+
+        #ddlanmu .cf_xl .kedian a:hover {
+            border: red 1px solid;
+            color: red
+        }
+
+        #ddlanmu .cf_xl {
+            background: #fff;
+            width: 100%;
+            border-bottom: 1px solid #ccc;
+            position: absolute;
+            left: 0;
+            z-index: 99;
+            padding: 8px 0;
+            padding-bottom: 0px;
+            overflow-x: hidden;
+            overflow-y: visible
+        }
+
+        #ddlanmu .cf_xl a {
+            padding: 6px 20px;
+            color: #333;
+            text-align: center;
+            display: inline-block;
+            font-size: 12px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            margin-bottom: 13px;
+            margin-left: 3%
+        }
+
+        #ddlanmu .cf_xl a.more {
+            border: none;
+            font-weight: 700;
+            padding: 0;
+            display: block;
+            text-align: left;
+            padding: 0 5px;
+        }
+
+        #ddlanmu .cf_xl a {
+            font-size: 13px;
+            color: #666;
+            text-decoration: none;
+            cursor: pointer
+        }
+
+        .hidden {
+            display: none;
+        }
+        /*分类 结束*/
+        #articleC{
+          margin-left: 40px;
+          margin-top: 5px;
+        }
+        .tongzhiimg{
+          position: absolute;
+          left: 1.2em;
+          top: 14px;
+          width: 2.5em;
+          z-index: 8;
+        }
+
+        .menu-toggle {
+            /*display: none;*/
+            width: 100%; height: 180px;
+            /*position: absolute; top: 40px;*/
+            /*background: rgba(255,255,255,0.9);*/
+            background: #fff;
+            border-top: 1px solid #f5f5f5;
+            border-bottom: 1px solid #f5f5f5;
+            overflow-y: scroll;
+            z-index: 888;
+        }
+        .menu-toggle li {
+            float: left;
+            width: 20%;
+            padding: 15px 0 10px;
+            font-size: 13px; line-height: 20px; text-align: center; font-weight: bold; color: #666;
+        }
+        .menu-icon {
+            width: 40px; height: 40px;
+            margin: auto; margin-bottom: 3px;
+            background: #fff;
+            border: 1px solid #f5f5f5;
+            border-radius: 50%;
+            overflow: hidden;
+        }
+        .menu-icon img {
+            width: 100%; height: 100%;
+        }
+        header {
+    background: #fff;
+    overflow: hidden;
+}
+.header-bg {
+    width: 100%;
+    height: 200px;
+    position: absolute; top: 0; left: 0;
+    background: #FF3C4A;
+    -webkit-transition: background 0.5s;
+    transition: background 0.5s;
+}
+.header-bg::after {
+    content: '';
+    display: block;
+    width: 140%;
+    height: 90px;
+    position: absolute;
+    bottom: -20px;
+    left: -20%;
+    background: inherit;
+    border-radius: 0 0 50% 50%;
+}
+.header-content {
+    position: relative;
+    padding: 0.1rem 0;
+    color: #fff;
+}
+.header-top {
+    position: relative;
+    height: 40px;
+    padding: 0 10px;
+}
+.header-logo {
+    width: 24px;
+    height: 24px;
+    /*border-radius: 50%;*/
+    overflow: hidden;
+}
+.header-logo img {
+    width: 100%;
+    height: 100%;
+}
+.header-tip {
+    font-size: 18px;
+    line-height: 40px;
+    text-align: center;
+}
+.header-icons {
+    height: 40px;
+    line-height: 40px;
+    font-size: 18px;
+}
+i.i-renwu {
+    color: #F6E1AF;
+}
+.iconbox {
+    position: relative;
+    display: inline-block;
+}
+#msg_tip {
+    width:8px;
+    height:8px;
+    position:absolute;
+    top:10px;
+    right:4px;
+    -webkit-border-radius:100%;
+    background:red;
+}
+
+#search-box {
+    height: 44px;
+}
+.header-search-box {
+    position: relative;
+    padding: 3px 0;
+    background: rgba(0,0,0,0);
+    -webkit-transition: background 0.1s;
+    transition: background 0.1s;
+}
+.header-search-box.fix {
+    background: #FF425D;
+    border-bottom: 0.01rem solid #f5f5f5;
+}
+.header-search {
+    height: 36px;
+    margin: 0 10px;
+    background: #f5f5f5;
+    border-radius: 5px;
+    overflow: hidden;
+}
+i.i-search {
+    margin-right: 10px;
+    margin-left: 10px;
+    font-size: 16px;
+    color: #888;
+}
+input.search-int {
+    width: 100%;
+    font-size: 16px;
+}
+input:disabled {
+    opacity: 1;
+}
+span.search-btn {
+    height: 36px;
+    padding: 0 15px;
+    font-size: 18px;
+    line-height: 36px;
+    color: #333233;
+    background: #FEE802;
+    border-radius: 5px;
+}
+.header-threestep {
+    padding: 0 10px;
+}
+.header-threestep-top {
+    height: 30px;
+}
+span.threestep-name {
+    font-size: 16px;
+}
+.threestep-video {
+    display: inline-block;
+    height: 25px;
+    line-height: 25px;
+    padding: 0 6px;
+    font-size: 14px;
+    border: 1px solid #eee;
+    border-radius: 15px;
+}
+i.i-video-more {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    margin-left: 4px;
+    font-size: 12px;
+    color: #FF3C4A;
+    text-align: center;
+    background: #fff;
+    line-height: 18px;
+    border-radius: 100%;
+    -webkit-transition: color 0.5s;
+    transition: color 0.5s;
+    text-indent: 2px;
+}
+.header-threestep-bot {
+    height: 20px;
+}
+.step-numtip {
+    display: inline-block;
+    position: relative;
+    width: 14px;
+    height: 14px;
+    margin-right: 10px;
+    text-align: center;
+    line-height: 14px;
+}
+.step-numtip::before {
+    content: '';
+    width: 16px;
+    height: 16px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: #fff;
+    border: 0.02rem solid rgba(255,255,255,0.9);
+    border-radius: 50% 20% 50% 50%;
+    -webkit-transform: rotate(45deg);
+    transform: rotate(45deg);
+}
+.step-numtip font {
+    width: 14px;
+    height: 14px;
+    position: absolute;
+    top: 1px;
+    left: 1px;
+    font-size: 14px;
+    color: #fff;
+    background: #FF3C4A;
+    border-radius: 50%;
+    overflow: hidden;
+    -webkit-transition: background 0.5s;
+    transition: background 0.5s;
+}
+.moreplat {
+    /*display: none;*/
+    height: 0;
+    overflow: hidden;
+    padding-left: 15px;
+    -webkit-transition: height 0.3s;
+    transition: height 0.3s;
+}
+.moreplat.show {
+    /*display: block;*/
+    height: 14px;
+}
+.moreplat span {
+    margin: 0 10px;
+    line-height: 18px;
+}
+#huandeng {
+    position: relative;
+    margin-top: 10px;
+    padding: 0 10px;
+}
+#huandeng .swiper-slide {
+    border-radius: 20px;
+    overflow: hidden;
+}
+.swiper-container-horizontal>.swiper-pagination-bullets .swiper-pagination-bullet {
+    margin: 0 10px;
+}
+#huandeng .swiper-pagination-bullet {
+    width: 0.06rem; height: 0.06rem;
+    border-radius: 0.03rem;
+}
+#huandeng .swiper-pagination-bullet-active {
+    width: 0.15rem;
+    background: #FF3C4A;
+}
+.swiper-notification {
+    display: none
+}
+
+.synav {
+    position: relative;
+    margin-top: 10px;
+    /*padding: 0 0.1rem;*/
+    font-size: 14px;
+    color: #333;
+    text-align: center;
+    overflow-x: scroll;
+}
+::-webkit-scrollbar {
+    width: 0;
+}
+.synav ul {
+    width: 100%;
+}
+.synav li {
+    width: 20% !important;
+    float: left;
+    margin: 10px 0;
+    font-size: 12px;
+}
+.synav li img {
+    display: block;
+    width: 60% !important;
+    margin: auto;
+    margin-bottom: 5px;
+}
+#synav li img.halfimg {
+    width: 32%;
+}
+.synavbarbox {
+    width: 12%;
+    height: 0.04rem;
+    position: relative;
+    margin: 0.05rem auto 0;
+    background: #ddd;
+    border-radius: 0.02rem;
+    overflow: hidden;
+}
+.synavbar {
+    width: 0;
+    height: 0.04rem;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: #f60;
+    border-radius: 0.03rem;
+}
+    </style>
+</head>
+
+<body>
+    <!-- <div id="searchTop" style="position:fixed;top:0; z-index:99999; width:100%">
+        <div style="background-color:#fff; border-radius:5px; width:80%; margin:auto; text-align:center; padding:5px 0px">搜索</div>
+    </div> -->
+
+    <header>
+      <div class="header-bg"></div>
+      <div class="header-content">
+          <div class="header-top flex-wrap flex-align flex-justify-sb">
+              <!-- <div class="header-logo" onclick="openPage('svip','circle_footer')">   -->
+              <div class="header-logo" onclick="openPage('page','set')">
+                  <img src="../../img/logo.png" alt="">
+              </div>
+              <div class="header-tip">购物前先领券再拿奖励</div>
+              <div class="header-icons">
+                  <i class="iconfont i-renwu" tapmode onclick="totask();">&#xe6d8;</i>
+                  <div class="iconbox">
+                      <i class="iconfont i-xiaoxi" tapmode onclick="tomale();">&#xe683;</i>
+                      <div id="msg_tip">&nbsp;</div>
+                  </div>
+              </div>
+          </div>
+          <div id="search-box">
+              <div id="search" class="header-search-box">
+                  <div class="header-search flex-wrap flex-align" tapmode onclick="ddevent.searchPop();">
+                      <i class="iconfont i-search">&#xe68d;</i>
+                      <input class="search-int flex-con" type="text" placeholder="复制商品标题 领券买再拿奖励" disabled="disabled">
+                      <span class="search-btn">搜索</span>
+                  </div>
+              </div>
+          </div>
+
+          <div class="header-threestep">
+              <div class="header-threestep-top flex-wrap flex-align flex-justify-sb">
+                  <span class="threestep-name">三步拿奖励</span>
+                  <div class="threestep-video flex-wrap flex-align" tapmode onclick="ddevent.url('http://www.xiaoxishengqian.com/plugin.php?mod=meiquan&act=article&id=xrzd')">
+                      <span>视频教程</span>
+                      <i class="iconfont i-video-more">&#xe6dc;</i>
+                  </div>
+              </div>
+              <div class="header-threestep-bot flex-wrap flex-align flex-justify-sb">
+                  <div class="step flex-wrap flex-align" tapmode onclick="taggleMoreplat();">
+                      <span class="step-numtip"><font>1</font></span>
+                      <span>打开淘宝</span>
+                      <i class="iconfont i-down">&#xe6c7;</i>
+                  </div>
+                  <i class="iconfont i-toright"></i>
+                  <div class="step flex-wrap flex-align">
+                      <span class="step-numtip"><font>2</font></span>
+                      <span>复制商品标题</span>
+                  </div>
+                  <i class="iconfont i-toright"></i>
+                  <div class="step flex-wrap flex-align">
+                      <span class="step-numtip"><font>3</font></span>
+                      <span>打开小溪省钱</span>
+                  </div>
+              </div>
+              <div class="moreplat"><span>天猫</span><span>京东</span><span>拼多多</span><span>唯品会</span><span>网易考拉</span></div>
+          </div>
+          <div class="huandeng" id="huandeng">
+          </div>
+          <div class="synav-part">
+              <div class="synav">
+                  <ul class="flex-wrap flex-linefeed">
+                      <li><img src="../../img/synav0.png" alt=""><p>淘宝</p></li>
+                      <li><img src="../../img/synav1.png" alt=""><p>京东</p></li>
+                      <li><img src="../../img/synav2.png" alt=""><p>拼多多</p></li>
+                      <li><img src="../../img/synav0.png" alt=""><p>网易考拉</p></li>
+                      <li><img src="../../img/synav1.png" alt=""><p>唯品会</p></li>
+                      <li><img src="../../img/synav0.png" alt=""><p>聚小店</p></li>
+                      <li><img src="../../img/synav1.png" alt=""><p>九块九</p></li>
+                      <li><img src="../../img/synav2.png" alt=""><p>1元购</p></li>
+                      <li><img src="../../img/synav0.png" alt=""><p>聚划算</p></li>
+                      <li><img src="../../img/synav1.png" alt=""><p>省钱秘笈</p></li>
+                  </ul>
+              </div>
+              <div class="synavbarbox" style="display:none;">
+                  <div class="synavbar"></div>
+              </div>
+          </div>
+      </div>
+  </header>
+    <div id="wrap" class="">
+        <div class="ios_hide_new toutiao" id="toutiao" style="border-bottom: 1px solid #eee;">
+          <span class="tongzhiimg"><img src="../../img/tongzhi.png" width="100%"></span>
+          <div class='ub'>
+						<div class='ub-f1 r' id="articleC"></div>
+					</div>
+        </div>
+
+<div id="gonggao" style="position: static"><div style="position: relative; width: 95%; margin: auto; height: inherit; overflow: hidden"><div id="wenzigundong" style="display:inline-block"></div></div></div>
+        <div class="jxxbanner sybanner" id="sybanner">
+					<div class="jxxnimgs">
+						<img src="../../img/banner01.jpg">
+					</div>
+					<div class="jxxnimgs">
+						<img src="../../img/banner02.jpg">
+					</div>
+					<div class="jxxnimgs">
+						<img src="../../img/banner03.jpg">
+					</div>
+					<div class="jxxnimgs">
+						<img src="../../img/banner04.jpg">
+					</div>
+					<div style="clear: both;"></div>
+				</div>
+<div style="clear: both;"></div>
+<div class="bgwhite" id="help_pic" tapmode onClick="openPage('help','help')" style="display:none;"><img src="../../img/news.gif" width="100%"></div>
+        <div class="bgwhite" id="addiv" style="width:100%;overflow:hidden"></div>
+        <div class="" style="height:40px;">
+            <div id="ddlanmu">
+                <div class="swiper-container" style="box-sizing: border-box;position: relative">
+                    <ul id="scroller" class="swiper-wrapper"></ul>
+                    <div id="jiantou" tapmode style="position: absolute; right: 0; top: 0; z-index: 2;height: 40px; width: 32px; text-align: center;line-height: 40px; background-color: #FFFFFF; border-left: 0 #EAEAEA solid; overflow: hidden;-webkit-box-shadow: -2px 0 6px #ddd;"
+                        class="jiantou"><span class="iconfont">&#xe610;</span></div>
+                </div>
+                <div class="cf_xl hidden" id="cf_xl">
+                    <div class="kedian menu-toggle" id="cid_arr"></div>
+                </div>
+            </div>
+        </div>
+
+        <div id="goods" style="background:#f5f5f5; display:inline-block; width:100%; padding-top:10px; margin-top:-2px;"></div>
+        <div id="loading"><span class="loading-img"></span>数据加载中</div>
+    </div>
+
+    <div style="position:fixed; left:16px; bottom:80px; display:none;z-index:9999" id="alihb">
+<div style="position:relative">
+<div style="position:absolute; top:-16px; left:0;-webkit-transform: rotate(45deg); color:red; font-size:32px;z-index:5" onclick="$('#alihb').hide()">+</div>
+<img src="../../img/alihb.png" style="display:block; width:4em" onclick="alihbShow()" />
+</div>
+</div>
+</body>
+
+</html>
+<script type="text/javascript">
+    var iosAudit,_user = {
+        'level': 0,
+        'type': 0
+    };
+    var synav_arr=[{url:"page=huodong&time",img:"../../img/synav0.png",title:"淘宝榜"},{url:"page=jd&list_phb",img:"../../img/synav1.png",title:"京东榜"},{url:"page=pdd&list_phb",img:"../../img/synav2.png",title:"拼多多榜"},{url:"page=zhibo&zhibo",img:"../../img/synav4.png",title:"天猫超市"},{url:"video",img:"../../img/synav5.png",title:"天猫国际"}];
+    var sybanner_arr=[{url:"list=&&is_jiu&9快9",img:"../../img/banner01.jpg",title:"9.9包邮"},{url:"fun=xueyuan()",img:"../../img/banner02.jpg",title:"商学院"},{url:"list=&&is_ph&爆款排行",img:"../../img/banner03.jpg",title:"爆款排行"},{url:"list=&&is_ju&品牌清仓",img:"../../img/banner04.jpg",title:"品牌清仓"}];
+    var menu_arr = [
+      {"cid":1,"title":"女装","num":"5752","img":"https://gw.alicdn.com/imgextra/i3/128/TB2iTpfbMvD8KJjSsplXXaIEFXa_!!128-2-luban.png_140x10000.jpg"},
+      {"cid":2,"title":"男装","num":"8860","img":"https://gw.alicdn.com/tps/TB1B7JPKFXXXXaEXVXXXXXXXXXX-375-375.jpg_140x10000Q75.jpg"},
+      {"cid":3,"title":"鞋包配饰","num":"9921","img":"https://gw.alicdn.com/tps/i4/TB1XkxWMpXXXXb9XXXXKqwKQVXX-375-375.png_140x10000.jpg"},
+      {"cid":6,"title":"美妆","num":"6513","img":"https://gw.alicdn.com/imgextra/i3/84523332/TB2WVIskpXXXXaoXpXXXXXXXXXX_!!84523332.jpg_140x10000Q75.jpg"},
+      {"cid":7,"title":"母婴","num":"8131","img":"https://gw.alicdn.com/tps/TB1KbR0KFXXXXaAaXXXXXXXXXXX-375-375.jpg_140x10000Q75.jpg"},
+      {"cid":8,"title":"美食","num":"7038","img":"https://gw.alicdn.com/imgextra/i4/200/TB2F2oOvgxlpuFjSszbXXcSVpXa_!!200-2-luban.png_140x10000.jpg"},
+      {"cid":9,"title":"内衣","num":"4248","img":"https://gw.alicdn.com/tps/TB1kP47KFXXXXaqXXXXXXXXXXXX-375-375.jpg_140x10000Q75.jpg"},
+      {"cid":10,"title":"家电数码","num":"1669","img":"https://gw.alicdn.com/tps/TB1J_vEKpXXXXblXFXXXXXXXXXX-375-375.jpg_140x10000Q75.jpg"},
+      {"cid":13,"title":"居家","num":"11540","img":"https://gw.alicdn.com/imgextra/i4/187/TB2fT_VavkmyKJjSZFmXXX1EFXa_!!187-2-luban.png_140x10000.jpg"},
+      {"cid":16,"title":"文体","num":"10169","img":"https://gw.alicdn.com/tps/TB1bQJ8KFXXXXa1XVXXXXXXXXXX-375-375.jpg_140x10000Q75.jpg"}
+    ]
+    //document.getElementById('searchTop').style.top=localStorage.getItem('safeAreaTop')+'px';
+
+    function alihbShow(kouling){
+        kouling=kouling||appInfo.zhikouling;
+    	if(isNaN(kouling)){
+    		var msg=kouling;
+    	}else{
+    		var msg='打开支付宝首页搜（'+kouling+'）领红包，领到大红包的小伙伴赶紧使用哦';
+    	}
+        api.confirm({
+            title:'支付宝红包来啦',
+            msg:msg,
+            buttons: ['稍后再说','立即领取']
+        }, function(ret, err){
+            if(ret.buttonIndex==2){
+                if(!isNaN(kouling)){
+            		var kl=kouling.match(/\d{5,99}/);
+                    kl=kl[0];
+            	}else{
+                    var kl=kouling;
+                }
+                clipboardSet(kl,1);
+    			openApp('alipays://');
+            }
+        });
+    }
+
+function xueyuan(){
+	if(iosAudit==0){
+		ddevent.fun('page=help&help&帮助中心');
+	}
+}
+
+function gonggao(str){
+    if(typeof str!='undefined' && str!='undefined' && str!=''){
+        str=str+'&nbsp;&nbsp;&nbsp;';
+        var $dom=$('#wenzigundong');
+        $dom.html('<span class="iconfont">&#xe6aa;</span>'+str);
+        var width=$dom.width();
+        var html=$dom.html();
+        for(i=0;i<10;i++){
+            html+=html;
+        }
+        $dom.html(html);
+        $('head').append('<style id="gonggao_style">#wenzigundong{ position:absolute;animation: move 10s linear infinite normal;animation-fill-mode:forwards;white-space: nowrap;text-indent:0.5em}@keyframes move{0%{transform:translateX(0px);}100%{transform:translateX(-'+api.winWidth+'px);}}</style>');
+    }else{
+        $('#gonggao').remove();
+    }
+}
+
+function fixDiv(div_id,offsetTop){
+	  var offset=arguments[1]?arguments[1]:0;
+    var Obj=$(div_id);
+  	if(Obj.length==0){
+  		return false;
+  	}
+    var ObjTop=Obj.offset().top;
+	  var position=Obj.css('position');
+    if(api.systemType=='ios'){
+        var moshi='scroll';
+    }else{
+        var moshi='scroll';//'touchmove';
+    }
+    $(window).on(moshi, function() {
+        if($(window).scrollTop()<=ObjTop){
+            Obj.css({
+                'position':position,
+                'top':0
+            });
+        }else{
+            Obj.css({
+                'position':'fixed',
+                'top':0+offsetTop+'px',
+                'z-index':999,
+                'width':'100%'
+            });
+        }
+    });
+}
+
+    function sybanner(data){
+        data=data||sybanner_arr;
+        var html='';
+    	var img='';
+    	var url='';
+    	for(var i in data){
+    		if(typeof data[i].img!='undefined' && data[i].img!=''){
+    			img=data[i].img;
+    		}else{
+    			img=sybanner_arr[i].img;
+    		}
+    		if(typeof data[i].url!='undefined' && data[i].url!=''){
+    			url=data[i].url;
+    		}else{
+    			url=sybanner_arr[i].url;
+    		}
+    		var re=ddevent.add(url);
+            img=getWidgetFile(img);
+    		html+='<div class="jxxnimgs" tapmode="hover" onclick="ddevent.fun('+re+')"><img src="'+img+'"></div>';
+    	}
+    	if(html!==''){
+    		$('#sybanner').html(html);
+    	}
+    }
+
+    function synav(data){
+        if(!data){
+            data=[];
+        }
+        var html='';
+    	var img='';
+    	var title='';
+    	var url='';
+        for(var i in synav_arr){
+            if(typeof data[i]=='undefined' || typeof data[i].title=='undefined' || data[i].title==''){
+                data[i]=synav_arr[i];
+            }else{
+                if(typeof data[i].img=='undefined' || data[i].img==''){
+                    data[i].img=synav_arr[i].img;
+                }
+                if(typeof data[i].url=='undefined' || data[i].url==''){
+                    data[i].url=synav_arr[i].url;
+                }
+                if(typeof data[i].title=='undefined' || data[i].title==''){
+                    data[i].title=synav_arr[i].title;
+                }
+            }
+        }
+
+    	for(var i in data){
+            if(typeof data[i]=='undefined' || typeof data[i].title=='undefined' || data[i].title==''){
+                break;
+            }
+    		var re=ddevent.add(data[i].url);
+            data[i].img=getWidgetFile(data[i].img);
+    		html+='<a tapmode="hover" onclick="ddevent.fun('+re+')"><span><img src="'+data[i].img+'"></span>'+data[i].title+'</a>';
+    	}
+    	if(html!==''){
+    		$('#synav').html(html);
+    	}
+    }
+
+function adPub(ad_pub,ads,ad_slides){
+	if(ad_slides==1){
+		var html1='';
+		for(var i in ads){
+			var re=ddevent.add(ads[i].url);
+            if(ads[i].img.indexOf('img')==0){
+                ads[i].img='../../'+ads[i].img;
+            }
+            ads[i].img=getWidgetFile(ads[i].img);
+			html1+='<div class="swiper-slide"><img tapmode="hover" src="'+ads[i].img+'" style="display:block;width:100%;" onclick="ddevent.fun('+re+')"/></div>';
+		}
+		if(html1!=''){
+			var html='<div class="swiper-wrapper">'+html1+'</div>';
+			$('#addiv').html('<div id="adhdp">'+html+'</div>');
+			loadScript.go('/script/swiper_min.js',function(){
+                var slider = new Swiper('#adhdp', {
+				    autoplay : {
+                        delay:3000,
+                        disableOnInteraction: false
+                    },
+                    watchOverflow: true,
+					speed : 300,
+					loop:true,
+					autoplayDisableOnInteraction : false
+				});
+			},'/css/swiper_min.css');
+		}else{
+			$('#addiv').remove();
+		}
+	}else{
+		var htmlArr=[],html='';
+		var n=0;
+		var t=ad_pub.split('|');
+		for(var i in t){
+			htmlArr.push([]);
+			var k=t[i].split(',');
+			for(var j in k){
+				var l=k[j].length;
+				var str='';
+				for(var m=0;m<l;m++){
+					if(typeof ads[n]!='undefined'){
+						var re=ddevent.add(ads[n].url);
+						if(typeof ads[n]!='undefined' && typeof ads[n].img!='undefined'){
+                            if(ads[n].img.indexOf('img')==0){
+                                ads[n].img='../../'+ads[n].img;
+                            }
+                            ads[n].img=getWidgetFile(ads[n].img);
+							str+='<img tapmode="hover" onClick="ddevent.fun('+re+')" src="'+ads[n].img+'" style="display:block;width:100%" />';
+						}
+					}
+					n++;
+				}
+				htmlArr[i].push('<div style="flex:1;">'+str+'</div>');
+			}
+			htmlArr[i]=htmlArr[i].join('');
+		}
+		for(var i in htmlArr){
+			html+='<div style="display:-webkit-flex;-webkit-align-items: center;">'+htmlArr[i]+'</div>';
+		}
+		if(html!=''){
+			$('#addiv').html(html);
+		}else{
+			$('#addiv').remove();
+		}
+	}
+}
+
+    function ddSlide(data) {
+        var html1 = '';
+        for (var i in data) {
+            var re = ddevent.add(data[i].url);
+            data[i].img=getWidgetFile(data[i].img);
+            html1 += '<div class="swiper-slide"><img src="' + data[i].img + '" style="display:block;width:100%;" onclick="ddevent.fun(' + re + ')"/></div>';
+        }
+        if(html1==''){
+            $('#huandeng').remove();
+            return false;
+        }
+        var html = '<div class="swiper-wrapper">' + html1 + '</div><div class="swiper-pagination" id="swiper-pagination">&nbsp;</div>';
+        var $huandeng = $api.dom('#huandeng');
+        $huandeng.innerHTML = '<div id="hdp">' + html + '</div>';
+        $huandeng.style.height = 'auto';
+        loadScript.go('/script/swiper_min.js', function() {
+            var slider = new Swiper('#hdp', {
+                autoplay: {
+                    delay: 3000,
+                    disableOnInteraction: false
+                },
+                watchOverflow: true,
+                speed: 300,
+                spaceBetween: 30,
+                pagination: {
+                    el: '#swiper-pagination',
+                },
+                'autoplayDisableOnInteraction' : false
+            });
+        }, '/css/swiper_min.css');
+    }
+    var menu;
+    function catSwiper() {
+        menu = new Swiper('.swiper-container', {
+            slidesPerView: 'auto',
+            freeMode: true
+        });
+    }
+
+    function catClick(cid,title){
+        api.setGlobalData({
+            key: 'title',
+            value:title
+        });
+        setPageParam('cid',cid);
+        openPage('taobao','list_header');
+    }
+
+    function setCat(cat) {
+        var html = '<li class="swiper-slide cur" id="cid_0" onClick="switchMenu(0,0);">综合</li>',
+            html1 = '',
+            html2 = '';
+        var index = 0;
+        for (var i in cat) {
+            var row = cat[i];
+            ++index;
+            html += '<li class="swiper-slide" id="cid_' + row['cid'] + '" onClick="switchMenu('+index+','+row['cid']+');"><a>' + row['title'] + '</a></li>';
+            // html1 += '<a id="cid1_' + row['cid'] + '" onClick="switchMenu('+index+','+row['cid']+');">' + row['title'] + '</a>';
+            var img_t = cat[i].img || '../../img/loading_300_300.gif';
+            html1 += '<li tapmode onclick="switchToggleMenu('+ index +','+ cat[i].cid +')"><div class="menu-icon"><img src="'+ img_t +'" alt=""></div><p>'+ cat[i].title +'</p></li>'
+        }
+        $api.dom('#scroller').innerHTML = html + '<li class="swiper-slide" style="width:24px" id="cid_99999"></li>';
+        loadScript.go('/script/swiper_min.js', function() {
+            $api.dom('#cid_arr').innerHTML = html1;
+            catSwiper();
+            var w = 0;
+            var li = $api.domAll('#scroller li');
+            for (var i = 0, len = li.length; i < len; i++) {
+                var _w = $api.offset(li[i]).w;
+                w += ddInt(_w);
+            }
+            $api.css($api.dom('#scroller'), 'width:' + w + 'px');
+            setCurCid(cat, 0);
+        }, '/css/swiper_min.css');
+
+        $jiantou=$('#jiantou');
+        if($jiantou.data('isclick')!=1){
+            $jiantou.on('click', function() {
+                $jiantou.find('span').eq(0).toggleClass('fangxiang');
+                $('#cf_xl').toggleClass('hidden');
+            });
+            $jiantou.data('isclick',1);
+        }
+    }
+    function switchToggleMenu(index, cid) {
+        $jiantou.find('span').eq(0).toggleClass('fangxiang');
+        $('#cf_xl').toggleClass('hidden');
+        $jiantou.data('isclick',0);
+        switchMenu(index, cid);
+    }
+
+    function setCurCid(_cat, _cid) {
+        if (typeof cat == 'undefined') {
+            cat = _cat;
+        }
+        if (typeof cid == 'undefined') {
+            cid = _cid;
+        }
+        if (typeof cat != 'undefined' && typeof cid != 'undefined' && cid > 0) {
+            var j = 0;
+            for (var i in cat) {
+                if (cid == cat[i].cid) {
+                    //window.swiper.slideTo(j - 1, 500, false);
+                    break;
+                }
+                j++;
+            }
+            var dom = $api.domAll('#scroller .swiper-slide');
+            for (var i = 0, len = dom.length; i < len; i++) {
+                if ($api.attr(dom[i], 'id') == 'cid_' + cid) {
+                    $api.addCls(dom[i], 'cur');
+                } else {
+                    $api.removeCls(dom[i], 'cur');
+                }
+            }
+            var dom = $api.domAll('#cid_arr a');
+            for (var i = 0, len = dom.length; i < len; i++) {
+                if ($api.attr(dom[i], 'id') == 'cid1_' + cid) {
+                    $api.addCls(dom[i], 'cur');
+                } else {
+                    $api.removeCls(dom[i], 'cur');
+                }
+            }
+        }
+    }
+    function switchMenu(index, cid) {
+        var sxTop = $('#scroller').offset().top;
+        $(window).scrollTop(sxTop);
+        menu.slideTo(index-2, 300, false);
+        var oli = $api.domAll('#scroller li');
+        for (var i = 0, ln = oli.length; i < ln; i++) {
+            if ($api.hasCls(oli[i], 'cur')) {
+                $api.removeCls(oli[i], 'cur');
+            }
+        }
+        $api.addCls(oli[index], 'cur');
+        if (cid==0) {
+            getTbData.reset();
+            getTbData.go({'type':'day','sort':4},function(data){
+                if(data.page=='1'){
+                    getTbData.go({'pagesize': 20});
+                }
+            });
+        } else {
+            getTbData.reset(1);
+            getTbData.go({'cid':cid,'pagesize':20,'sort':4},'',1);
+        }
+    }
+
+
+    function getToutiao(){
+      if (iosShenhe() == 1) {
+        return false;
+      }
+    	if(window.toustatus==1){
+    		return false;
+    	}
+    	window.toustatus=1;
+
+        if(appInfo.toutiao==1){
+    		var toutiao=appInfo.toutiao_content.split('|');
+            var html='';
+            for(var i in toutiao){
+                toutiao[i]=toutiao[i].replace('[','<span class="cat">').replace(']','</span>&nbsp;');
+                html+='<li>'+toutiao[i]+'</li>';
+            }
+            $('#toutiao').show().find('#articleC').html('<div class="swiper-wrapper"><div class="swiper-slide"><ul>'+html+'</ul></div></div>');
+            $('#toutiao').click(function(){
+                ddevent.fun(appInfo.toutiao_code);
+            });
+    		loadScript.go('/script/swiper_min.js',function(){
+    			var article = new Swiper('#articleC', {
+    				autoplay : {delay:3000},
+    				speed : 300,
+    				loop:true,
+    				height: $('#articleC').height()*1,
+    				direction : 'vertical',
+    				autoplayDisableOnInteraction : false
+    			});
+    		},'/css/swiper_min.css');
+    	}else if(appInfo.toutiao==2){
+            var url=createUrl('caiwu',{'fun':'toutiao'});
+        	getAjax(url,function(data){
+        		var html='';
+        		for(i=0;i<data.r.length;i=i+2){
+        			html+='<li class="swiper-slide"><div><font color="#333">'+data.r[i].nick+'</font><font color="#8c8b8b">刚刚获得奖励</font><font color="#333">'+data.r[i].fxje+'元</font></div>';
+        			if(typeof data.r[i+1]!='undefined'){
+        				html+='<div><font color="#333">'+data.r[i+1].nick+'</font><font color="#8c8b8b">刚刚获得奖励</font><font color="#333">'+data.r[i+1].fxje+'元</font></div></li>';
+        			}else{
+        				html+='</li>';
+        			}
+        		}
+        		if(html!=''){
+        			$('#toutiao').show().find('#articleC').html('<ul class="swiper-wrapper">'+html+'</ul>');
+        			loadScript.go('/script/swiper_min.js',function(){
+        				var article = new Swiper('#articleC', {
+        					autoplay : {
+                                delay:3000,
+                                disableOnInteraction: false
+                            },
+        					speed : 500,
+        					loop:true,
+        					height: $('#articleC').height()*1,
+        					direction : 'vertical',
+        					autoplayDisableOnInteraction : false
+        				});
+        			},'/css/swiper_min.css');
+        		}
+            },'',3600);
+    	}else{
+    		$('#toutiao').remove();
+    	}
+    }
+
+    function reStart(){
+        clear(2);
+        getInt(function(){
+            start();
+        },0);
+    }
+
+    function start() {
+        /*加载幻灯片*/
+        ddSlide(appInfo.slides);
+    	/*加载次级导航*/
+    	synav(appInfo.synav);
+    	/*加载四格*/
+    	sybanner(appInfo.sybanner);
+        /*加载公告*/
+        gonggao(appInfo.gonggao);
+
+        /*教程*/
+    	if(typeof appInfo.help_pic!='undefined' && appInfo.help_pic!=''){
+    		$('#help_pic').show();
+            if(appInfo.help_pic.indexOf('img')==0){
+                appInfo.help_pic='../../'+appInfo.help_pic;
+            }
+    		appInfo.help_pic=getWidgetFile(appInfo.help_pic);
+    		$('#help_pic img').attr('src',appInfo.help_pic);
+    	}
+
+        api.parseTapmode();
+
+        /*获取头条*/
+	    getToutiao();
+
+        getWidgetFile();
+
+        /*加载广告*/
+        var adhtml='';
+        if(typeof appInfo.ads!='undefined' && appInfo.ads!=null){
+            if(typeof appInfo.ads[0]!='undefined' && typeof appInfo.ads[0]['img']!='undefined' && appInfo.ads[0]['img']!=''){
+                down(appInfo.ads[0]['img'],function(data){
+                    set('DD_ad1_img',data.replace('fs:/',api.fsDir));
+                    set('DD_ad1_click',appInfo.ads[0]['url']);
+                })
+            }
+            var ad_pub=appInfo.ad_pub;
+            var ads=clone(appInfo.ads);
+            ads.splice(0,1);
+    		if(typeof appInfo.ad_slides=='undefined'){
+    			appInfo.ad_slides=0;
+    		}
+            adPub(ad_pub,ads,appInfo.ad_slides);
+        }else{
+            $('#addiv').remove();
+        }
+
+        /*获取分类*/
+        setCat(menu_arr);
+        setTimeout(function(){
+            fixDiv('#ddlanmu',0);
+        },1000);
+        // getAjax(buildUrl('cid'),function(data){
+        //     data=data.data;
+        //     console.log(JSON.stringify(data));
+        //     setCat(data);
+        //     setTimeout(function(){
+        //         fixDiv('#ddlanmu',0);
+        //     },1000);
+        // },'',86400);
+
+        user=checkLogin()||_user;
+        getTbData.reset();
+        // getTbData.go({'pagesize': 20});
+        getTbData.go({'type':'day','sort':4},function(data){
+            if(data.page=='1'){
+                getTbData.go({'pagesize': 20});
+            }
+        });
+
+        setGlobalData('indexOk',1);
+    }
+    ready(function() {
+
+      if (iosShenhe() == 1) {
+        $('.ios_hide_new').hide();
+      }
+
+        clear(0);//清除过期缓存
+        api.execScript({
+            script: 'clear(0);'
+        });
+
+        api.execScript({
+            script: 'showSplash();'
+        });
+        iosAudit=iosShenhe();
+        api.addEventListener({
+            name: 'reStart'
+        }, function(ret, err) {
+            start();
+        });
+        start();
+        setBounce(reStart);
+		if(api.systemType=='android'){
+            swiperForAndroid('huandeng');
+        }
+
+        /*吱口令*/
+    	if(iosAudit==1){
+    		appInfo.zhikouling='';
+    	}
+    	if(typeof appInfo.zhikouling=='undefined'){
+    		appInfo.zhikouling='';
+    	}
+    	if(appInfo.zhikouling!=''){
+    		if(typeof appInfo.zhikouling_img=='undefined' || appInfo.zhikouling_img==''){
+    			appInfo.zhikouling_img='../../img/alihb.png';
+    		}
+    		$('#alihb img').attr('src',appInfo.zhikouling_img);
+    		$('#alihb').show();
+    	}
+    }, 2);
+
+    function viewappear(){
+
+    }
+
+    function picLazyLoad() {
+        $('.lazyimg').picLazyLoad();
+    }
+</script>

@@ -1,0 +1,106 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="../../css/api.css"/>
+    <script src="../../script/api.js"></script>
+</head>
+<body>
+<div id="wrap" class="flex-wrap flex-vertical">
+    <header style="background: #FFFFFF;color:#5f646d;border-bottom: 1px solid #DDDFE3;">
+            <div class="topbar">
+                <div id="left" style="color:#5f646d;width:100px" class="egret-img fl">
+                    <div><span style="padding:5px" tapmode="hover" onClick="leftClick()" class="iconfont">&#xe607;</span></div>
+                </div>
+                <div id="right" style="color:#5f646d;width:100px" class="egret-img fr">
+                    <div><span style="padding:5px" tapmode="hover" onclick="_closeWin()" class="iconfont">&#xe622;</span></div>
+                </div>
+                <div tapmode="hover" style="display: -webkit-flex;display: flex;-webkit-align-items: center;align-items: center;height: 100%;color:#333;justify-content: center;" class="egret-header-box"><div id="title" style="overflow: hidden;text-overflow: ellipsis;white-space: nowrap;">图文详情</div></div>
+            </div>
+        </header>
+    <div id="main" class="flex-con">
+
+    </div>
+    <div id="footer"></div>
+</div>
+</body>
+</html>
+<script type="text/javascript">
+    var browser,url,leftFun=0,frmArr=[],title;
+
+    ready(function(){
+        api.addEventListener({
+            name: 'reStart'
+        }, function(ret, err) {
+            uexWebView.close();
+            openWebView(url);
+        });
+        var cha=api.pageParam.cha;
+        if(cha==1){
+            var child=document.getElementById("cha");
+            child.parentNode.removeChild(child);
+        }
+        var title=getGlobalData('title');
+        if(title!=''){
+            $api.dom('#title').innerHTML=title;
+        }
+        headerFuns('url');
+        url=api.pageParam.url;
+        openWebView(url);
+    },0);
+
+    function openWebView(url){
+        if(url=='' || typeof url=='undefined'){
+            alert('网址未定义');
+        }
+        var offset = $api.offset($api.dom('#main'));
+        var intercept=[''];
+        var js='';
+        var ua=navigator.userAgent;
+        ua=ua.replace(/ duoduo:(\d+)? (\w+)?;/,'');
+        ua+=' duoduo:'+get('DD_DDUSERID')+' '+get('DD_PASSWORD')+';';
+        uexWebView.setUa(ua);
+        uexWebView.open(url,{'x':offset.l,'y':offset.t,'w':offset.w,'h':offset.h},js,intercept,{
+            'title':function(str){
+            },
+            'url':function(str){
+            },
+            'intercept':function(data){
+
+            }
+        });
+    }
+
+    function _closeWin(){
+        uexWebView.close();
+        closeWin();
+    }
+
+    function leftClick(){
+        if(frmArr.length>0){
+            closeFrm(frmArr[frmArr.length-1])
+        }else{
+            uexWebView.back(function(){
+                _closeWin();
+            });
+        }
+    }
+
+    function closeFrm(name){
+        for(var i in frmArr){
+            if(frmArr[i]==name){
+                frmArr.splice(i,1);
+            }
+        }
+        api.closeFrame({'name':name});
+    }
+
+    function rightClick(){
+        //uexWebView.loadScript('location.reload()');
+        frmArr.push('page_share_frm');
+        share(title,url,'','','page_url');
+    }
+</script>

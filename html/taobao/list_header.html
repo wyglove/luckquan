@@ -1,0 +1,321 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="../../css/api.css" />
+    <script type="text/javascript" src="../../script/api.js"></script>
+    <style>
+    #ddlanmu {
+        width: 100%;
+        background: #FFF;
+        font-size: 14px;
+        color: #616161;
+        border-bottom: 1px solid #f2f2f2
+    }
+    /*分类 开始*/
+    #ddlanmu .swiper-container .jiantou span {
+        display: inline-block;
+        -webkit-transform: rotate(90deg);
+        transform: rotate(90deg);
+        -webkit-transition: all .3s
+    }
+
+    #ddlanmu .swiper-container .jiantou span.fangxiang {
+        -webkit-transform: rotate(270deg);
+        transform: rotate(270deg);
+    }
+
+    #ddlanmu .swiper-container{
+        height: 40px;
+        line-height: 36px
+    }
+
+    #ddlanmu .swiper-slide {
+        background: #fff;
+        width: auto;
+        padding: 3px 8px;
+        font-size: 14px;
+        float: left;
+    }
+    #ddlanmu .swiper-slide a{
+        line-height: 1;
+    }
+    #ddlanmu .swiper-slide.cur a {
+        background-color: #ff464e;
+        color: #fff;
+        border-radius: 8px;
+        padding: 4px 8px;
+    }
+
+    .hidden {
+        display: none;
+    }
+    /*分类 结束*/
+
+    #qiehuan {
+        background: #ffffff;
+    }
+
+    .paixu {
+        display: flex;
+        height: 40px;
+        line-height: 40px;
+        background-color: #FFFFFF;
+        width: 100%;
+    }
+
+    .paixu .item {
+        text-align: center;
+        font-size: 14px;
+        -webkit-flex:1
+        flex:1
+    }
+
+    #ddlanmu .item{flex:1}
+
+    .paixu .item.cur {
+        color: #ff464e;
+    }
+
+    .hover {
+        opacity: 0.5
+    }
+    .color-pdd{color:#f50008;}
+    .color-jd{color:#d1043f;}
+    </style>
+</head>
+
+<body>
+    <div id="wrap" class="flex-wrap flex-vertical">
+        <header style="background: #FFFFFF;color:#5f646d;border-bottom: 1px solid #F2F2F2;display:">
+            <div class="topbar">
+                <div id="left" style="color:#5f646d" tapmode="hover" class="egret-img fl" onClick="leftClick()">
+                    <div><span class="iconfont">&#xe607;</span></div>
+                </div>
+                <div id="right" style="color:#5f646d" class="egret-img fr" tapmode="hover" onClick="rightClick()">
+                    <div><span class="iconfont">&#xe68d;</span></div>
+                </div>
+                <div id="title-box" tapmode="hover" style="display: flex;justify-content: center;align-items: center;height: 100%;color:#333;font-size:16px;" class="egret-header-box">
+                    <div id="title" style="text-align:center;margin:auto;width:100%;white-space:nowrap;word-break:break-all;text-overflow:ellipsis;overflow:hidden;">
+                    </div>
+                </div>
+                <form id="search-box" onSubmit="return rightClick()" style="display:none;">
+                    <div class="egret-header-box" tapmode>
+                        <div class="egret-header-search">
+                            <input id="q" style="background: #F4F4F4;border-radius: 16px;font-size: 14px;padding-bottom:5px;" type="search" placeholder="粘贴宝贝标题 先领券后购物">
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </header>
+
+        <div id="qiehuan" class="swiper-container" style="display:none;width:100%;overflow:hidden">
+            <div class="paixu swiper-wrapper flex-wrap flex-justify-sb" id="paixu">
+                <div class="swiper-slide item cur" id="sort0" tapmode="hover" onclick="sortGoods(this)">综合</div>
+                <div class="swiper-slide item" id="sort1" tapmode="hover" onclick="sortGoods(this)">销量↓</div>
+                <div class="swiper-slide item" id="sort2" tapmode="hover" onclick="sortGoods(this)">价格↑</div>
+                <div class="swiper-slide item" tapmode="hover" onclick="listSearch('jd')"><b class="color-jd">搜京东</b></div>
+                <div class="swiper-slide item" tapmode="hover" onclick="listSearch('pdd')"><b class="color-pdd">搜拼多多</b></div>
+            </div>
+        </div>
+
+        <div id="ddlanmu" style="display:;">
+            <div class="swiper-container" style="box-sizing: border-box;position: relative;border-bottom:1px solid #f5f5f5;">
+                <ul id="scroller" class="swiper-wrapper" style="width:5000px"></ul>
+            </div>
+            <div style="clear:both"></div>
+            <div class="paixu" id="paixu">
+                <div class="item cur" id="sort0" tapmode="hover" onClick="sortGoods(this)">综合排序</div>
+                <div class="item" id="sort2" tapmode="hover" onClick="sortGoods(this)">销量最高↓</div>
+                <div class="item" id="sort5" tapmode="hover" onClick="sortGoods(this)">券值最大↓</div>
+                <div class="item" id="sort3" tapmode="hover" onClick="sortGoods(this)">价格最低↑</div>
+            </div>
+        </div>
+        <div style="height:8px; background-color:#f5f5f5; margin-bottom:-2px;">&nbsp;</div>
+        <div id="main" class="flex-con"></div>
+        <div id="footer"></div>
+    </div>
+
+</body>
+
+</html>
+<script type="text/javascript">
+    var mod, act, leftFun = 0,cid=0,cat=[],q='',swiper;
+    var pd='taobao';
+
+    function sortGoods(t){
+        var item=$api.domAll('#paixu .item');
+        for(i=0;i<item.length;i++){
+            if(t==item[i]){
+                $api.addCls(item[i],'cur');
+            }else{
+                $api.removeCls(item[i],'cur');
+            }
+        }
+        var jsfun = 'sortClick('+$api.attr(t,'id').replace('sort','')+')';
+        api.execScript({
+            frameName: pd+'_list_frm',
+            script: jsfun
+        });
+    }
+
+    function catClick(cid){
+        setCurCid(cid);
+        var jsfun = 'catClick('+cid+')';
+        api.execScript({
+            frameName: pd+'_list_frm',
+            script: jsfun
+        });
+    }
+
+    function catSwiper() {
+        swiper = new Swiper('#ddlanmu .swiper-container', {
+            slidesPerView: 'auto',
+            freeMode: true
+        });
+    }
+
+    function setCat(cat,callback) {
+        var html = '<li class="swiper-slide cur" tapmode="hover" onClick="catClick(0)" id="cid_0"><a>综合</a></li>',
+            html1 = '';
+        for (var i in cat) {
+            var row = cat[i];
+            html += '<li class="swiper-slide" id="cid_' + row['cid'] + '" tapmode="hover" onClick="catClick(' + row['cid'] + ');"><a>' + row['title'] + '</a></li>';
+        }
+        $api.dom('#scroller').innerHTML = html;
+        loadScript.go('/script/swiper_min.js', function() {
+            catSwiper();
+            var w = 0;
+            var li = $api.domAll('#scroller li');
+            for (var i = 0, len = li.length; i < len; i++) {
+                var _w = $api.offset(li[i]).w;
+                w += ddInt(_w);
+            }
+            $api.css($api.dom('#scroller'), 'width:' + w + 'px');
+            if(typeof callback=='function'){
+                callback();
+            }
+        }, '/css/swiper_min.css');
+    }
+
+    function setCurCid(cid) {
+        if (typeof cat != 'undefined' && typeof cid != 'undefined' && cid >= 0) {
+            var j = 0;
+            for (var i in cat) {
+                if (cid == cat[i].cid) {
+                    swiper.slideTo(j - 1, 500, false);
+                    break;
+                }
+                j++;
+            }
+            var dom = $api.domAll('#scroller .swiper-slide');
+            for (var i = 0, len = dom.length; i < len; i++) {
+                if ($api.attr(dom[i], 'id') == 'cid_' + cid) {
+                    $api.addCls(dom[i], 'cur');
+                } else {
+                    $api.removeCls(dom[i], 'cur');
+                }
+            }
+        }
+    }
+
+    function search(){
+        ddevent.searchPop(pd+'/list_header');
+    }
+
+    function rightClick(){
+        // search();
+        if (!!q && q!='') {
+            q = $('#q').val();
+            api.sendEvent({
+                name: 'tbSearch',
+                extra: {
+                    q: q
+                }
+            });
+            return false;
+        } else {
+            search();
+        }
+    }
+
+    function reStart(_q){
+        _q=_q||'';
+        api.pageParam.q=q=_q;
+        start();
+    }
+
+    function start(){
+        q=api.pageParam.q||'';
+        cid=api.pageParam.cid||0;
+        if(q==''){
+            $api.css($api.dom('#ddlanmu'),'display:block');
+            $api.css($api.dom('#qiehuan'),'display:none');
+            $('#title-box').show();
+            $('#search-box').hide();
+    		/*获取分类*/
+    		getAjax(buildUrl('cid'),function(data){
+                for(var i in data.data){
+                    cat.push(data.data[i]);
+                }
+    			setCat(cat,function(){
+                    if(cid>0){
+                        setCurCid(cid);
+                    }
+                });
+                setPageParam('cat',cat);
+                api.pageParam.mod=pd;
+                api.pageParam.act='list';
+                headerFuns();
+    		},'',86400);
+        }else{
+            $api.css($api.dom('#qiehuan'),'display:block');
+            $api.css($api.dom('#ddlanmu'),'display:none');
+            $('#q').val(q);
+
+            $('#title-box').hide();
+            $('#search-box').show();
+            api.pageParam.mod=pd;
+            api.pageParam.act='list';
+            headerFuns();
+    	}
+    }
+
+    function listSearch(m){
+        ddevent.search(m,q);
+    }
+
+    function appendSearch(swiper){
+        // swiper=swiper||0;
+        // var html='';
+        // for(var i in webMalls){
+        //     if(i!=pd){
+        //         html+='<div class="swiper-slide item" tapmode="hover" onclick="listSearch(\''+i+'\')">搜'+webMalls[i]+'</div>';
+        //     }
+        // }
+        // $api.append($api.byId('paixu'),html);
+        if(swiper==1){
+            loadScript.go('/script/swiper_min.js', function() {
+                new Swiper('#qiehuan', {
+                    slidesPerView: 6.5,
+                    paginationClickable: true,
+                    freeMode: true
+                });
+            }, '/css/swiper_min.css');
+        }
+    }
+
+    ready(function(){
+        start();
+        appendSearch(1);
+    },1,function(){
+        var title=getGlobalData('title');
+        if(title!=''){
+            document.getElementById('title').innerHTML = title;
+            document.getElementById('title').removeAttribute('id');
+        }
+    });
+</script>

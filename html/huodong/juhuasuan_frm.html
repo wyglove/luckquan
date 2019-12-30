@@ -1,0 +1,437 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="../../css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/new_list0.css" />
+    <script src="../../script/rem.js"></script>
+    <script src="../../script/api.js"></script>
+    <style>
+        html,body{background: #f5f5f5;}
+        #list_data {
+            margin: 4em 0.1rem 0;
+        }
+        .dstab{
+            display: -webkit-flex; display: flex;
+            width: 100%;
+            padding-bottom: 1em;
+            position: fixed; top: 0; left: 0;
+            z-index: 999;
+        }
+        .dslist{height: 3em; line-height: 3em; text-align: center; flex: 1; background: #fff;}
+        .dslist.cur{background: #e72a38; color: #fff; position: relative;}
+        .arrow-down {
+            display: block;
+            width: 0; height: 0;
+            position: absolute; left: 50%; bottom: -0.5em;
+            border-left: 0.5em solid transparent;
+            border-right: 0.5em solid transparent;
+            border-top: 0.5em solid #fff;
+            transform: translateX(-50%);
+        }
+        .dslist.cur .arrow-down{
+          	display: block;
+            border-top: 0.5em solid #e72a38;
+        }
+        .dslist .arrow-down{
+          	display: none;
+        }
+
+    </style>
+</head>
+<body>
+
+  <div class="dstab is_ju" style="position: fixed; z-index: 999;">
+    	<div class="dslist dslist_ju  cur" onclick="getGoods('ju');">聚划算<span class="arrow-down"></span></div>
+    	<div class="dslist dslist_tqg" onclick="getGoods('tqg');">淘抢购<span class="arrow-down"></span></div>
+  </div>
+  <div id="goods">
+      <div class="waterfall-list" id="list_data"></div>
+  </div>
+  <div id="loading"><span class="loading-img"></span>数据加载中</div>
+
+
+</body>
+<script src="../../script/api.js"></script>
+<script>
+    var cat=[{"cid":13,"title":"居家"},{"cid":1,"title":"女装"},{"cid":7,"title":"母婴"},{"cid":8,"title":"美食"},{"cid":6,"title":"美妆"},{"cid":3,"title":"鞋包配饰"},{"cid":10,"title":"家电数码"},{"cid":2,"title":"男装"},{"cid":9,"title":"内衣"},{"cid":16,"title":"文体"}];
+    var code, cid, is, sort, q, type, is_rank, yunGoods, appinfo, siteinfo, user, onlyApi, has_coupon, laiyuan, tip;
+    var iosAudit,cacheClass;
+    function getData(unlock){
+
+    	if(q==''){
+
+    		if(is=='is_tqg' ||is=='is_ju'){
+
+    			 $('#ddlanmu').hide();
+
+    			 $('.dstab').hide();
+
+    			 $('.is_ju').show();
+
+    			 $('#minirefresh').css('top',($('.is_ju').outerHeight())+'px');
+
+    		}else if(is=='is_jiu' || is=='is_gy'){
+
+    			 $('#ddlanmu').hide();
+
+    			 $('.dstab').hide();
+
+    			 $('.is_jiu').show();
+
+    			 $('#minirefresh').css('top',($('.is_jiu').outerHeight())+'px');
+
+    		}else if(code=='guoye'){
+
+    			 $('#ddlanmu').hide();
+
+    		}else{
+
+    			 $('#ddlanmu').show();
+
+    			 $('#paixu').hide();
+
+    			 $('#minirefresh').css('top',($('#ddlanmu').outerHeight())+'px');
+
+    		}
+
+        }else{
+
+    		if(laiyuan=='pdd'){
+
+    			$('#sortGoods').show();
+
+    		}else if(laiyuan=='jd'){
+
+    			$('#sortGoods').show();
+
+    		}
+
+            $('#ddlanmu').hide();
+
+            $('#paixu').show();
+
+    		$('#minirefresh').css('top',($('#paixu').outerHeight())+'px');
+
+    		var sl=get('DD_searchLog');
+
+            if(sl=='' || sl=='[]'){
+
+                sl=[];
+
+            }
+
+
+
+            var jilu=1;
+
+            var myDate = new Date();
+
+            var t=myDate.format('mm-dd');
+
+            for(var i in sl){
+
+                if(typeof sl[i].title!='undefined' && sl[i]['title']==q){
+
+                    jilu=0;
+
+                    break;
+
+                }
+
+            }
+
+            if(jilu==1){
+
+                sl.unshift({'title':q,'subTitle':t});
+
+                if(size(sl)>5){
+
+                    sl.pop();
+
+                }
+
+                set('DD_searchLog',sl);
+
+            }
+
+
+
+    		$('.sealist').removeClass('cur');
+
+    		$('.sealist_'+laiyuan).addClass('cur');
+
+        }
+
+    	if(laiyuan=='pdd'){
+
+    		getPdd(unlock);
+
+    	}else if(laiyuan=='jd'){
+
+    		getJd(unlock);
+
+    	}else if(yunGoods==1){
+
+    		$('#sortGoods').show();
+
+    		getData1(unlock);
+
+    	}else{
+
+    		$('#sortGoods').hide();
+
+    		/*$('#minirefresh').css('top',($('#sousuoqiehuan').outerHeight())+'px');*/
+
+    		$('#minirefresh').css('top',($('.searchtab').outerHeight())+'px');
+
+    		getData2(unlock);
+
+    	}
+
+    }
+
+    function loadLazyImg(){
+
+    	$('img.lazyimg').picLazyLoad();
+
+    }
+
+    function getGoods(t){
+      document.documentElement.scrollTop=document.body.scrollTop=0;
+      tip = t;
+
+    	$('.dslist').removeClass('cur');
+
+        $('.dslist_'+t).addClass('cur');
+
+    	if(t=='pdd'){
+
+    		laiyuan='pdd';
+
+    		getPdd(1);
+
+    	}else{
+
+    		laiyuan='tb';
+
+    		if(t=='ju'){
+
+    			set('is','is_ju');
+
+    			is='is_ju';
+
+    		}else if(t=='tqg'){
+
+    			set('is','is_tqg');
+
+    			is='is_tqg';
+
+    		}
+
+    		getData(1);
+
+    	}
+
+    }
+
+    function getData1(unlock){  /*获取云端数据*/
+
+    	unlock=unlock||0;
+
+        var _this=this;
+
+        if(unlock==1){
+
+            this.lock=0;
+
+            this.page=0;
+
+    		$('#loading').show();
+
+    		$('#list_data').html('');
+
+        }
+
+        if(typeof this.lock!='undefined' && this.lock==1){
+
+            return false;
+
+        }
+
+        if(typeof this.page=='undefined'){
+
+            this.page=0;
+
+        }
+
+        this.page++;
+
+    	this.lock=1;
+
+    	if(this.page==1){
+
+    		$('#list_data').html('');
+
+    	}
+
+        var url=goodsUrl()+'&page='+this.page;
+
+        getJson(url,'数据获取中',function(ret){
+        		_this.lock=0;
+        		$('#loading').hide();
+            var html='';
+            if(ret.s==1){
+                var html = transGoodsHtml({
+                    data: ret.data.goods,
+                    laiyuan: 'tb'
+                })
+          			if(html!=''){
+          				  $('#list_data').append(html);
+                    loadLazyImg();
+          			}
+            }
+
+        		if(ret.s==0 || size(ret.data.goods)<20 || html==''){
+          			if(q!=''){
+            				yunGoods=0;
+            				_this.page=0;
+            				getData();
+          			}else{
+            				_this.lock=1;
+            				$('#loading').hide();
+          			}
+            }
+        },60);
+
+    }
+
+    function getData2(unlock){  /*获取api数据*/
+
+    	unlock=unlock||0;
+
+        var _this=this;
+
+        if(unlock==1){
+
+            this.lock=0;
+
+            this.page=0;
+
+    		$('#loading').show();
+
+    		$('#list_data').html('');
+
+        }
+
+        if(typeof this.lock!='undefined' && this.lock==1){
+
+            return false;
+
+        }
+
+        if(typeof this.page=='undefined'){
+
+            this.page=0;
+
+        }
+
+        this.page++;
+
+    	this.lock=1;
+
+        var url=createUrl('goods',{'fun':'allSearch','page_size':20,'q':q,'has_coupon':has_coupon,'page':this.page});
+
+        getJson(url,'数据获取中',function(data){
+        		_this.lock=0;
+        		$('#loading').hide();
+            if(ret.s==1){
+                var html = transGoodsHtml({
+                    data: ret.r,
+                    laiyuan: 'tb'
+                })
+
+                if(html==''){
+                    if(_this.page==1){
+                        html=emptyData('暂无数据~~~');
+                    }else{
+                        toastOpen('没有啦');
+                    }
+                }
+                $('#list_data').append(html);
+                loadLazyImg();
+          			if(html=='' || size(ret.r)<20){
+          				  _this.lock=1;
+          			}
+            }else{
+                toastOpen('数据获取失败');
+            }
+
+        },60);
+
+    }
+
+    function goodsUrl(){
+    	var data={'code':code,'cid':cid,'sort':sort,'is_x':'1','q':q,'type':type,'is_rank':is_rank,'pagesize':20};
+    	if(is!=''){
+    		data=JSON.stringify(data);
+    		data=data.replace('is_x',is);
+    		data=JSON.parse(data);
+    	}
+    	var url=buildUrl('app_goods',data);
+    	return url;
+    }
+
+    function reStart(s){
+      	s=s||0;
+      	if(s==1){
+        		q=get('q',1);
+        		is_rank='';
+        		type='';
+        		yunGoods=1;
+      	}
+        clear(2);
+      	start();
+    }
+
+    function start(){
+        user=checkLogin()||user;
+        getGoods(tip);
+    }
+
+    ready(function(){
+        code=get('code',1);
+        cid=get('cid',1);
+        is=get('is',1);
+        sort=get('sort',1);
+        q=get('q',1);
+        type=get('type',1);
+        is_rank=get('is_rank',1);
+        yunGoods=1;
+        appinfo=get('DD_appinfo');
+        siteinfo=get('DD_siteinfo');
+        user={'type':0,'level':-1};
+        onlyApi=ddInt(get('onlyApi',1));
+        has_coupon=ddInt(get('has_coupon',1));
+        laiyuan=get('laiyuan',1)||'tb';
+        tip = 'ju';
+        iosAudit = iosShenhe();
+
+        if(onlyApi==1){
+            yunGoods=0;
+        }
+
+        setTitle('聚划算');
+
+        start();
+        setBounce(reStart);
+        infinite(function(){
+            getData();
+        });
+    },2);
+
+</script>
+</html>

@@ -1,0 +1,961 @@
+<html style="-webkit-touch-callout: default;">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0">
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="../../css/api.css">
+    <style>
+        .weixuanzhong {
+            color: #D4D3D3
+        }
+
+        .wechat_list {
+            margin-bottom: 56px;
+        }
+
+        .wechat_list li {
+            text-align: center;
+            overflow: hidden;
+            -webkit-animation-name: fadeIn;
+            animation-name: fadeIn;
+            -webkit-animation-duration: 1s;
+            animation-duration: 1s;
+            margin-bottom: 8px;
+            border-bottom: 8px solid #eeeeee;
+            padding-bottom: 15px;
+        }
+
+        .wechat_list li span.toptitle {
+            display: inline-block;
+            height: 48px;
+            width: 100%;
+        }
+
+        .wechat_list li span.toptitle img {
+            border-radius: 100%;
+            width: 40px;
+            margin-bottom: -14px;
+        }
+
+        .wechat_list li .xxq_a {
+            display: block;
+            background: #ffffff;
+            padding: 14px 14px 8px 14px;
+            text-align: left;
+            color: #959595;
+        }
+
+        .wechat_list li .xxq_a h4 {
+            margin: 0;
+            color: #282828;
+            font-size: 14px;
+            font-weight: bold
+        }
+
+        .wechat_list li .xxq_a span.time {
+            display: block;
+            font-size: 14px;
+            line-height: 32px;
+            margin: 10px 0;
+            color: #272727;
+        }
+
+        .wechat_list li .xxq_a p.desc {
+            color: #959595;
+            line-height: 1.4;
+            margin-bottom: 10px;
+        }
+
+        .wechat_list li .xxq_a span.more {
+            color: #000000;
+        }
+
+        .xxqbiaoti {
+            display: inline-block;
+            font-size: 12px;
+            margin-left: 8px;
+        }
+
+        .xxqbiaoti p.first {
+            color: #000;
+        }
+
+        .sharebtn {
+            border: 1px solid #ff3b7f;
+            color: #ff3b7f;
+            border-radius: 80px;
+            font-size: 12px;
+            float: right;
+            padding: 4px 8px;
+        }
+
+        .zhanshipic {
+            width: 100%;
+            margin-top: 8px;
+        }
+
+        .zhanshipic a {
+            display: inline-block;
+            width: 33%;
+            position: relative;
+            text-decoration: none;
+            overflow: hidden;
+        }
+
+        .zhanshipic a img {
+            display: block;
+            margin: 0 auto;
+            width: 96%;
+            object-fit: cover;
+            min-height: 64px;
+            border-radius: 8px;
+        }
+
+        .xxq_price {
+            background-color: #f60;
+            color: #fff;
+            padding: 4px 8px;
+            position: absolute;
+            right: 4px;
+            bottom: 0;
+            border-radius: 8px 0;
+            font-size: 12px;
+        }
+
+        .sharetime {
+            font-size: 12px;
+        }
+
+        .sharetime span:nth-child(2) {
+            margin-left: 32px;
+        }
+
+        .shareprice {
+            color: #f60;
+            margin-top: 8px;
+            font-size: 16px;
+            text-decoration: underline;
+        }
+
+        .caozuobtn {
+            display: flex;
+            background: #fff;
+        }
+
+        .caozuobtn span.item {
+            flex: 1;
+        }
+
+        .caozuobtn span.item div {
+            background: #feeef1;
+            border-radius: 15px;
+            margin: auto;
+            display: inline-block;
+            padding: 2px 15px
+        }
+
+        .copypl {
+            display: flex;
+            margin: 12px 0;
+        }
+
+        .plcon {
+            flex: 3;
+            font-size: 14px;
+            margin-right: 8px;
+        }
+
+        .copybtn {
+            flex: 0.5;
+        }
+
+        .copybtn span {
+            font-size: 14px;
+            display: inline-block;
+            background: linear-gradient(top, #fb4c83, #fc1c35);
+            background: -webkit-linear-gradient(top, #fb4c83, #fc1c35);
+            background: -o-linear-gradient(top, #fb4c83, #fc1c35);
+            background: -moz-linear-gradient(top, #fb4c83, #fc1c35);
+            color: #fff;
+            line-height: 20px;
+            text-align: center;
+            margin-right: 8px;
+            border-radius: 4px;
+            padding: 8px;
+            width: 90%;
+        }
+
+        .xxq_title {
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .xxq_tab {
+            display: flex;
+            background: #fff;
+            margin-bottom: 4px;
+        }
+
+        .xxq_flex {
+            flex: 1;
+            text-align: center;
+            padding: 10px;
+            border-bottom: 5px solid #f2f2f2;
+            color: #a6a6a6;
+            font-size: 16px;
+        }
+
+        .xxq_flex.cur {
+            color: #333333;
+            font-weight: bold;
+        }
+    </style>
+    <script type="text/javascript" src="../../script/config.js"></script>
+    <script type="text/javascript" src="../../script/zepto.js"></script>
+    <script type="text/javascript" src="../../script/fun.js"></script>
+    <script type="text/javascript" src="../../script/zepto_lazyload.js"></script>
+</head>
+
+<body>
+    <div class="bc-bg bgccc">
+        <div style="position: fixed; top: 0; left: 0; height: 42px; width: 100%; z-index: 999; background: #fff;">
+            <div class="xxq_tab"> <span tapmode="" onclick="set_tab($(this),'0');" class="xxq_flex cur">爆款必发</span> <span tapmode="" onclick="set_tab($(this),'1');" class="xxq_flex">宣传素材</span> </div>
+        </div>
+        <div class="container container-fill" id="zhuti" style="margin-top: 47px;">
+            <ul class="wechat_list" id="goods">
+                <li id="li522832502356" class="animated">
+                    <div class="xxq_a"> <span class="toptitle"> <div style="display:flex"> <div> <img src="http://v83.duoduo123.com/upload/2018/0629/15194712123.png" class="xxq_img"> </div> <div style="text-align:left"> <span class="xxqbiaoti"> <p class="first xxq_title">美券返利</p> <div style="margin-top:5px"> <span>4天前</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <span>已被转发<span id="num_522832502356">879</span>次</span>
+                    </div>
+                    <p></p>
+                    </span>
+        </div>
+    </div>
+    </span>
+    <h4>【HLE】圆形LED卧室书房吸顶灯</h4>
+    <div style="color: #ff0036;margin-top: 10px;font-size: 12px;font-weight: bold;">10.00元优惠券 | 分享赚3.46</div> <span class="time" onclick="fuzhiwenan('522832502356')">【天猫正品】蓝禾照明，采用智能IC驱动，LED芯片，散热底盘，专业光学面罩，提高寿命，节能省电，品牌保障，16项专利，3年质保，破损包退。【赠运费险】</span>
+    <div class="zhanshipic">
+        <a onclick="showPics('522832502356',0);"><img class="tspic lazyimg" src="https://img.alicdn.com/i4/1718308205/TB2K_PklS0mpuFjSZPiXXbssVXa_!!1718308205.jpg_300x300.jpg" style="height: 122px;"></a>
+        <a onclick="showPics('522832502356',1);"><img class="tspic lazyimg" src="https://img.alicdn.com/i1/1718308205/TB2fgoYjM0kpuFjSspdXXX4YXXa_!!1718308205.jpg_300x300.jpg" style="height: 122px;"></a>
+        <a onclick="showPics('522832502356',2);"><img class="tspic lazyimg" src="https://img.alicdn.com/i1/1718308205/TB2DJuejMaTBuNjSszfXXXgfpXa_!!1718308205.jpg_300x300.jpg" style="height: 122px;"></a>
+    </div>
+    </div>
+    <div style="" tapmode="" onclick="fuzhikl(522832502356)">小贴士：复制这段淘口令￥*******￥→打开手机淘宝领券下单</div>
+    <div class="caozuobtn"> <span class="item" tapmode="" onclick="baocun('522832502356')"> <div>保存图片</div> </span> <span class="item" tapmode="" onclick="fuzhiwenan(522832502356)"> <div>复制评论</div> </span> <span class="item" tapmode="" onclick="ddevent.taobaoView(522832502356)"> <div>直接购买</div> </span>        <span class="item" tapmode="" onclick="zhuanfa('522832502356')"> <div style="background-color:#fc3e6c; color:#FFFFFF">一键转发</div> </span> </div>
+    </li>
+    <li id="li597786586655" class="animated">
+        <div class="xxq_a"> <span class="toptitle"> <div style="display:flex"> <div> <img src="http://v83.duoduo123.com/upload/2018/0629/15194712123.png" class="xxq_img"> </div> <div style="text-align:left"> <span class="xxqbiaoti"> <p class="first xxq_title">美券返利</p> <div style="margin-top:5px"> <span>1星期前</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <span>已被转发<span id="num_597786586655">363</span>次</span>
+        </div>
+        <p></p>
+        </span>
+        </div>
+        </div>
+        </span>
+        <h4>【四款可选】抖音爆款芝麻街卡通小挎包</h4>
+        <div style="color: #ff0036;margin-top: 10px;font-size: 12px;font-weight: bold;">10.00元优惠券 | 分享赚3.46</div> <span class="time" onclick="fuzhiwenan('597786586655')">超级好看的小包包，抖音上都火炸啦！大爱的芝麻街卡通形象，小巧精致，夏日百搭，多种款式可搭配，简约出行，气质俏皮少女心，小仙女必备！超优惠价格抢购【赠运费险】</span>
+        <div class="zhanshipic">
+            <a onclick="showPics('597786586655',0);"><img data-img="https://img.alicdn.com/i2/1629792640/O1CN01jePIH31VNA9ebIr5S_!!1629792640.jpg_300x300.jpg" class="tspic lazyimg" style="height: 122px;"></a>
+            <a onclick="showPics('597786586655',1);"><img data-img="https://img.alicdn.com/i3/1629792640/O1CN01vrFVTJ1VNA9ebLCc4_!!1629792640.jpg_300x300.jpg" class="tspic lazyimg" style="height: 122px;"></a>
+            <a onclick="showPics('597786586655',2);"><img data-img="https://img.alicdn.com/i2/1629792640/O1CN01BLVvsh1VNA9c15tIi_!!1629792640.jpg_300x300.jpg" class="tspic lazyimg" style="height: 122px;"></a>
+            <a onclick="showPics('597786586655',3);"><img data-img="https://img.alicdn.com/i2/1629792640/O1CN01qS1YAE1VNA9fX17kE_!!1629792640.jpg_300x300.jpg" class="tspic lazyimg" style="height: 122px;"></a>
+        </div>
+        </div>
+        <div style="" tapmode="" onclick="fuzhikl(597786586655)">小贴士：复制这段淘口令￥*******￥→打开手机淘宝领券下单</div>
+        <div class="caozuobtn"> <span class="item" tapmode="" onclick="baocun('597786586655')"> <div>保存图片</div> </span> <span class="item" tapmode="" onclick="fuzhiwenan(597786586655)"> <div>复制评论</div> </span> <span class="item" tapmode="" onclick="ddevent.taobaoView(597786586655)"> <div>直接购买</div> </span>            <span class="item" tapmode="" onclick="zhuanfa('597786586655')"> <div style="background-color:#fc3e6c; color:#FFFFFF">一键转发</div> </span> </div>
+    </li>
+    <li id="li597470436873" class="animated">
+        <div class="xxq_a"> <span class="toptitle"> <div style="display:flex"> <div> <img src="http://v83.duoduo123.com/upload/2018/0629/15194712123.png" class="xxq_img"> </div> <div style="text-align:left"> <span class="xxqbiaoti"> <p class="first xxq_title">美券返利</p> <div style="margin-top:5px"> <span>1天前</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <span>已被转发<span id="num_597470436873">124931</span>次</span>
+        </div>
+        <p></p>
+        </span>
+        </div>
+        </div>
+        </span>
+        <h4>【阳澄之王】大闸蟹礼券公4母3共8大只</h4>
+        <div style="color: #ff0036;margin-top: 10px;font-size: 12px;font-weight: bold;">206.00元优惠券 | 分享赚11.68</div> <span class="time" onclick="fuzhiwenan('597470436873')">【中秋送礼】豪华礼券包装，二十年老品牌，爆黄大闸蟹，公4两4只，母3两4只，共8大只！【品质、提货绝对保障】家里吃，送朋友，送领导首选</span>
+        <div class="zhanshipic">
+            <a onclick="showPics('597470436873',0);"><img data-img="https://img.alicdn.com/i2/2934852393/O1CN01AR5bSI1TY2LBu9gqw_!!2934852393.jpg_300x300.jpg" class="tspic lazyimg" style="height: 122px;"></a>
+            <a onclick="showPics('597470436873',1);"><img data-img="https://img.alicdn.com/i1/2934852393/O1CN01FpYdWi1TY2KsENct1_!!2934852393.jpg_300x300.jpg" class="tspic lazyimg" style="height: 122px;"></a>
+            <a onclick="showPics('597470436873',2);"><img data-img="https://img.alicdn.com/i1/2934852393/O1CN01xuae1y1TY2KJesYRg_!!2934852393.jpg_300x300.jpg" class="tspic lazyimg" style="height: 122px;"></a>
+            <a onclick="showPics('597470436873',3);"><img data-img="https://img.alicdn.com/i1/2934852393/O1CN01czx4wT1TY2KKNa0Lm_!!2934852393.jpg_300x300.jpg" class="tspic lazyimg" style="height: 122px;"></a>
+        </div>
+        </div>
+        <div style="" tapmode="" onclick="fuzhikl(597470436873)">小贴士：复制这段淘口令￥*******￥→打开手机淘宝领券下单</div>
+        <div class="caozuobtn"> <span class="item" tapmode="" onclick="baocun('597470436873')"> <div>保存图片</div> </span> <span class="item" tapmode="" onclick="fuzhiwenan(597470436873)"> <div>复制评论</div> </span> <span class="item" tapmode="" onclick="ddevent.taobaoView(597470436873)"> <div>直接购买</div> </span>            <span class="item" tapmode="" onclick="zhuanfa('597470436873')"> <div style="background-color:#fc3e6c; color:#FFFFFF">一键转发</div> </span> </div>
+    </li>
+    <li id="li521066652216" class="animated">
+        <div class="xxq_a"> <span class="toptitle"> <div style="display:flex"> <div> <img src="http://v83.duoduo123.com/upload/2018/0629/15194712123.png" class="xxq_img"> </div> <div style="text-align:left"> <span class="xxqbiaoti"> <p class="first xxq_title">美券返利</p> <div style="margin-top:5px"> <span>4天前</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <span>已被转发<span id="num_521066652216">29078</span>次</span>
+        </div>
+        <p></p>
+        </span>
+        </div>
+        </div>
+        </span>
+        <h4>【PICOOC/有品】有品体脂电子脂肪秤</h4>
+        <div style="color: #ff0036;margin-top: 10px;font-size: 12px;font-weight: bold;">20.00元优惠券 | 分享赚6.9</div> <span class="time" onclick="fuzhiwenan('521066652216')">有品智能体脂秤称体重秤家用测电子秤脂肪秤成人体秤精准仪PICOOC，定制运动饮食建议，科学减重塑形，加大稳定大秤脚，一年免费换新！赠运费险</span>
+        <div class="zhanshipic">
+            <a onclick="showPics('521066652216',0);"><img data-img="https://img.alicdn.com/i2/2591319573/O1CN01sYXWbx2KaU4lZEIun_!!2591319573.jpg_300x300.jpg" class="tspic lazyimg" style="height: 122px;"></a>
+            <a onclick="showPics('521066652216',1);"><img data-img="https://img.alicdn.com/i3/2591319573/O1CN01IJVdu02KaU4BZl7Bs_!!2591319573.jpg_300x300.jpg" class="tspic lazyimg" style="height: 122px;"></a>
+            <a onclick="showPics('521066652216',2);"><img data-img="https://img.alicdn.com/i1/2591319573/O1CN01TpvaDL2KaU1haLX1m_!!2591319573.jpg_300x300.jpg" class="tspic lazyimg" style="height: 122px;"></a>
+            <a onclick="showPics('521066652216',3);"><img data-img="https://img.alicdn.com/i3/2591319573/O1CN012KaU0XEMxPts3qq_!!2591319573.jpg_300x300.jpg" class="tspic lazyimg" style="height: 122px;"></a>
+        </div>
+        </div>
+        <div style="" tapmode="" onclick="fuzhikl(521066652216)">小贴士：复制这段淘口令￥*******￥→打开手机淘宝领券下单</div>
+        <div class="caozuobtn"> <span class="item" tapmode="" onclick="baocun('521066652216')"> <div>保存图片</div> </span> <span class="item" tapmode="" onclick="fuzhiwenan(521066652216)"> <div>复制评论</div> </span> <span class="item" tapmode="" onclick="ddevent.taobaoView(521066652216)"> <div>直接购买</div> </span>            <span class="item" tapmode="" onclick="zhuanfa('521066652216')"> <div style="background-color:#fc3e6c; color:#FFFFFF">一键转发</div> </span> </div>
+    </li>
+    <li id="li570042773785" class="animated">
+        <div class="xxq_a"> <span class="toptitle"> <div style="display:flex"> <div> <img src="http://v83.duoduo123.com/upload/2018/0629/15194712123.png" class="xxq_img"> </div> <div style="text-align:left"> <span class="xxqbiaoti"> <p class="first xxq_title">美券返利</p> <div style="margin-top:5px"> <span>3天前</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <span>已被转发<span id="num_570042773785">1706</span>次</span>
+        </div>
+        <p></p>
+        </span>
+        </div>
+        </div>
+        </span>
+        <h4>【安曼儿】多功能大容量母婴双肩包</h4>
+        <div style="color: #ff0036;margin-top: 10px;font-size: 12px;font-weight: bold;">20.00元优惠券 | 分享赚4.5</div> <span class="time" onclick="fuzhiwenan('570042773785')">【送手提袋，童车挂钩】立体包设计，简约时尚，防泼水，干湿分离科学分区，便捷后开口，内置钥匙扣，可提可背，质量保障【赠运费险】</span>
+        <div class="zhanshipic">
+            <a onclick="showPics('570042773785',0);"><img data-img="https://img.alicdn.com/i3/2638461099/TB2Dk3kj5CYBuNkHFCcXXcHtVXa_!!2638461099.jpg_300x300.jpg" class="tspic lazyimg" style="height: 122px;"></a>
+            <a onclick="showPics('570042773785',1);"><img data-img="https://img.alicdn.com/i3/2638461099/TB2yc9Rsr1YBuNjSszhXXcUsFXa_!!2638461099.jpg_300x300.jpg" class="tspic lazyimg" style="height: 122px;"></a>
+            <a onclick="showPics('570042773785',2);"><img data-img="https://img.alicdn.com/i4/2638461099/TB2dbM8j8yWBuNkSmFPXXXguVXa_!!2638461099.jpg_300x300.jpg" class="tspic lazyimg" style="height: 122px;"></a>
+            <a onclick="showPics('570042773785',3);"><img data-img="https://img.alicdn.com/i3/2638461099/TB2n180swmTBuNjy1XbXXaMrVXa_!!2638461099.jpg_300x300.jpg" class="tspic lazyimg" style="height: 122px;"></a>
+        </div>
+        </div>
+        <div style="" tapmode="" onclick="fuzhikl(570042773785)">小贴士：复制这段淘口令￥*******￥→打开手机淘宝领券下单</div>
+        <div class="caozuobtn"> <span class="item" tapmode="" onclick="baocun('570042773785')"> <div>保存图片</div> </span> <span class="item" tapmode="" onclick="fuzhiwenan(570042773785)"> <div>复制评论</div> </span> <span class="item" tapmode="" onclick="ddevent.taobaoView(570042773785)"> <div>直接购买</div> </span>            <span class="item" tapmode="" onclick="zhuanfa('570042773785')"> <div style="background-color:#fc3e6c; color:#FFFFFF">一键转发</div> </span> </div>
+    </li>
+    <li id="li561509713807" class="animated">
+        <div class="xxq_a"> <span class="toptitle"> <div style="display:flex"> <div> <img src="http://v83.duoduo123.com/upload/2018/0629/15194712123.png" class="xxq_img"> </div> <div style="text-align:left"> <span class="xxqbiaoti"> <p class="first xxq_title">美券返利</p> <div style="margin-top:5px"> <span>1天前</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <span>已被转发<span id="num_561509713807">10362</span>次</span>
+        </div>
+        <p></p>
+        </span>
+        </div>
+        </div>
+        </span>
+        <h4>初学者17音手指琴卡林巴琴抖音琴</h4>
+        <div style="color: #ff0036;margin-top: 10px;font-size: 12px;font-weight: bold;">20.00元优惠券 | 分享赚2.6</div> <span class="time" onclick="fuzhiwenan('561509713807')">卡林巴拇指琴17音kalimba单板抖音琴，初学者，专业音色，多款可选，声音优美，容易上手~【赠运费险】</span>
+        <div class="zhanshipic">
+            <a onclick="showPics('561509713807',0);"><img data-img="https://img.alicdn.com/i1/3177744901/TB2s0GgpTJYBeNjy1zeXXahzVXa_!!3177744901.jpg_300x300.jpg" class="tspic lazyimg" style="height: 122px;"></a>
+            <a onclick="showPics('561509713807',1);"><img data-img="https://img.alicdn.com/i4/3177744901/TB2laRFh6QnBKNjSZSgXXXHGXXa_!!3177744901.jpg_300x300.jpg" class="tspic lazyimg" style="height: 122px;"></a>
+            <a onclick="showPics('561509713807',2);"><img data-img="https://img.alicdn.com/i4/3177744901/TB2EwZRIVuWBuNjSszbXXcS7FXa_!!3177744901.jpg_300x300.jpg" class="tspic lazyimg" style="height: 122px;"></a>
+            <a onclick="showPics('561509713807',3);"><img data-img="https://img.alicdn.com/i1/3177744901/TB26QQ7pqmWBuNjy1XaXXXCbXXa_!!3177744901.jpg_300x300.jpg" class="tspic lazyimg" style="height: 122px;"></a>
+        </div>
+        </div>
+        <div style="" tapmode="" onclick="fuzhikl(561509713807)">小贴士：复制这段淘口令￥*******￥→打开手机淘宝领券下单</div>
+        <div class="caozuobtn"> <span class="item" tapmode="" onclick="baocun('561509713807')"> <div>保存图片</div> </span> <span class="item" tapmode="" onclick="fuzhiwenan(561509713807)"> <div>复制评论</div> </span> <span class="item" tapmode="" onclick="ddevent.taobaoView(561509713807)"> <div>直接购买</div> </span>            <span class="item" tapmode="" onclick="zhuanfa('561509713807')"> <div style="background-color:#fc3e6c; color:#FFFFFF">一键转发</div> </span> </div>
+    </li>
+    <li id="li600826876762" class="animated">
+        <div class="xxq_a"> <span class="toptitle"> <div style="display:flex"> <div> <img src="http://v83.duoduo123.com/upload/2018/0629/15194712123.png" class="xxq_img"> </div> <div style="text-align:left"> <span class="xxqbiaoti"> <p class="first xxq_title">美券返利</p> <div style="margin-top:5px"> <span>2天前</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <span>已被转发<span id="num_600826876762">19</span>次</span>
+        </div>
+        <p></p>
+        </span>
+        </div>
+        </div>
+        </span>
+        <h4>【采萃】美齿洁白慕斯护理液</h4>
+        <div style="color: #ff0036;margin-top: 10px;font-size: 12px;font-weight: bold;">40.00元优惠券 | 分享赚1.24</div> <span class="time" onclick="fuzhiwenan('600826876762')">牙美清新口气，美齿洁白，减少牙垢牙斑，漱口+刷牙一瓶解决所有口腔问题。水果香型，泡沫细腻。券后9.9元，巨划算！</span>
+        <div class="zhanshipic">
+            <a onclick="showPics('600826876762',0);"><img data-img="https://img.alicdn.com/i3/2431753140/O1CN01TYkutq1Z4ACQK0l5k_!!2431753140.jpg_300x300.jpg" class="tspic lazyimg" style="height: 122px;"></a>
+            <a onclick="showPics('600826876762',1);"><img data-img="https://img.alicdn.com/i1/2431753140/O1CN0161Bsmd1Z4ACSVB5qS_!!2431753140.jpg_300x300.jpg" class="tspic lazyimg" style="height: 122px;"></a>
+        </div>
+        </div>
+        <div style="" tapmode="" onclick="fuzhikl(600826876762)">小贴士：复制这段淘口令￥*******￥→打开手机淘宝领券下单</div>
+        <div class="caozuobtn"> <span class="item" tapmode="" onclick="baocun('600826876762')"> <div>保存图片</div> </span> <span class="item" tapmode="" onclick="fuzhiwenan(600826876762)"> <div>复制评论</div> </span> <span class="item" tapmode="" onclick="ddevent.taobaoView(600826876762)"> <div>直接购买</div> </span>            <span class="item" tapmode="" onclick="zhuanfa('600826876762')"> <div style="background-color:#fc3e6c; color:#FFFFFF">一键转发</div> </span> </div>
+    </li>
+    <li id="li600558889390" class="animated">
+        <div class="xxq_a"> <span class="toptitle"> <div style="display:flex"> <div> <img src="http://v83.duoduo123.com/upload/2018/0629/15194712123.png" class="xxq_img"> </div> <div style="text-align:left"> <span class="xxqbiaoti"> <p class="first xxq_title">美券返利</p> <div style="margin-top:5px"> <span>2天前</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <span>已被转发<span id="num_600558889390">28</span>次</span>
+        </div>
+        <p></p>
+        </span>
+        </div>
+        </div>
+        </span>
+        <h4>【鲜美利】5A新西兰鳕鱼胶25g</h4>
+        <div style="color: #ff0036;margin-top: 10px;font-size: 12px;font-weight: bold;">30.00元优惠券 | 分享赚2.99</div> <span class="time" onclick="fuzhiwenan('600558889390')">新西兰原产，深海鳕鱼胶，深海野生，品质滋补，富含胶原蛋白及各种微量元素，爱美女性日常滋补、家庭煲汤伴侣，保持好容颜，才能一路奋战，不掉气色，美丽不停炖。【坏单包退】</span>
+        <div class="zhanshipic">
+            <a onclick="showPics('600558889390',0);"><img data-img="https://img.alicdn.com/i4/4052195358/O1CN01KIEXuJ1pS0fnBVMAr_!!4052195358.jpg_300x300.jpg" class="tspic lazyimg" style="height: 122px;"></a>
+            <a onclick="showPics('600558889390',1);"><img data-img="https://img.alicdn.com/i3/4052195358/O1CN0125esMw1pS0fhL48Er_!!4052195358.jpg_300x300.jpg" class="tspic lazyimg" style="height: 122px;"></a>
+            <a onclick="showPics('600558889390',2);"><img data-img="https://img.alicdn.com/i4/4052195358/O1CN010s5xtJ1pS0fiWNoFw_!!4052195358.jpg_300x300.jpg" class="tspic lazyimg" style="height: 122px;"></a>
+            <a onclick="showPics('600558889390',3);"><img data-img="https://img.alicdn.com/i1/4052195358/O1CN01EXIC5c1pS0fmMFjDd_!!4052195358.jpg_300x300.jpg" class="tspic lazyimg" style="height: 122px;"></a>
+        </div>
+        </div>
+        <div style="" tapmode="" onclick="fuzhikl(600558889390)">小贴士：复制这段淘口令￥*******￥→打开手机淘宝领券下单</div>
+        <div class="caozuobtn"> <span class="item" tapmode="" onclick="baocun('600558889390')"> <div>保存图片</div> </span> <span class="item" tapmode="" onclick="fuzhiwenan(600558889390)"> <div>复制评论</div> </span> <span class="item" tapmode="" onclick="ddevent.taobaoView(600558889390)"> <div>直接购买</div> </span>            <span class="item" tapmode="" onclick="zhuanfa('600558889390')"> <div style="background-color:#fc3e6c; color:#FFFFFF">一键转发</div> </span> </div>
+    </li>
+    <li id="li566438971169" class="animated">
+        <div class="xxq_a"> <span class="toptitle"> <div style="display:flex"> <div> <img src="http://v83.duoduo123.com/upload/2018/0629/15194712123.png" class="xxq_img"> </div> <div style="text-align:left"> <span class="xxqbiaoti"> <p class="first xxq_title">美券返利</p> <div style="margin-top:5px"> <span>1天前</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <span>已被转发<span id="num_566438971169">86377</span>次</span>
+        </div>
+        <p></p>
+        </span>
+        </div>
+        </div>
+        </span>
+        <h4>【润丝丹】一梳彩染发剂200ml+30ml</h4>
+        <div style="color: #ff0036;margin-top: 10px;font-size: 12px;font-weight: bold;">40.00元优惠券 | 分享赚3.5</div> <span class="time" onclick="fuzhiwenan('566438971169')">润丝丹品牌代言人李彩桦，专门做高端染发剂，植物精华，无需调配，染完不伤发，一按一梳一洗，15分钟快速上色，轻松搞定染发，健康安全，18种颜色可选~【赠运费险】</span>
+        <div class="zhanshipic">
+            <a onclick="showPics('566438971169',0);"><img data-img="https://img.alicdn.com/i1/2873639922/O1CN012NAKEXWIF87Tdaz_!!2873639922.jpg_300x300.jpg" class="tspic lazyimg" style="height: 122px;"></a>
+            <a onclick="showPics('566438971169',1);"><img data-img="https://img.alicdn.com/i3/2873639922/O1CN01QOLQQr2NAKJqom08E_!!2873639922.jpg_300x300.jpg" class="tspic lazyimg" style="height: 122px;"></a>
+            <a onclick="showPics('566438971169',2);"><img data-img="https://img.alicdn.com/i4/2873639922/TB2iGU5G79WBuNjSspeXXaz5VXa_!!2873639922.jpg_300x300.jpg" class="tspic lazyimg" style="height: 122px;"></a>
+            <a onclick="showPics('566438971169',3);"><img data-img="https://img.alicdn.com/i2/2873639922/O1CN012NAKDwETWAPDWy2_!!2873639922.jpg_300x300.jpg" class="tspic lazyimg" style="height: 122px;"></a>
+        </div>
+        </div>
+        <div style="" tapmode="" onclick="fuzhikl(566438971169)">小贴士：复制这段淘口令￥*******￥→打开手机淘宝领券下单</div>
+        <div class="caozuobtn"> <span class="item" tapmode="" onclick="baocun('566438971169')"> <div>保存图片</div> </span> <span class="item" tapmode="" onclick="fuzhiwenan(566438971169)"> <div>复制评论</div> </span> <span class="item" tapmode="" onclick="ddevent.taobaoView(566438971169)"> <div>直接购买</div> </span>            <span class="item" tapmode="" onclick="zhuanfa('566438971169')"> <div style="background-color:#fc3e6c; color:#FFFFFF">一键转发</div> </span> </div>
+    </li>
+    <li id="li577606657086" class="animated">
+        <div class="xxq_a"> <span class="toptitle"> <div style="display:flex"> <div> <img src="http://v83.duoduo123.com/upload/2018/0629/15194712123.png" class="xxq_img"> </div> <div style="text-align:left"> <span class="xxqbiaoti"> <p class="first xxq_title">美券返利</p> <div style="margin-top:5px"> <span>1天前</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <span>已被转发<span id="num_577606657086">22914</span>次</span>
+        </div>
+        <p></p>
+        </span>
+        </div>
+        </div>
+        </span>
+        <h4>【小米】无染卫生纸抽纸整箱批130抽18包&nbsp;</h4>
+        <div style="color: #ff0036;margin-top: 10px;font-size: 12px;font-weight: bold;">10.00元优惠券 | 分享赚3.9</div> <span class="time" onclick="fuzhiwenan('577606657086')">【小米众筹产品销量2W+口碑爆炸！】无染wuro原生竹浆超高品质，本色纸领先品牌，天然抑菌，亲肤柔韧，加厚3层湿水不易破，干湿两用，不含漂白荧光剂，母婴适用。</span>
+        <div class="zhanshipic">
+            <a onclick="showPics('577606657086',0);"><img data-img="https://img.alicdn.com/i3/4147737385/O1CN01RWAo5824QNUcT7CeF_!!4147737385.jpg_300x300.jpg" class="tspic lazyimg" style="height: 122px;"></a>
+            <a onclick="showPics('577606657086',1);"><img data-img="https://img.alicdn.com/i3/4147737385/O1CN01VNIl1224QNTr7L8DF_!!4147737385.jpg_300x300.jpg" class="tspic lazyimg" style="height: 122px;"></a>
+            <a onclick="showPics('577606657086',2);"><img data-img="https://img.alicdn.com/i2/4147737385/O1CN016O0XPH24QNTsdvKVA_!!4147737385.jpg_300x300.jpg" class="tspic lazyimg" style="height: 122px;"></a>
+            <a onclick="showPics('577606657086',3);"><img data-img="https://img.alicdn.com/i3/4147737385/O1CN01atc7Wh24QNTqnyHxy_!!4147737385.jpg_300x300.jpg" class="tspic lazyimg" style="height: 122px;"></a>
+        </div>
+        </div>
+        <div style="" tapmode="" onclick="fuzhikl(577606657086)">小贴士：复制这段淘口令￥*******￥→打开手机淘宝领券下单</div>
+        <div class="caozuobtn"> <span class="item" tapmode="" onclick="baocun('577606657086')"> <div>保存图片</div> </span> <span class="item" tapmode="" onclick="fuzhiwenan(577606657086)"> <div>复制评论</div> </span> <span class="item" tapmode="" onclick="ddevent.taobaoView(577606657086)"> <div>直接购买</div> </span>            <span class="item" tapmode="" onclick="zhuanfa('577606657086')"> <div style="background-color:#fc3e6c; color:#FFFFFF">一键转发</div> </span> </div>
+    </li>
+    <li id="li585840407458" class="animated">
+        <div class="xxq_a"> <span class="toptitle"> <div style="display:flex"> <div> <img src="http://v83.duoduo123.com/upload/2018/0629/15194712123.png" class="xxq_img"> </div> <div style="text-align:left"> <span class="xxqbiaoti"> <p class="first xxq_title">美券返利</p> <div style="margin-top:5px"> <span>1天前</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <span>已被转发<span id="num_585840407458">33851</span>次</span>
+        </div>
+        <p></p>
+        </span>
+        </div>
+        </div>
+        </span>
+        <h4>【两包13.9】黄渤代言正新鱼豆腐416g</h4>
+        <div style="color: #ff0036;margin-top: 10px;font-size: 12px;font-weight: bold;">3.00元优惠券 | 分享赚1.24</div> <span class="time" onclick="fuzhiwenan('585840407458')">【正新旗舰店！直接拍2件，第二件仅需4元！】家乐福，沃尔玛等均有销售，超市24元1斤！入口Q弹，鲜香嫩滑，无论是作为办公室零食或是追剧零食都非常合适，好吃会上瘾哦！</span>
+        <div class="zhanshipic">
+            <a onclick="showPics('585840407458',0);"><img data-img="https://img.alicdn.com/i3/4094439041/O1CN01wUQiPr2GepKDfX6FC_!!0-item_pic.jpg_300x300.jpg" class="tspic lazyimg" style="height: 122px;"></a>
+            <a onclick="showPics('585840407458',1);"><img data-img="https://img.alicdn.com/i1/4094439041/O1CN01VL5ET92GepK6OjZBh_!!4094439041.jpg_300x300.jpg" class="tspic lazyimg" style="height: 122px;"></a>
+            <a onclick="showPics('585840407458',2);"><img data-img="https://img.alicdn.com/i1/4094439041/O1CN0115M7Of2GepK9kphN1_!!4094439041.jpg_300x300.jpg" class="tspic lazyimg" style="height: 122px;"></a>
+            <a onclick="showPics('585840407458',3);"><img data-img="https://img.alicdn.com/i1/4094439041/O1CN01fjCLXs2GepK8mKx56_!!4094439041.jpg_300x300.jpg" class="tspic lazyimg" style="height: 122px;"></a>
+        </div>
+        </div>
+        <div style="" tapmode="" onclick="fuzhikl(585840407458)">小贴士：复制这段淘口令￥*******￥→打开手机淘宝领券下单</div>
+        <div class="caozuobtn"> <span class="item" tapmode="" onclick="baocun('585840407458')"> <div>保存图片</div> </span> <span class="item" tapmode="" onclick="fuzhiwenan(585840407458)"> <div>复制评论</div> </span> <span class="item" tapmode="" onclick="ddevent.taobaoView(585840407458)"> <div>直接购买</div> </span>            <span class="item" tapmode="" onclick="zhuanfa('585840407458')"> <div style="background-color:#fc3e6c; color:#FFFFFF">一键转发</div> </span> </div>
+    </li>
+    <li id="li534062342920" class="animated">
+        <div class="xxq_a"> <span class="toptitle"> <div style="display:flex"> <div> <img src="http://v83.duoduo123.com/upload/2018/0629/15194712123.png" class="xxq_img"> </div> <div style="text-align:left"> <span class="xxqbiaoti"> <p class="first xxq_title">美券返利</p> <div style="margin-top:5px"> <span>1天前</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <span>已被转发<span id="num_534062342920">45241</span>次</span>
+        </div>
+        <p></p>
+        </span>
+        </div>
+        </div>
+        </span>
+        <h4>西麦原味纯燕麦片1000gX3袋</h4>
+        <div style="color: #ff0036;margin-top: 10px;font-size: 12px;font-weight: bold;">10.00元优惠券 | 分享赚3.99</div> <span class="time" onclick="fuzhiwenan('534062342920')">【买就送燕麦神器，&nbsp;前1小时首件立减10元，1小时之后2件立减5元】精选澳洲燕麦，天然营养，无添加，饱腹无负担，3分钟补充能量，包装精美，颗粒饱满，美味及时享用！吃法多样</span>
+        <div class="zhanshipic">
+            <a onclick="showPics('534062342920',0);"><img data-img="https://img.alicdn.com/i4/1646579318/O1CN01xknrJI2Ihh2Efm8B1_!!1646579318.jpg_300x300.jpg" class="tspic lazyimg" style="height: 122px;"></a>
+            <a onclick="showPics('534062342920',1);"><img data-img="https://img.alicdn.com/i3/1646579318/O1CN01yGXTJh2Ihh1eGQaaN_!!1646579318.jpg_300x300.jpg" class="tspic lazyimg" style="height: 122px;"></a>
+            <a onclick="showPics('534062342920',2);"><img data-img="https://img.alicdn.com/i1/1646579318/O1CN016gGLQH2Ihh5mcnVMs_!!1646579318.jpg_300x300.jpg" class="tspic lazyimg" style="height: 122px;"></a>
+            <a onclick="showPics('534062342920',3);"><img data-img="https://img.alicdn.com/i4/1646579318/O1CN01a68H1E2Ihh3ZNqrJL_!!1646579318.jpg_300x300.jpg" class="tspic lazyimg" style="height: 122px;"></a>
+        </div>
+        </div>
+        <div style="" tapmode="" onclick="fuzhikl(534062342920)">小贴士：复制这段淘口令￥*******￥→打开手机淘宝领券下单</div>
+        <div class="caozuobtn"> <span class="item" tapmode="" onclick="baocun('534062342920')"> <div>保存图片</div> </span> <span class="item" tapmode="" onclick="fuzhiwenan(534062342920)"> <div>复制评论</div> </span> <span class="item" tapmode="" onclick="ddevent.taobaoView(534062342920)"> <div>直接购买</div> </span>            <span class="item" tapmode="" onclick="zhuanfa('534062342920')"> <div style="background-color:#fc3e6c; color:#FFFFFF">一键转发</div> </span> </div>
+    </li>
+    <li id="li589143467457" class="animated">
+        <div class="xxq_a"> <span class="toptitle"> <div style="display:flex"> <div> <img src="http://v83.duoduo123.com/upload/2018/0629/15194712123.png" class="xxq_img"> </div> <div style="text-align:left"> <span class="xxqbiaoti"> <p class="first xxq_title">美券返利</p> <div style="margin-top:5px"> <span>1天前</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <span>已被转发<span id="num_589143467457">26848</span>次</span>
+        </div>
+        <p></p>
+        </span>
+        </div>
+        </div>
+        </span>
+        <h4>【第2件0元】医用补水无菌冷敷面膜</h4>
+        <div style="color: #ff0036;margin-top: 10px;font-size: 12px;font-weight: bold;">100.00元优惠券 | 分享赚13.3</div> <span class="time" onclick="fuzhiwenan('589143467457')">【敷尔佳同款，院线专用，敏感肌救星】线下大品牌，超火面膜！小红书美妆博主推荐！适合任何肌肤，医用冷敷面膜，微整术后修复面膜，专注敏感肌肤修复，无添加防腐剂、无刺激、低敏感【赠运费险】</span>
+        <div class="zhanshipic">
+            <a onclick="showPics('589143467457',0);"><img data-img="https://img.alicdn.com/i3/2200554932955/O1CN01fzZOOj1XhQsZWt0Zo_!!2200554932955.jpg_300x300.jpg" class="tspic lazyimg" style="height: 122px;"></a>
+            <a onclick="showPics('589143467457',1);"><img data-img="https://img.alicdn.com/i4/2200554932955/O1CN01HbmcSe1XhQtcYmKGz_!!2200554932955.jpg_300x300.jpg" class="tspic lazyimg" style="height: 122px;"></a>
+            <a onclick="showPics('589143467457',2);"><img data-img="https://img.alicdn.com/i4/2200554932955/O1CN01UYGPEO1XhQtVbg8rj_!!2200554932955.jpg_300x300.jpg" class="tspic lazyimg" style="height: 122px;"></a>
+            <a onclick="showPics('589143467457',3);"><img data-img="https://img.alicdn.com/i3/2200554932955/O1CN01LI0Jmm1XhQstsdyhg_!!2200554932955.jpg_300x300.jpg" class="tspic lazyimg" style="height: 122px;"></a>
+        </div>
+        </div>
+        <div style="" tapmode="" onclick="fuzhikl(589143467457)">小贴士：复制这段淘口令￥*******￥→打开手机淘宝领券下单</div>
+        <div class="caozuobtn"> <span class="item" tapmode="" onclick="baocun('589143467457')"> <div>保存图片</div> </span> <span class="item" tapmode="" onclick="fuzhiwenan(589143467457)"> <div>复制评论</div> </span> <span class="item" tapmode="" onclick="ddevent.taobaoView(589143467457)"> <div>直接购买</div> </span>            <span class="item" tapmode="" onclick="zhuanfa('589143467457')"> <div style="background-color:#fc3e6c; color:#FFFFFF">一键转发</div> </span> </div>
+    </li>
+    <li id="li595854768784" class="animated">
+        <div class="xxq_a"> <span class="toptitle"> <div style="display:flex"> <div> <img src="http://v83.duoduo123.com/upload/2018/0629/15194712123.png" class="xxq_img"> </div> <div style="text-align:left"> <span class="xxqbiaoti"> <p class="first xxq_title">美券返利</p> <div style="margin-top:5px"> <span>1天前</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <span>已被转发<span id="num_595854768784">21730</span>次</span>
+        </div>
+        <p></p>
+        </span>
+        </div>
+        </div>
+        </span>
+        <h4>【芭米】手工牛扎夹心饼干96g*4</h4>
+        <div style="color: #ff0036;margin-top: 10px;font-size: 12px;font-weight: bold;">25.00元优惠券 | 分享赚6.2</div> <span class="time" onclick="fuzhiwenan('595854768784')">【拍4份更划算！第2,3,4件0元！】爆款返场~5000W人都在吃的牛轧饼，选用进口奶源，四种口味组合装，优质夹心原料，新西兰恒天然乳业，早餐下午茶必备！</span>
+        <div class="zhanshipic">
+            <a onclick="showPics('595854768784',0);"><img data-img="https://img.alicdn.com/i1/3432794606/O1CN01cYBcyn1jtao4gj6um_!!3432794606.png_300x300.jpg" class="tspic lazyimg" style="height: 122px;"></a>
+            <a onclick="showPics('595854768784',1);"><img data-img="https://img.alicdn.com/i3/3432794606/O1CN01u0ZNVM1jtanIIzW8X_!!3432794606.jpg_300x300.jpg" class="tspic lazyimg" style="height: 122px;"></a>
+            <a onclick="showPics('595854768784',2);"><img data-img="https://img.alicdn.com/i2/3432794606/O1CN011jtakImzD5Qirzx_!!3432794606.jpg_300x300.jpg" class="tspic lazyimg" style="height: 122px;"></a>
+            <a onclick="showPics('595854768784',3);"><img data-img="https://img.alicdn.com/i1/3432794606/O1CN014PXCDA1jtanJjP7pd_!!3432794606.jpg_300x300.jpg" class="tspic lazyimg" style="height: 122px;"></a>
+        </div>
+        </div>
+        <div style="" tapmode="" onclick="fuzhikl(595854768784)">小贴士：复制这段淘口令￥*******￥→打开手机淘宝领券下单</div>
+        <div class="caozuobtn"> <span class="item" tapmode="" onclick="baocun('595854768784')"> <div>保存图片</div> </span> <span class="item" tapmode="" onclick="fuzhiwenan(595854768784)"> <div>复制评论</div> </span> <span class="item" tapmode="" onclick="ddevent.taobaoView(595854768784)"> <div>直接购买</div> </span>            <span class="item" tapmode="" onclick="zhuanfa('595854768784')"> <div style="background-color:#fc3e6c; color:#FFFFFF">一键转发</div> </span> </div>
+    </li>
+    <li id="li599059148813" class="animated">
+        <div class="xxq_a"> <span class="toptitle"> <div style="display:flex"> <div> <img src="http://v83.duoduo123.com/upload/2018/0629/15194712123.png" class="xxq_img"> </div> <div style="text-align:left"> <span class="xxqbiaoti"> <p class="first xxq_title">美券返利</p> <div style="margin-top:5px"> <span>1天前</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <span>已被转发<span id="num_599059148813">72726</span>次</span>
+        </div>
+        <p></p>
+        </span>
+        </div>
+        </div>
+        </span>
+        <h4>【沈梦辰推荐】NFF红石榴面部精华液&nbsp;</h4>
+        <div style="color: #ff0036;margin-top: 10px;font-size: 12px;font-weight: bold;">15.00元优惠券 | 分享赚2.51</div> <span class="time" onclick="fuzhiwenan('599059148813')">【天猫旗舰店】红石榴精华美白亮肤，提高肤色，补水保湿，国际高端奢华原液，让肌肤白嫩无暇，女神美白必备，女神防衰老必备，让你重返18岁少女！</span>
+        <div class="zhanshipic">
+            <a onclick="showPics('599059148813',0);"><img data-img="https://img.alicdn.com/i4/2201470544376/O1CN01ZLITyh1iCFjP1fxOp_!!2201470544376.jpg_300x300.jpg" class="tspic lazyimg" style="height: 122px;"></a>
+            <a onclick="showPics('599059148813',1);"><img data-img="https://img.alicdn.com/i2/2201470544376/O1CN013r8wd01iCFjNTSmUt_!!2201470544376.jpg_300x300.jpg" class="tspic lazyimg" style="height: 122px;"></a>
+            <a onclick="showPics('599059148813',2);"><img data-img="https://img.alicdn.com/i4/2201470544376/O1CN017iD0B51iCFjsXJLMM_!!2201470544376.jpg_300x300.jpg" class="tspic lazyimg" style="height: 122px;"></a>
+            <a onclick="showPics('599059148813',3);"><img data-img="https://img.alicdn.com/i3/2201470544376/O1CN01zlRkmc1iCFjGFuRX4_!!2201470544376.jpg_300x300.jpg" class="tspic lazyimg" style="height: 122px;"></a>
+        </div>
+        </div>
+        <div style="" tapmode="" onclick="fuzhikl(599059148813)">小贴士：复制这段淘口令￥*******￥→打开手机淘宝领券下单</div>
+        <div class="caozuobtn"> <span class="item" tapmode="" onclick="baocun('599059148813')"> <div>保存图片</div> </span> <span class="item" tapmode="" onclick="fuzhiwenan(599059148813)"> <div>复制评论</div> </span> <span class="item" tapmode="" onclick="ddevent.taobaoView(599059148813)"> <div>直接购买</div> </span>            <span class="item" tapmode="" onclick="zhuanfa('599059148813')"> <div style="background-color:#fc3e6c; color:#FFFFFF">一键转发</div> </span> </div>
+    </li>
+    <li id="li564308397090" class="animated">
+        <div class="xxq_a"> <span class="toptitle"> <div style="display:flex"> <div> <img src="http://v83.duoduo123.com/upload/2018/0629/15194712123.png" class="xxq_img"> </div> <div style="text-align:left"> <span class="xxqbiaoti"> <p class="first xxq_title">美券返利</p> <div style="margin-top:5px"> <span>1天前</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <span>已被转发<span id="num_564308397090">198974</span>次</span>
+        </div>
+        <p></p>
+        </span>
+        </div>
+        </div>
+        </span>
+        <h4>【谷初源】黑芝麻核桃黑豆粉600g</h4>
+        <div style="color: #ff0036;margin-top: 10px;font-size: 12px;font-weight: bold;">30.00元优惠券 | 分享赚1.48</div> <span class="time" onclick="fuzhiwenan('564308397090')">【南京大学研制】综合评分4.9！月销量10万+，专为女性研究私享配方孕妇也能放心喝，健康营养补肾养生，秋季脱发严重，一定要赶紧喝它预防啊！</span>
+        <div class="zhanshipic">
+            <a onclick="showPics('564308397090',0);"><img data-img="https://img.alicdn.com/i3/3686870312/O1CN010aL09s1EAw6S0yqQW_!!3686870312.jpg_300x300.jpg" class="tspic lazyimg" style="height: 122px;"></a>
+            <a onclick="showPics('564308397090',1);"><img data-img="https://img.alicdn.com/i1/3686870312/O1CN01lN9PRg1EAw7BXBQru_!!3686870312.jpg_300x300.jpg" class="tspic lazyimg" style="height: 122px;"></a>
+            <a onclick="showPics('564308397090',2);"><img data-img="https://img.alicdn.com/i1/3686870312/TB2.qLAhmtYBeNjSspkXXbU8VXa_!!3686870312.jpg_300x300.jpg" class="tspic lazyimg" style="height: 122px;"></a>
+            <a onclick="showPics('564308397090',3);"><img data-img="https://img.alicdn.com/i4/3686870312/O1CN019Ygwah1EAw6GPg4r1_!!3686870312.png_300x300.jpg" class="tspic lazyimg" style="height: 122px;"></a>
+        </div>
+        </div>
+        <div style="" tapmode="" onclick="fuzhikl(564308397090)">小贴士：复制这段淘口令￥*******￥→打开手机淘宝领券下单</div>
+        <div class="caozuobtn"> <span class="item" tapmode="" onclick="baocun('564308397090')"> <div>保存图片</div> </span> <span class="item" tapmode="" onclick="fuzhiwenan(564308397090)"> <div>复制评论</div> </span> <span class="item" tapmode="" onclick="ddevent.taobaoView(564308397090)"> <div>直接购买</div> </span>            <span class="item" tapmode="" onclick="zhuanfa('564308397090')"> <div style="background-color:#fc3e6c; color:#FFFFFF">一键转发</div> </span> </div>
+    </li>
+    <li id="li591301191084" class="animated">
+        <div class="xxq_a"> <span class="toptitle"> <div style="display:flex"> <div> <img src="http://v83.duoduo123.com/upload/2018/0629/15194712123.png" class="xxq_img"> </div> <div style="text-align:left"> <span class="xxqbiaoti"> <p class="first xxq_title">美券返利</p> <div style="margin-top:5px"> <span>1天前</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <span>已被转发<span id="num_591301191084">1799</span>次</span>
+        </div>
+        <p></p>
+        </span>
+        </div>
+        </div>
+        </span>
+        <h4>【超值大卷】多功能食品保鲜膜一卷</h4>
+        <div style="color: #ff0036;margin-top: 10px;font-size: 12px;font-weight: bold;">5.00元优惠券 | 分享赚0.48</div> <span class="time" onclick="fuzhiwenan('591301191084')">【超值大卷、食品保鲜、瘦身美容、多种用途】食品级进口PE材料，清洗透明，厚薄均匀，拉伸柔韧不易断，粘度强，密封严实，使用方便，单张尺寸适中，随撕随用安全环保！</span>
+        <div class="zhanshipic">
+            <a onclick="showPics('591301191084',0);"><img data-img="https://img.alicdn.com/i2/3172426766/O1CN01AFYEFQ1zqsIPWFl6J_!!3172426766.jpg_300x300.jpg" class="tspic lazyimg" style="height: 122px;"></a>
+            <a onclick="showPics('591301191084',1);"><img data-img="https://img.alicdn.com/i1/3172426766/O1CN01qLo3De1zqsHoBnyKZ_!!3172426766.jpg_300x300.jpg" class="tspic lazyimg" style="height: 122px;"></a>
+            <a onclick="showPics('591301191084',2);"><img data-img="https://img.alicdn.com/i1/3172426766/O1CN01G1wOrC1zqsIPIcOsn_!!3172426766.jpg_300x300.jpg" class="tspic lazyimg" style="height: 122px;"></a>
+            <a onclick="showPics('591301191084',3);"><img data-img="https://img.alicdn.com/i1/3172426766/O1CN015dD9tG1zqsHmnUwUU_!!3172426766.jpg_300x300.jpg" class="tspic lazyimg" style="height: 122px;"></a>
+        </div>
+        </div>
+        <div style="" tapmode="" onclick="fuzhikl(591301191084)">小贴士：复制这段淘口令￥*******￥→打开手机淘宝领券下单</div>
+        <div class="caozuobtn"> <span class="item" tapmode="" onclick="baocun('591301191084')"> <div>保存图片</div> </span> <span class="item" tapmode="" onclick="fuzhiwenan(591301191084)"> <div>复制评论</div> </span> <span class="item" tapmode="" onclick="ddevent.taobaoView(591301191084)"> <div>直接购买</div> </span>            <span class="item" tapmode="" onclick="zhuanfa('591301191084')"> <div style="background-color:#fc3e6c; color:#FFFFFF">一键转发</div> </span> </div>
+    </li>
+    <li id="li20723660588" class="animated">
+        <div class="xxq_a"> <span class="toptitle"> <div style="display:flex"> <div> <img src="http://v83.duoduo123.com/upload/2018/0629/15194712123.png" class="xxq_img"> </div> <div style="text-align:left"> <span class="xxqbiaoti"> <p class="first xxq_title">美券返利</p> <div style="margin-top:5px"> <span>1天前</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <span>已被转发<span id="num_20723660588">16256</span>次</span>
+        </div>
+        <p></p>
+        </span>
+        </div>
+        </div>
+        </span>
+        <h4>【青蛙王子】【买一送一】婴儿面霜</h4>
+        <div style="color: #ff0036;margin-top: 10px;font-size: 12px;font-weight: bold;">5.00元优惠券 | 分享赚3.73</div> <span class="time" onclick="fuzhiwenan('20723660588')">【青蛙王子】【买一送一】国民老品牌，天然温和不刺激，加倍亲肤，补水滋润，深层保湿，呵护宝贝娇嫩肌肤！【赠运费险】</span>
+        <div class="zhanshipic">
+            <a onclick="showPics('20723660588',0);"><img data-img="https://img.alicdn.com/i2/908483460/O1CN01J5KC5s1bQiwM9pe4D_!!908483460.jpg_300x300.jpg" class="tspic lazyimg" style="height: 122px;"></a>
+            <a onclick="showPics('20723660588',1);"><img data-img="https://img.alicdn.com/i3/908483460/O1CN011BTOcO1bQiwGyx8K4_!!908483460.jpg_300x300.jpg" class="tspic lazyimg" style="height: 122px;"></a>
+            <a onclick="showPics('20723660588',2);"><img data-img="https://img.alicdn.com/i1/908483460/O1CN01YbKxPX1bQiwBQOMc7_!!908483460.jpg_300x300.jpg" class="tspic lazyimg" style="height: 122px;"></a>
+            <a onclick="showPics('20723660588',3);"><img data-img="https://img.alicdn.com/i1/908483460/O1CN01mX2vEg1bQiwHD0wXV_!!908483460.jpg_300x300.jpg" class="tspic lazyimg" style="height: 122px;"></a>
+        </div>
+        </div>
+        <div style="" tapmode="" onclick="fuzhikl(20723660588)">小贴士：复制这段淘口令￥*******￥→打开手机淘宝领券下单</div>
+        <div class="caozuobtn"> <span class="item" tapmode="" onclick="baocun('20723660588')"> <div>保存图片</div> </span> <span class="item" tapmode="" onclick="fuzhiwenan(20723660588)"> <div>复制评论</div> </span> <span class="item" tapmode="" onclick="ddevent.taobaoView(20723660588)"> <div>直接购买</div> </span>            <span class="item" tapmode="" onclick="zhuanfa('20723660588')"> <div style="background-color:#fc3e6c; color:#FFFFFF">一键转发</div> </span> </div>
+    </li>
+    <li id="li567218620982" class="animated">
+        <div class="xxq_a"> <span class="toptitle"> <div style="display:flex"> <div> <img src="http://v83.duoduo123.com/upload/2018/0629/15194712123.png" class="xxq_img"> </div> <div style="text-align:left"> <span class="xxqbiaoti"> <p class="first xxq_title">美券返利</p> <div style="margin-top:5px"> <span>1天前</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <span>已被转发<span id="num_567218620982">17124</span>次</span>
+        </div>
+        <p></p>
+        </span>
+        </div>
+        </div>
+        </span>
+        <h4>【来伊份】网红零食大礼包整箱909g</h4>
+        <div style="color: #ff0036;margin-top: 10px;font-size: 12px;font-weight: bold;">35.00元优惠券 | 分享赚2.49</div> <span class="time" onclick="fuzhiwenan('567218620982')">【中秋大促lou洞，快！限量拍下半价！到手只要24.95元！】抖音零食推荐，给生活一个吃的理由！多种套餐，多种美味零食混搭，满足全家人的口味</span>
+        <div class="zhanshipic">
+            <a onclick="showPics('567218620982',0);"><img data-img="https://img.alicdn.com/i3/732501769/O1CN010qTY1c1OwFC2rajNb_!!732501769.jpg_300x300.jpg" class="tspic lazyimg" style="height: 122px;"></a>
+            <a onclick="showPics('567218620982',1);"><img data-img="https://img.alicdn.com/i4/732501769/O1CN01TPngNi1OwFC7tbc3M_!!732501769.jpg_300x300.jpg" class="tspic lazyimg" style="height: 122px;"></a>
+            <a onclick="showPics('567218620982',2);"><img data-img="https://img.alicdn.com/i4/732501769/O1CN01aZr0Um1OwFC7tbc5r_!!732501769.jpg_300x300.jpg" class="tspic lazyimg" style="height: 122px;"></a>
+            <a onclick="showPics('567218620982',3);"><img data-img="https://img.alicdn.com/i4/732501769/O1CN01B8sAks1OwFC1i0T9t_!!732501769.jpg_300x300.jpg" class="tspic lazyimg" style="height: 122px;"></a>
+        </div>
+        </div>
+        <div style="" tapmode="" onclick="fuzhikl(567218620982)">小贴士：复制这段淘口令￥*******￥→打开手机淘宝领券下单</div>
+        <div class="caozuobtn"> <span class="item" tapmode="" onclick="baocun('567218620982')"> <div>保存图片</div> </span> <span class="item" tapmode="" onclick="fuzhiwenan(567218620982)"> <div>复制评论</div> </span> <span class="item" tapmode="" onclick="ddevent.taobaoView(567218620982)"> <div>直接购买</div> </span>            <span class="item" tapmode="" onclick="zhuanfa('567218620982')"> <div style="background-color:#fc3e6c; color:#FFFFFF">一键转发</div> </span> </div>
+    </li>
+    <li id="li540739615976" class="animated">
+        <div class="xxq_a"> <span class="toptitle"> <div style="display:flex"> <div> <img src="http://v83.duoduo123.com/upload/2018/0629/15194712123.png" class="xxq_img"> </div> <div style="text-align:left"> <span class="xxqbiaoti"> <p class="first xxq_title">美券返利</p> <div style="margin-top:5px"> <span>1天前</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <span>已被转发<span id="num_540739615976">1117</span>次</span>
+        </div>
+        <p></p>
+        </span>
+        </div>
+        </div>
+        </span>
+        <h4>【金沙传奇】有机红枣496g*3+128g枣片</h4>
+        <div style="color: #ff0036;margin-top: 10px;font-size: 12px;font-weight: bold;">29.00元优惠券 | 分享赚-0.9</div> <span class="time" onclick="fuzhiwenan('540739615976')">【拍三件39.98元，送一袋枣片】自然挂干，颗颗严格筛选，果肉饱满，肉质紧凑细腻，枣香浓郁，香甜可口，好吃不腻哦!</span>
+        <div class="zhanshipic">
+            <a onclick="showPics('540739615976',0);"><img data-img="https://img.alicdn.com/i1/2896765064/O1CN01wypb131nHMDDYUK2z_!!2896765064.jpg_300x300.jpg" class="tspic lazyimg" style="height: 122px;"></a>
+            <a onclick="showPics('540739615976',1);"><img data-img="https://img.alicdn.com/i1/2896765064/O1CN011nHM99rYIwCxYP1_!!2896765064.jpg_300x300.jpg" class="tspic lazyimg" style="height: 122px;"></a>
+            <a onclick="showPics('540739615976',2);"><img data-img="https://img.alicdn.com/i3/2896765064/O1CN01KgkXsI1nHMEJ6VuDS_!!2896765064.jpg_300x300.jpg" class="tspic lazyimg" style="height: 122px;"></a>
+            <a onclick="showPics('540739615976',3);"><img data-img="https://img.alicdn.com/i1/2896765064/O1CN01ifwgWt1nHMADQjfQ9_!!2896765064.jpg_300x300.jpg" class="tspic lazyimg" style="height: 122px;"></a>
+        </div>
+        </div>
+        <div style="" tapmode="" onclick="fuzhikl(540739615976)">小贴士：复制这段淘口令￥*******￥→打开手机淘宝领券下单</div>
+        <div class="caozuobtn"> <span class="item" tapmode="" onclick="baocun('540739615976')"> <div>保存图片</div> </span> <span class="item" tapmode="" onclick="fuzhiwenan(540739615976)"> <div>复制评论</div> </span> <span class="item" tapmode="" onclick="ddevent.taobaoView(540739615976)"> <div>直接购买</div> </span>            <span class="item" tapmode="" onclick="zhuanfa('540739615976')"> <div style="background-color:#fc3e6c; color:#FFFFFF">一键转发</div> </span> </div>
+    </li>
+    </ul>
+    </div>
+    <div id="loading"><span class="loading-img"></span>数据加载中</div>
+    </div>
+    <script type="text/javascript" src="../../script/api.js"></script>
+    <script type="text/javascript">
+        var p = setInterval(function() {
+            var data=$('.cell-dialog-content').html();
+            if(data.indexOf("很抱歉")>=0){
+                window.location.href='http://lanjieapp/close/error';
+            }
+        }, 100);
+
+        var code = 0;
+        var goodsData = [];
+        var iosAudit = 0;
+        var weixinShareType = 0;
+        var imgW = 0;
+        var _user = {
+                'type': 0,
+                'level': -1
+            },
+            iosAudit = 0;
+        ready(function() {
+            iosAudit = iosShenhe();
+            setBounce(reStart);
+            start();
+        }, 2, function() {
+            setTitle('好货圈');
+        });
+        var getHaohuo = {
+            'lock': 0,
+            'infinite': 0,
+            'page': 0,
+            'url': '',
+            'id': 'goods',
+            'reset': function() {
+                $('#' + this.id).html('');
+                this.page = 0;
+                this.lock = 0;
+                this.infinite = 0;
+            },
+            'go': function(url) {
+                var _this = this;
+                if (_this.page == 0 && _this.infinite == 0) {
+                    _this.infinite = 1;
+                    infinite(function() {
+                        _this.go();
+                    });
+                }
+                url = url || '';
+                if (url == '') {
+                    url = _this.url;
+                } else {
+                    _this.url = url;
+                }
+                if (_this.lock == 1) {
+                    return false;
+                }
+                _this.page++;
+                var url = url + '&page=' + _this.page;
+                _this.lock = 1;
+                getAjax(url, function(data) {
+                    _this.lock = 0;
+                    var count = size(data.r);
+                    if (count > 0) {
+                        _this.goodsSet(data);
+                        if (count < 20) {
+                            $api.dom('#loading').innerHTML = '————我是有底线的————';
+                            api.removeEventListener({
+                                name: 'scrolltobottom'
+                            });
+                        }
+                    } else {
+                        _this.lock = 1;
+                        if (_this.page == 1) {
+                            $api.dom('#goods').innerHTML = emptyData('暂无数据');
+                            $api.dom('#loading').innerHTML = '';
+                        } else {
+                            $api.dom('#loading').innerHTML = '————我是有底线的————';
+                        }
+                        api.removeEventListener({
+                            name: 'scrolltobottom'
+                        });
+                    }
+                }, '数据加载中', 3600);
+            },
+            'goodsSet': function(data) {
+                if (code == 0) {
+                    for (var i in data.r) {
+                        var row = data.r[i];
+                        var imgs = row.images.split(',');
+                        data.r[i].images = '';
+                        for (var j in imgs) {
+                            imgs[j] = imgs[j].replace('_250x250.jpg', '');
+                            data.r[i].images += "<a onClick=\"showPics('" + row.data_id + "'," + j + ");\"><img data-img='" + imgs[j] + "_300x300.jpg' class='tspic lazyimg'></a>";
+                        }
+                        var price = row.discount_price - row.price_jian;
+                        data.r[i].fenxiang = toFixed(row.fanli_bl * price * siteInfo.fxbl[user.type] / 100);
+                    }
+                    var html = barretTpl(shangpinTpl, data.r);
+                } else {
+                    for (var i in data.r) {
+                        var row = data.r[i];
+                        var imgs = row.imgs;
+                        data.r[i].images = '';
+                        for (var j in imgs) {
+                            data.r[i].images += "<a onClick=\"showPics('" + row.data_id + "'," + j + ");\"><img data-img='" + imgs[j] + "' class='tspic lazyimg'></a>";
+                        }
+                    }
+                    var html = barretTpl(sucaiTpl, data.r);
+                }
+                $('#' + this.id).append(html);
+                loadLazyImg();
+                api.parseTapmode();
+                getCurlHtml();
+            }
+        };
+
+        function goodsUrl() {
+            if (code == 0) {
+                var url = createUrl('tbgoods', {
+                    'fun': 'listdata',
+                    'pagesize': 20
+                });
+            } else {
+                var url = createUrl('sucai', {
+                    'fun': 'listdata',
+                    'pagesize': 20
+                });
+            }
+            return url;
+        }
+
+        function reStart() {
+            clear(1);
+            getHaohuo.reset();
+            getHaohuo.go(goodsUrl());
+        }
+
+        function start() {
+            user = checkLogin();
+            if (user == false) {
+                user = _user;
+            }
+            getHaohuo.go(goodsUrl());
+        }
+
+        function loadLazyImg() {
+            imgW = $('.wechat_list .zhanshipic img').eq(0).width();
+            if (code == 0) {
+                $('.zhanshipic a img').height(imgW);
+            }
+            $('img.lazyimg').picLazyLoad();
+        }
+
+        function set_tab(tb, t) {
+            $('.xxq_flex').removeClass('cur');
+            tb.addClass('cur');
+            code = t;
+            getHaohuo.reset();
+            getHaohuo.go(goodsUrl());
+        } /*查看大图*/
+        function showPics(id, k) {
+            var imgs = [];
+            var img = [];
+            $('#li' + id).find('.zhanshipic img').each(function() {
+                imgs.push($(this).attr('src'));
+            });
+            img[0] = imgs[k];
+            imgs = img.concat(imgs);
+            var new_arr = [];
+            for (var i = 0; i < imgs.length; i++) {
+                var items = imgs[i];
+                if ($.inArray(items, new_arr) == -1) {
+                    new_arr.push(items);
+                }
+            }
+            openWin({
+                'mod': 'page',
+                'act': 'imgs',
+                'pageParam': {
+                    'topColor': 'dark',
+                    'imgs': JSON.stringify(new_arr)
+                }
+            });
+        }
+
+        function baocun(id) {
+            var user = checkLogin(1);
+            if (user == false) {
+                return false;
+            }
+            var imgs = [];
+            if (code == 0) {
+                $('#li' + id).find('.zhanshipic img').each(function() {
+                    imgs.push($(this).attr('src'));
+                });
+            } else {
+                $('#li' + id).find('.zhanshipic img').each(function(i) {
+                    imgs.push(addUrlParam(createUrl('sucai', {
+                        'fun': 'hecheng',
+                        'id': id,
+                        'img_index': i
+                    })));
+                });
+            }
+            xiazaitupian(imgs, function(datas) {
+                for (var i in datas) {
+                    saveImage(datas[i], function(data) {
+                        if (i == datas.length - 1) {
+                            toastOpen('保存完成');
+                        }
+                    });
+                }
+            });
+        }
+
+        function zhuanfa(id) {
+            var user = checkLogin(1);
+            if (user == false) {
+                return false;
+            }
+            var imgs = [];
+            if (code == 0) {
+                $('#li' + id).find('.zhanshipic img').each(function(index) {
+                    imgs.push(addUrlParam(createUrl('img', {
+                        'fun': 'goods',
+                        'iid': id,
+                        'zhannei': 1
+                    })));
+                    return false;
+                });
+            } else {
+                imgs.push(addUrlParam(createUrl('sucai', {
+                    'fun': 'hecheng',
+                    'id': id,
+                    'img_index': 0
+                })));
+            }
+            xiazaitupian(imgs, function(datas) {
+                var content = $('#li' + id).find('.time').text();
+                getTkl(id, function(kl) {
+                    if (kl != '') {
+                        content += "\r\n" + kl;
+                    }
+                    clipboardSet(content);
+                    toastOpen('内容已复制', 1000);
+                    api.actionSheet({
+                        title: '分享到',
+                        cancelTitle: '取消',
+                        destructiveTitle: '',
+                        buttons: ['微信', '朋友圈', 'QQ', '空间']
+                    }, function(ret, err) {
+                        var index = ret.buttonIndex - 1;
+                        var a = ['weixin', 'pyq', 'qq', 'taobao'];
+                        if (typeof a[index] != 'undefined') {
+                            shareImgPage(datas, a[index]);
+                        }
+                    });
+                });
+            });
+        }
+
+        function xiazaitupian(imgs, callback, suoyin) {
+            suoyin = suoyin || 0;
+            if (suoyin == 0) {
+                toastOpen('图片下载', -1);
+            }
+            if (typeof imgs[suoyin] == 'undefined') {
+                toastClose();
+                if (typeof callback == 'function') {
+                    callback(imgs);
+                }
+            } else {
+                down(imgs[suoyin], function(data) {
+                    imgs[suoyin] = data;
+                    suoyin++;
+                    xiazaitupian(imgs, callback, suoyin);
+                }, "fs://down/" + time() + "_" + suoyin + ".jpg");
+            }
+        }
+
+        function fuzhi(id) {
+            var user = checkLogin(1);
+            if (user == false) {
+                return false;
+            }
+            var wenben = $('#li' + id).find('.plcon').text();
+            getTkl(id, function(kl) {
+                wenben = wenben.replace('{淘口令}', kl);
+                $('#li' + id).find('.plcon').text(wenben);
+                clipboardSet(wenben);
+                toast('已复制', 1000);
+            });
+        }
+
+        function fuzhikl(iid) {
+            var url = createUrl('goods', 'wenan', {
+                'iid': iid,
+                'ver': 1
+            });
+            getAjax(url, function(data) {
+                        if (data.s == 0) {
+                            clear(2);
+                            openAlert(data.r);
+                        } else if (data.s == 2) {
+                            qudaoShouquan(data);
+                        } else {
+                            clipboardSet(data.r.kouling);
+                            openTaobao("taobao://"); //toast('已复制',1000); } },'数据获取中'); } function getTkl(iid,callback){ if(code==1){ callback(''); return false; } var url=createUrl('goods','wenan',{'iid':iid,'ver':1}); getAjax(url,function(data){ if(data.s==0){ clear(2); openAlert(data.r); }else if(data.s==2){ qudaoShouquan(data); }else{ callback(data.r.kouling); } },'数据获取中'); } function view(id){ id=id||''; if(id==''){ toastOpen('素材文件无需转发'); return false; } ddevent.taobaoView(id); } function fuzhiwenan(id){ var wenben=$('#li'+id+' .time').text(); clipboardSet(wenben); toast('文案复制完成'); } function mousedown(iid){ window.timer = setTimeout(function () { fuzhiwenan(iid); }, 1000); } function mouseup($t){ clearTimeout(window.timer); } function shangpinTpl(){/*<% for(var i = 0; i < this.length; i++) {var data = this[i]; %> <li id="li<%data.data_id%>" class="animated"> <div class="xxq_a"> <span class="toptitle"> <div style="display:flex"> <div> <img src="<%appInfo.logo%>" class="xxq_img" /> </div> <div style="text-align:left"> <span class="xxqbiaoti"> <p class="first xxq_title"><%appInfo.name%></p> <div style="margin-top:5px"> <span><%data.time%></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span>已被转发<span id="num_<%data.data_id%>"><%data.share_num%></span>次</span> </div> <p></p> </span> </div> </div> </span> <%if(data.title!=''){%> <h4><%data.title%></h4> <%}%> <% if(iosAudit==0 && 0<data.price_jian){ %> <div style="color: #ff0036;margin-top: 10px;font-size: 12px;font-weight: bold;"><%data.price_jian%>元优惠券 | 分享赚<%data.fenxiang%></div> <% }%> <span class="time" onclick="fuzhiwenan('<%data.data_id%>')"><%data.content%></span> <div class="zhanshipic"> <%data.images%> </div> </div> <div style="" tapmode onclick="fuzhikl(<%data.data_id%>)">小贴士：复制这段淘口令￥*******￥→打开手机淘宝领券下单</div> <div class="caozuobtn"> <span class="item" tapmode onclick="baocun('<%data.data_id%>')"> <div>保存图片</div> </span> <span class="item" tapmode onclick="fuzhiwenan(<%data.data_id%>)"> <div>复制评论</div> </span> <span class="item" tapmode onclick="ddevent.taobaoView(<%data.data_id%>)"> <div>直接购买</div> </span> <% if(iosAudit==0){ %> <span class="item" tapmode onclick="zhuanfa('<%data.data_id%>')"> <div style="background-color:#fc3e6c; color:#FFFFFF">一键转发</div> </span> <% }else{%> <span class="item" tapmode onclick="view('<%data.data_id%>')"> <div style="background-color:#fc3e6c; color:#FFFFFF">一键购买</div> </span> <% }%> </div> </li><% } %>*/;} function sucaiTpl(){/*<% for(var i = 0; i < this.length; i++) {var data = this[i]; %> <li id="li<%data.data_id%>" class="animated"> <div class="xxq_a"> <span class="toptitle"> <div style="display:flex"> <div> <img src="<%appInfo.logo%>" class="xxq_img" /> </div> <div style="text-align:left"> <span class="xxqbiaoti"> <p class="first xxq_title"><%appInfo.name%></p> <div style="margin-top:5px"> <span><%data.time%></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span>已被转发<span id="num_<%data.data_id%>"><%data.share_num%></span>次</span> </div> <p></p> </span> </div> </div> </span> <%if(data.title!=''){%> <h4><%data.title%></h4> <%}%> <span class="time" onclick="fuzhiwenan('<%data.data_id%>')" ontouchstart="mousedown('<%data.data_id%>')" ontouchend="mouseup('<%data.data_id%>')"><%data.content%></span> <div class="zhanshipic"> <%data.images%> </div> </div> <div class="caozuobtn"> <span class="item" tapmode onclick="baocun('<%data.data_id%>')"> <div><i class="iconfont">&#xe601;</i>保存图片</div> </span> <span class="item" tapmode onclick="fuzhiwenan(<%data.data_id%>)"> <div><i class="iconfont">&#xe68f;</i>复制评论</div> </span> <% if(iosAudit==0){ %> <span class="item" tapmode onclick="zhuanfa('<%data.data_id%>')"> <div style="background-color:#fc3e6c; color:#FFFFFF"><i class="iconfont">&#xe60a;</i>一键转发</div> </span> <% }else{%> <span class="item" tapmode onclick="view('<%data.data_id%>')"> <div style="background-color:#fc3e6c; color:#FFFFFF"><i class="iconfont">&#xe60a;</i>一键购买</div> </span> <% }%> </div> </li><% } %>*/;}
+    </script>
+    <div onclick="document.documentElement.scrollTop=document.body.scrollTop=0" style=" text-align:center; line-height:40px;background:rgba(255,255,255,0.6);border:1px solid #fdabc7;-webkit-border-radius:50%;width: 40px;height: 40px;background-size: cover;display: inline-block;position: fixed;right: 8px;z-index: 99;bottom:-48px;-webkit-transition-duration:.2s"
+        id="backToTop"><i class="iconfont shake shake-slow" style=" font-size:32px;color:#f54275;"></i></div>
+</body>
+
+</html>

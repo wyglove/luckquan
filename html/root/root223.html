@@ -1,0 +1,777 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>底部导航</title>
+    <link rel="stylesheet" type="text/css" href="../../css/api.css"/>
+    <script src="../../script/api.js"></script>
+    <style>
+        #footer{  background-color: #f8f8f8; }
+        /*#footer ul li{  padding-top: 5px; padding-bottom: 4px; background: url() no-repeat center 2px; background-size: auto 30px; text-align: center;font-size: 11px}
+        #footer ul li span.iconfont{font-size: 20px}
+        #footer ul li.active{ color: red; }*/
+        .flex-con{overflow: auto}
+        header .hover{color: #999999}
+        #msg_tip{position:absolute; height:8px; width:8px;-webkit-border-radius:50%; background:red; top:-5px; right:-5px; display:;background-color: #342d27}
+
+        #footer ul li{  padding-top: 35px; padding-bottom: 4px; background: url() no-repeat center 10px; background-size: auto 24px; text-align: center;font-size: 12px; color: #1d1d1f;}
+        #footer ul li.active{ color: #342d27; font-weight: bold;}
+        .jiazaizhong{
+            background-image: url(../../img/index.gif);
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: 15%;
+        }
+
+        .soubox {
+            height: 44px;
+            margin-left: 17px;
+            border-right: 0;
+            border-radius: 5px;
+            overflow: hidden;
+            background: #f3f2f7;
+        }
+        .souint {
+            padding-left: 12px;
+            font-size: 15px;
+        }
+        .souint i.iconfont {
+            margin-right: 3px;
+            font-size: 18px; color: #ccc; font-weight: bold;
+        }
+        .souint input {
+            color: #000;
+            font-size: 15px;
+        }
+        .soubtn {
+            height: 44px;
+            padding: 0 15px;
+            font-size: 16px; line-height: 44px; color: #342d27;
+            background: #FFE836;
+        }
+        .rightnav {
+            position: relative;
+            margin: 0 20px;
+        }
+        .rightnav i.iconfont {
+            font-size: 24px;
+        }
+    </style>
+</head>
+<body>
+<div id="wrap" class="flex-wrap flex-vertical">
+
+    <header id="header" style="visibility:hidden">
+      <!--
+            <div class="topbar">
+                <div class="egret-img fl" id="rightbtn" tapmode="hover" onClick="leftFun()">
+                    <div><span class="iconfont">&#xe62e;</span><br/>扫扫</div>
+                </div>
+                <div class="egret-img fr" tapmode="hover" onClick="rightFun()">
+                    <div style="position:relative"><span class="iconfont">&#xe672;</span><br/>消息<div id="msg_tip">&nbsp;</div></div>
+                </div>
+                <div class="egret-header-box" tapmode onClick="search()">
+                    <div class="egret-header-search">
+                        <input type="text" disabled="disabled" style="opacity:1" value="粘贴宝贝标题 先领券后购物">
+                    </div>
+                </div>
+            </div>
+            -->
+        </header>
+    <div id="main" class="flex-con jiazaizhong">
+
+        <div style="display:none; line-height:2; text-align:center; padding-top:80px" id="without-network">
+            <div>
+                <img class="widget" src="../../img/without_network.jpg" style="display:block; width:100%" />
+            </div>
+            <div style="font-size:146x">无法连接到网络</div>
+            <div style="font-size:14px; color:#999" onClick="openSet()">请检查网络设置后重试，或者直接反馈给我们</div>
+            <div style="margin-top:0.5em"><span id="refreshNet" style="border:1px #F30 solid; border-radius:5px; color:#F30;padding: 4px 10px;" onClick="start()">点击刷新</span>
+            </div>
+        </div>
+        <div id="must_update" style="display:none">
+            <img onClick="versionUpdate.update()" class="widget" src="../../img/update.png" style="display:block; width:100%" />
+        </div>
+    </div>
+    <div id="footer" class="border-t" style="visibility:hidden">
+        <ul class="flex-wrap" >
+            <li style="background-image: url(../../img/syfoot0.png)" tapmode="hover" class="flex-con" >首页</li>
+            <li style="background-image: url(../../img/syfoot1.png)" tapmode="hover" class="flex-con" >找好券</li>
+            <li style="background-image: url(../../img/syfoot2.png)" tapmode="hover" class="flex-con" >视频购</li>
+            <li style="background-image: url(../../img/syfoot3.png)" tapmode="hover" class="flex-con" >品牌集</li>
+            <li style="background-image: url(../../img/syfoot4.png)" tapmode="hover" class="flex-con" >我的</li>
+        </ul>
+    </div>
+</div>
+</body>
+</html>
+<script type="text/javascript">
+    var TIME,ajpush;
+    var footerObj=[
+        {'title':'首页','img':'../../img/syfoot0.png','img_act':'../../img/syfoot0_act.png','url':'index'},
+        {'title':'找好券','img':'../../img/syfoot1.png','img_act':'../../img/syfoot1_act.png','url':'fenlei'},
+        {'title':'视频购','img':'../../img/syfoot2.png','img_act':'../../img/syfoot2_act.png','url':'douquan'},
+        {'title':'品牌集','img':'../../img/syfoot3.png','img_act':'../../img/syfoot3_act.png','url':'pinpai'},
+        {'title':'我的','img':'../../img/syfoot4.png','img_act':'../../img/syfoot4_act.png','url':'user'},
+    ];
+
+    function rightFun(){
+        // openPage('douquan','douquan','',0);
+        // openPage('huodong','time');
+        // openPage('pinpai','pinpai');
+        var u=checkLogin(1);
+        if(u==false){
+            return false;
+        }
+        openPage(['user','msg','消息']);
+    }
+
+    function leftFun(){
+        //ddevent.taourl('https://s.m.taobao.com/h5?event_submit_do_new_search_auction=1&_input_charset=utf-8&topSearch=1&atype=b&searchfrom=1&action=home%3Aredirect_app_action&from=1&sst=1&n=20&buying=buyitnow&q=%E5%A5%B3%E8%A3%85');return false;
+        // baichuan.loginout(function(){
+        //     baichuan.getLoginStatus(function(data){
+        //         alert(data);
+        //     });
+        // });
+        //ddevent.taourl('https://detail.m.tmall.com/item.htm?spm=a1z0d.6639537.1997196601.4.23247484cw252B&id=573648628193');
+        //return false;
+        // baichuan.login(function(){
+        //     toastOpen('前往淘宝',1,function(){
+        //         ddevent.taourl('https://main.m.taobao.com/cart/index.html?cartFrom=taobao_client');
+        //     });
+        // });
+        // return false;
+        // var apiCloudAn = api.require('apiCloudAn');
+        // var param={'videoPath':'http://www.haixingshuo.com/upload/haixingshuo.mp4','title':'我是表示'};
+        // apiCloudAn.intoVideoPage(param);
+        // var LWSystemShare=api.require('LWSystemShare');
+        // alert(LWSystemShare==null);
+        // LWSystemShare.systemShare({'msg':['这是一个系统分享任务',['http://d.hiphotos.baidu.com/img/pic/item/34fae6cd7b899e51c46401174ea7d933c9950dce.jpg'],'https://www.baidu.com','com.tencent.xin.sharetimeline']},function(ret,err){
+        //     var msg=ret.index;
+        // });
+        // return false;
+        // openPage(['page','set','更多']);return false;
+        if(checkLogin(1)==false){
+            return false
+        }
+        if(appInfo.sign_jifenbao>0){
+            openPage('user','sign');
+        }else{
+            getPermission(function(){
+                var FNScanner = api.require('FNScanner');
+                FNScanner.open({
+                    hintText: ''
+                }, function(ret, err) {
+                    if (ret.eventType=='success') {
+                        if(ret.content.indexOf('http')==0){
+                            ddevent.url(ret.content);
+                        }else{
+                            toast('已复制');
+                            clipboardSet(ret.content);
+                        }
+                    }
+                });
+            },'camera','缺少使用相机权限');
+        }
+    }
+
+    function footerHtml(){
+        if(typeof appInfo.syfoot=='undefined' || appInfo.syfoot==null){
+		    appInfo.syfoot=[];
+	    }
+        for(var i in appInfo.syfoot){
+            var row=appInfo.syfoot[i];
+            if(typeof row.img!='undefined' && row.img!=''){
+    			footerObj[i].img=row.img;
+    		}
+            if(typeof row.img1!='undefined' && row.img1!=''){
+    			footerObj[i].img_act=row.img1;
+    		}
+            if(typeof row.title!='undefined' && row.title!=''){
+    			footerObj[i].title=row.title;
+    		}
+            if(typeof row.url!='undefined' && row.url!=''){
+    			footerObj[i].url=row.url;
+    		}
+        }
+        var css='';
+        var html='';
+
+        if(iosShenhe()==1){
+            for(var i in footerObj){
+                if(footerObj[i].title.indexOf('商城')>=0){
+                    footerObj.splice(i,1);
+                }
+            }
+        }
+
+        for(var i in footerObj){
+            css+='#footer ul li:nth-child('+(parseInt(i)+1)+'){ background-image: url('+footerObj[i].img+'); }';
+            html+='<li tapmode="hover" id="page_'+footerObj[i].url+'" onclick="footerPage(\''+footerObj[i].url+'\',this );" class="flex-con" >'+footerObj[i].title+'</li>';
+            css+='#footer ul li:nth-child('+(parseInt(i)+1)+').active{ background-image: url('+footerObj[i].img_act+'); }';
+        }
+        loadCssCode(css);
+        $('#footer .flex-wrap').html(html);
+        api.parseTapmode();
+    }
+
+    //头底代码固定
+    function fixHeaderFooter(){
+        //console.log("头部安全区高度："+api.safeArea.top);
+        $api.fixStatusBar( $api.dom('header') );
+        $api.fixTabBar($api.byId('footer'));
+        set('safeAreaTop',api.safeArea.top);
+        set('safeAreaBottom',api.safeArea.bottom);
+        localStorage.setItem('safeAreaTop',api.safeArea.top);
+        localStorage.setItem('safeAreaBottom',api.safeArea.bottom);
+        var barColorArr=['light','dark'];
+        api.pageParam.curPageBarColor=barColorArr[BAR_COLOR];
+        api.setStatusBarStyle({ //状态栏白色
+            style: barColorArr[BAR_COLOR]
+        });
+    }
+
+    function search(){
+        ddevent.searchPop();
+    }
+
+    //安卓连点2次返回提示退出
+    function keyBack(){
+        var closeAPP = {
+            count: 0,
+            timer: null,
+            time: 1500
+        }
+        api.addEventListener({
+            name: 'keyback'
+        }, function(ret, err) {
+            if(typeof window.pop!='undefined' && window.pop!=''){
+                api.execScript({
+                    frameName: window.pop,
+                    script: 'popClose();'
+                });
+                return false;
+            }
+            if(!$('#footer li').eq(0).hasClass('active')){
+                var el=$api.first($api.dom('#footer'),'li');
+                footerPage('index',el); //打开首页
+                return false;
+            }
+            closeAPP.count++;
+            if(closeAPP.count >= 2){
+                api.closeWidget({})
+            }else{
+                api.toast({
+                    msg: '再按一次退出应用',
+                    duration: closeAPP.time,
+                    location: 'bottom'
+                });
+            }
+            clearTimeout(closeAPP.timer);
+            closeAPP.timer = setTimeout(function(){
+                closeAPP.count = 0;
+            },closeAPP.time)
+        });
+    }
+
+    //底部切换
+    function footerPage(url,tag) {duilie1[2]='';
+        tag=tag||'';
+        if(tag==''){
+            tag=document.getElementById('page_'+url);
+        }
+        if(url==''){return false;}
+        var urlFrmArr=['index','user','fenlei','douquan','pinpai'];
+        var nameFrmArr=['index_index','user_user','taobao_fenlei','douquan_douquan','pinpai_pinpai'];
+        if( this.curUrl==url && url!=='douquan'){
+            return;
+        }
+
+        if(inArray(url,urlFrmArr)>=0){
+            $('#footer li').removeClass('active');
+            $(tag).addClass('active');
+            if(typeof this[url+'_frm']=='undefined'){
+                if(url=='user'){
+                    var rect={'marginLeft':0,'marginTop':0,'marginRight':0,'marginBottom':$api.byId('footer').offsetHeight};
+                    openFrame({'rect':rect,'mod':url,'act':'user_frm'});
+                }else if(url=='index'){
+                    api.setFrameAttr({'name':'taobao_fenlei_frm',hidden:true});
+                    api.setFrameAttr({'name':'user_user_frm',hidden:true});
+                    api.setFrameAttr({'name':'pinpai_pinpai_frm',hidden:true});
+                    var rect={'marginLeft':0,'marginTop':$api.byId('header').offsetHeight,'marginRight':0,'marginBottom':$api.byId('footer').offsetHeight};
+                    openFrame({'rect':rect,'mod':url,'act':url+'_frm'});
+                }else if(url=='fenlei'){
+                    api.setFrameAttr({'name':'index_index_frm',hidden:true});
+                    api.setFrameAttr({'name':'user_user_frm',hidden:true});
+                    api.setFrameAttr({'name':'pinpai_pinpai_frm',hidden:true});
+                    var rect={'marginLeft':0,'marginTop':$api.byId('header').offsetHeight,'marginRight':0,'marginBottom':$api.byId('footer').offsetHeight};
+                    openFrame({'rect':rect,'mod':'taobao','act':url+'_frm'});
+                }else if(url=='pinpai'){
+                    var rect={'marginLeft':0,'marginTop':0,'marginRight':0,'marginBottom':$api.byId('footer').offsetHeight};
+                    openFrame({'rect':rect,'mod':url,'act':url+'_frm'});
+                }
+                else if(url=='douquan'){
+                    setPageParam('slidBackEnabled', false);
+                    // openPage('douquan','douquan','',0);
+                    openWin({
+                        mod: 'douquan',
+                        act: 'douquan_frm'
+                    })
+                    //openPage('zhibo','zhibo');
+                }
+                this[url+'_frm']=1;
+            }else{
+                if (url=='douquan') {
+                    openPage('douquan','douquan','',0);
+                    //openPage('zhibo','zhibo');
+                } else {
+                    for(var i in urlFrmArr){
+                        if(urlFrmArr[i]==url){
+                            api.setFrameAttr({'name':nameFrmArr[i]+'_frm',hidden:false});
+                        }else{
+                            api.setFrameAttr({'name':nameFrmArr[i]+'_frm',hidden:true});
+                        }
+                    }
+                }
+            }
+            this.curUrl=url;
+        }else{
+            ddevent.fun(url);
+        }
+    }
+
+    function huanxing(){
+        everyWinFrm.exec('','');
+        api.execScript({
+            name: 'root_root',
+            frameName: 'user_user_frm',
+            script: 'start();'
+        });
+        checkUpdate(function(){
+        });
+    }
+
+	function mustUpdate(){
+        api.closeFrame({
+            name: 'index_index_frm'
+        });
+        $('#must_update').show();
+        $('#header,#footer').css('visibility','hidden');
+    }
+
+    function openSet(){
+        if(api.systemType=='ios'){
+             api.openApp({
+                iosUrl: 'app-settings:prefs:root=WIFI'
+            }, function(ret, err) {
+
+            });
+        }
+    }
+
+    function start(){duilie[4]='';
+        if(api.systemType=='ios'){ //苹果只在有网络的情况下进行初始化
+            if(api.connectionType!='none'){
+                baichuan.ini();
+                var jdKey=api.loadSecureValue({sync: true,key: 'jd_key'});
+                jdSdk.ini(jdKey,jdKey);
+            }else{
+                if(get('DD_click_helloApp')!=1){
+                    $('#without-network').show();
+                    return false;
+                }
+            }
+        }else{
+            baichuan.ini();
+            var jdKey=api.loadSecureValue({sync: true,key: 'jd_key'});
+            jdSdk.ini(jdKey,jdKey);
+        }
+        duilie[5]='';
+        duilie[6]='';
+        TIME=time();
+        if(ddInt(get('DD_click_helloApp'))==0){ /*第一次打开APP*/
+            var hello_img = api.loadSecureValue({sync: true,key: 'hello_img'});
+            if(hello_img>0){ /*有开机广告或者启动图*/
+                setTimeout(function(){ //当打开一个页面后，如果马上再打开一个，安卓会出现打不开的现象，所以延迟半秒
+                    api.pageParam.barColor='light';
+                    openPage('page','welcome','',0,{'type':'none','duration':10});
+                },400);
+                setTimeout(function(){ //延迟一会，否则会先打开首页再打开welcome，造成闪动一下
+                    start1();
+                },600);
+            }else{
+                start1();
+                set('DD_click_helloApp',1);
+            }
+        }else{
+            start1();
+        }
+    }
+
+    function showSplash(){
+        if(typeof appInfo=='object' &&  typeof appInfo.root_color!='undefined' && appInfo.root_color!=''){
+            var root_color=appInfo.root_color;
+        }else{
+            var root_color=ROOT_HEADER_COLOR[0]+','+ROOT_HEADER_COLOR[1];
+        }
+        root_color=root_color.split(',');
+        if(root_color.length==1){
+            root_color[1]=root_color[0];
+        }
+        // $('#header').css('background','-webkit-linear-gradient(left,'+root_color[0]+','+root_color[1]+')');
+        $('#header,#footer').css('visibility','');
+        $('#main').removeClass('jiazaizhong');
+        var close_start_ad=ddInt(get('DD_close_start_ad'));
+        if(close_start_ad==0){
+            if(appInfo.appad && appInfo.appad.ad && appInfo.appad.ad.kaiping && appInfo.appad.ad.kaiping==1){
+                TENCENT_ADS=1;
+            }else {
+                TENCENT_ADS=0;
+            }
+            if(TENCENT_ADS==1){
+                var tencentAds = api.require('tencentAds');
+                tencentAds.showSplash({
+                    'y':api.safeArea.top
+                },function(ret,err){
+                    if(ret.status=='true'){
+                        api.removeLaunchView(true);
+                    }else if(ret.status=='onclick'){
+                        var url=createUrl('appad','add',{'tag':'kaiping'});
+                        getAjax(url,function(data){},'',0);
+                    }
+                });
+            }else{
+                api.pageParam.barColor='light';
+                openPage('page','welcome','',0,{'type':'none','duration':10});
+            }
+        }else{
+            api.removeLaunchView(true);
+        }
+    }
+
+    function start1(){duilie[7]='';
+        getInt(function(re,cache,times){
+            setTimeout(function(){
+                var ok=1;
+                for(var i in duilie1){
+                    if(duilie1[i]!=''){
+                        ok=0;
+                    }
+                }
+                if(ok==0){
+                    //alert('b:'+JSON.stringify(duilie1));
+                }
+            },3000);
+            duilie1[0]='';
+            if(times==1){
+                if(appInfo.sign_jifenbao>0){
+                    $('#rightbtn').html('<div><span class="iconfont">&#xe6d8;</span><br/>签到</div>');
+                }
+                set('DD_close_start_ad',appInfo.close_start_ad);
+                footerHtml();
+                duilie1[1]='';
+                var el=$api.first($api.dom('#footer'),'li');
+                openXieyi(function(){
+                    footerPage('index',el); //打开首页
+                });
+            }
+            if(cache==0){
+                showMsgInfo(re);
+            }
+        },3600);
+    }
+
+    function showMsgInfo(re){
+        if(re.msg_num>0){
+            $('#msg_tip').css('display','block');
+        }else{
+            $('#msg_tip').css('display','none');
+        }
+        if(re.msg_content && re.msg_content!='' && re.msg_num>0){
+            openDialog('您有新消息',re.msg_content,'',appInfo.logo,'稍后再看','立即查看','',function(){
+                openPage('user','msg');
+            });
+        }
+    }
+
+    function requestPhonePermission(callback,times){
+        times=times||0;
+        var uexAn = api.require('uexAn');
+        if(times==0){
+            uexAn.requestPermission();
+        }
+        uexAn.getPhoneState(function(ret){
+            if(times==10){
+                callback(false);
+            }
+            if(ret.permissionState==false){
+                setTimeout(function(){
+                    times++;
+                    requestPhonePermission(callback,times);
+                },1000);
+            }else{
+                callback(true);
+            }
+        });
+    }
+
+    function getPhonePer(callback){
+        var uexAn = api.require('uexAn');
+        uexAn.getPhoneState(function(ret){
+            if(ret.permissionState==false){
+                requestPhonePermission(function(ret){
+                    if(ret==false){
+                        openAlert('缺少读取手机基本信息权限',function(){
+                            api.rebootApp();
+                        });
+                    }
+                    callback();
+                });
+            }else{
+                callback();
+            }
+        });
+    }
+
+	function getBiaoshi(callback){
+    // callback();
+    // return;
+        var uexAn=api.require('uexAn');
+        if(api.systemType=='ios'){
+            var idfa=uexAn.getIdfa();
+            set('DD_idfa',idfa);
+            callback();
+        }else{
+            uexAn.getChannel({'name':'UMENG_CHANNEL'},function(ret,err){
+                if(typeof ret.metadata=='undefined'){
+                    ret.metadata='';
+                }
+                set('DD_qudao',ret.metadata);
+                getPhonePer(function(){
+                    uexAn.getIMEI(function(ret){
+                        set('DD_imei',ret.imei);
+                        callback();
+                    });
+                });
+                // getPermission(function(){
+                //     callback();
+                // },'phone','缺少读取手机基本信息权限',function(){
+                //     api.rebootApp();
+                // });
+            });
+        }
+    }
+
+    function huidiao(callback){
+        callback();
+    }
+
+    var duilie=['a','b','c','d','e','f','g','h'];
+    setTimeout(function(){
+        var ok=1;
+        for(var i in duilie){
+            if(duilie[i]!=''){
+                ok=0;
+            }
+        }
+        if(ok==0){
+            // alert('a:'+JSON.stringify(duilie));
+        }
+    },3000);
+
+    var duilie1=['a','b','c'];
+
+    function openXieyi(callback){
+        var xieyi=ddInt(get('DD_xieyi'));
+        if(typeof appInfo.close_start_yinsi=='undefined'){
+            appInfo.close_start_yinsi=0;
+        }
+        if(xieyi==1 || appInfo.close_start_yinsi==1){
+            callback();
+            return false;
+        }
+        var w=api.winWidth;
+        var h=api.winHeight;
+        var dialogBox = api.require('dialogBox');
+        dialogBox.webView({
+            tapClose: false,
+            path: createUrl('xieyi'),
+            texts: {
+                title: '温馨提示',
+                leftBtnTitle: '拒绝',
+                rightBtnTitle: '同意'
+            },
+            styles: {
+                bg: '#fff',
+                corner: 2,
+                w: w*0.8,
+                h: h*0.8,
+                webView: {
+                    h: h*0.8-60-44,
+                    bg: '#fff',
+                },
+                downDividingLine: {
+                    width: 0.5,
+                    color: '#c3c3c3'
+                },
+                upDividingLine: {
+                    width: 0.5,
+                    color: '#696969'
+                },
+                title: {
+                    h: 43,
+                    size: 14,
+                    color: '#000'
+                },
+                left: {
+                    bg: 'rgba(0,0,0,0)',
+                    color: '#007FFF',
+                    size: 14
+                },
+                right: {
+                    bg: 'red',
+                    color: '#007FFF',
+                    size: 14
+                }
+            }
+        }, function(ret) {
+            if(ret.eventType=='left'){
+                openConfirm("您需要同意本隐私权政策才能继续使用","若您不同意本隐私权政策，很遗憾我们将无法为您提供服务",['仍不同意','查看协议'],function(data){
+        			if(data==1){
+        				api.closeWidget({'silent':true});
+        			}
+        		});
+            }
+            else {
+                dialogBox.close({
+                    dialogName: 'webView'
+                });
+                set('DD_xieyi',1);
+                if(typeof callback=='function'){
+                    callback();
+                }
+            }
+        });
+    }
+
+    ready(function(){
+        duilie[0]='';
+        fixHeaderFooter();
+        duilie[1]='';
+        keyBack();
+        duilie[2]='';
+        ajpush = api.require('ajpush');
+        ajpush.init(function(ret) {
+            if (ret && ret.status){
+                if(typeof user=='object' && user.id && user.id>0 && get('DD_bingjiguang')!=1){
+                    var param = {alias:String(user.id),tags:[]};
+                    ajpush.bindAliasAndTags(param,function(ret) {
+                        set('DD_bingjiguang',1);
+                    });
+                }
+            }
+        });
+        duilie[3]='';
+        // ajpush.getRegistrationId(function(ret) {
+        //     alert(ret.id);
+        // });
+
+        if(api.systemType=='ios'){
+            api.addEventListener({
+                name:'appintent'
+            },function(ret,err){
+                var fun=ret.iosUrl.replace(/.*\?fun=/,'');
+                fun=fun.replace('%3d','=');
+                ddevent.fun(fun);
+            });
+
+            ajpush.setBadge({
+                badge:0
+            });
+            api.addEventListener({
+                name: 'noticeclicked'
+            }, function(ret, err) {
+                if (ret && ret.value) {
+                    for(var i in ret.value.extras){
+                        if(i.indexOf('_j_')<0){
+                            ddevent.fun(i+'='+ret.value.extras[i]);
+                            break;
+                        }
+                    }
+                }
+                ajpush.setBadge({
+                    badge:0
+                });
+                var param = {id:-1};
+                ajpush.clearNotification(param,function(ret) {
+                    if(ret && ret.status){
+                        //success
+                    }
+                });
+            })
+        }else{
+            // api.addEventListener({
+            //     name:'viewappear'
+            // }, function(ret, err){
+            //    if(window.pop && window.pop!=''){
+            //        api.execScript({
+            //            frameName: window.pop,
+            //            script: 'start();'
+            //        });
+            //    }
+            // });
+            api.addEventListener({
+                name: 'appintent'
+            }, function(ret, err) {
+                if (ret && ret.appParam.ajpush) {
+                    for(var i in ret.appParam.ajpush.extra){
+                        if(i.indexOf('_j_')<0){
+                            ddevent.fun(i+'='+ret.appParam.ajpush.extra[i]);
+                            break;
+                        }
+                    }
+                    var param = {'id':ret.appParam.ajpush.id};
+                    ajpush.clearNotification(param,function(ret) {
+                        if(ret && ret.status){
+                            //success
+                        }
+                    });
+                }else if (ret && ret.appParam.fun) {  //被别的软件唤醒传的参数
+                    ddevent.fun(ret.appParam.fun);
+                }
+            });
+        }
+
+        api.addEventListener({
+            name:'viewappear'
+        }, function(ret, err){
+            if(getGlobalData('viewdisappear')=='page_welcome'){
+                api.execScript({
+                    frameName: 'index_index_frm',
+                    script: 'viewappear();'
+                });
+            }
+        });
+
+        api.addEventListener({
+            name:'pause'
+        }, function(ret, err){
+            //alert('应用进入后台');
+            var FNScanner = api.require('FNScanner');
+            FNScanner.onPause();
+        });
+
+        api.addEventListener({
+            name:'resume'
+        }, function(ret, err){
+            var FNScanner = api.require('FNScanner');
+            FNScanner.onResume();
+            getInt(function(re,cache,times){
+                showMsgInfo(re);
+            },0,1);
+        });
+        start();
+    },1);
+</script>

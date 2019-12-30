@@ -1,0 +1,213 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="../../css/api.css"/>
+    <script src="../../script/api.js"></script>
+    <style>
+/*我的订单*/
+.dmingxi{
+    background: #fff;
+}
+.tongji{
+    padding: 1em 0;
+    text-align: center;
+}
+.tongji .tiotle{
+    font-size: 0.875em;
+    margin-bottom: 0.5em;
+}
+.yue{
+    color: #ee3d47;
+    font-size: 1.25em;
+}
+.list_jilu li{
+    display: flex;
+    padding: 0.5em 0;
+    border-top: 1px solid #dfdfdf;
+}
+.list_jilu li:first-child{ border-top: 0}
+.list_jilu li:nth-child(1){
+    border-top: 0;
+}
+.list_jilu li .leftnr{
+    flex: 5;
+    text-align: left;
+    padding-left: 1em;
+}
+.list_jilu li .leftnr .title{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+}
+.list_jilu li .rightnr{
+    flex: 1;
+    text-align: right;
+    padding-right: 1em;
+    padding-top: 0.75em;
+}
+.time{
+    color: #a7a7a7;
+    font-size: 0.875em;
+    margin-top: 0.5em;
+}
+.rightnr.sucess{
+    color: #ee3d47;
+}
+
+.ubb {
+    border-bottom: 1px solid;
+}
+.ub
+{
+	display: -webkit-box !important;
+	display: box !important;
+	position:relative;
+}
+.bc-border {
+    border-color: #BABABA;
+}
+.ub-ac
+{
+	-webkit-box-align:center;
+	box-align:center;
+}
+.lis {
+    padding: 0.5em;
+    min-height: 2.4em;
+}
+.ub-f1
+{
+	position:relative;
+	-webkit-box-flex: 1;
+	box-flex: 1;
+}
+.ub-ver
+{
+	-webkit-box-orient:vertical;
+	box-orient:vertical;
+}
+.bc-text {
+    color: black;
+}
+.ut-m {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: normal !important;
+    outline: 0 !important
+}
+.line1 {
+    -webkit-line-clamp: 1;
+}
+.ulev-1 {
+    font-size: 0.8125em !important;
+}
+.uinn3 {
+    padding: 0.2em;
+    margin: 0;
+}
+.ub-ae
+{
+	-webkit-box-align:end;
+	box-align:end;
+}
+.umar-r {
+    margin-right: 0.4em;
+}
+</style>
+</head>
+<body>
+    <img src="http://quan2.meiquan8.com/app/img/chaojijiangli.jpg" style="width:100%; display:block" />
+    <div class="bc-bg bgccc">
+        <div class="dmingxi">
+            <div id="listview" class="listview"></div><div style="clear:both"></div>
+    <div id="loading"><span class="loading-img"></span>数据加载中</div>
+    </div>
+        </div>
+                </body>
+                </html>
+<script>
+var status;
+var statusArr=['<span style="color:red">未激活</span>','<span style="color:green">已领取</span>'];
+
+function dataTpl(){/*<% for(var i = 0; i < this.length; i++) {var data = this[i]; %>
+<li id="1" class="ubb ub bc-border t-bla ub-ac lis" data-index="0">
+<ul class="ub-f1 ub ub-pj ub-ac">
+<ul class="ub-f1 ub ub-ver marg-l">
+<li class="bc-text ub ub-ver ut-m line1"><%data.title%></li>
+<li class="ulev-1 sc-text1 uinn3"><%data.msg%> </li>
+</ul>
+<ul class="ub ub-ver ub-ae umar-r">
+<li class="bc-text lv_subTitle">¥<%data.money%></li>
+<li class="ulev-1 sc-text1 uinn3"><%statusArr[data.status]%></li>
+</ul>
+</ul>
+</li>
+<% } %>*/;}
+
+function getData(unlock){
+    unlock=unlock||0;
+    var _this=this;
+    if(unlock==1){
+        this.lock=0;
+        this.page=0;
+        $('#loading').show();
+    }
+    if(typeof this.lock!='undefined' && this.lock==1){
+        return false;
+    }
+    if(typeof this.page=='undefined'){
+        this.page=0;
+    }
+    this.page++;
+    this.lock=1;
+    var url=createUrl('caiwu',{'fun':'superJl','status':status,'page':this.page});
+    getJson(url,'数据获取中',function(data){
+        _this.lock=0;
+        if(data.s==1){
+			updateUserIndex(1);
+            if(_this.page==1){
+                $('#listview').html('');
+            }
+            var html=barretTpl(dataTpl,data.r);
+            if(html==''){
+                if(page==1){
+                    html=emptyData('暂无数据~~~');
+                }else{
+                    toast('没有啦');
+                }
+            }
+            $('#listview').append(html);
+            if(html=='' || size(data.r)<20){
+                _this.lock=1;
+                $('#loading').hide();
+            }
+        }else{
+            toast('数据获取失败');
+        }
+    });
+}
+
+function start(){
+    getData();
+    infinite(function(){
+        getData();
+    });
+}
+
+ready(function(){
+    status=get('status',1);
+    if(status==1){
+        setTitle('已领超级奖励');
+    }else{
+        setTitle('超级奖励池');
+    }
+    start();
+    setBounce(reStart);
+},1);
+</script>

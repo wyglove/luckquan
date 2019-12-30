@@ -1,0 +1,106 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+<title></title>
+<link rel="stylesheet" type="text/css" href="../../css/api.css"/>
+<script src="../../script/api.js"></script>
+<style>
+    html, body {
+        background: rgba(0,0,0,0);
+    }
+    .btns {
+        width: 50px;
+    }
+    .btn-item {
+        width: 50px; height: 50px;
+        margin-bottom: 10px;
+        text-align: center; color: #fff;
+        text-shadow: 0 0 1px rgba(0,0,0,0.8);
+    }
+    .btn-item i.iconfont {
+        line-height: 36px; font-size: 24px;
+    }
+    .btn-item p {
+        line-height: 14px;
+    }
+    .iconfont.like.active {
+        color: #FF3249;
+    }
+</style>
+</head>
+
+<body>
+    <div class="btns">
+        <div class="btn-item" onclick="openWenan()">
+            <i class="iconfont">&#xe698;</i>
+            <p>文案</p>
+        </div>
+        <div class="btn-item" onclick="toShare()">
+            <i class="iconfont">&#xe668;</i>
+            <p>分享</p>
+        </div>
+        <!-- <div class="btn-item" onclick="toCollect()">
+            <i class="iconfont like">&#xe686;</i>
+            <p>收藏</p>
+        </div> -->
+        <!-- <div class="btn-item" onclick="downVideo()">
+            <i class="iconfont">&#xe601;</i>
+            <p>下载</p>
+        </div> -->
+        <div class="btn-item" onclick="copyTaoKL();">
+            <i class="iconfont">&#xe66e;</i>
+            <p>口令</p>
+        </div>
+        <div class="btn-item" onclick="toCourse();" style="display:none;">
+            <!-- <i class="iconfont" style="color:#FAC91E;">&#xe608;</i> -->
+            <i class="iconfont">&#xe608;</i>
+            <p>教程</p>
+        </div>
+    </div>
+</body>
+<script type="text/javascript">
+    function openWenan() {
+        api.execScript({
+            name: 'douquan_douquan_frm',
+            script: 'openWenan();'
+        });
+    }
+    function toShare() {
+        api.execScript({
+            name: 'douquan_douquan_frm',
+            script: 'shareVideo();'
+        });
+    }
+    function toCollect() {
+        var el = $api.dom('.iconfont.like');
+        if ($api.hasCls(el, 'active')) {
+            $api.removeCls(el, 'active');
+            el.innerHTML = '&#xe686;';
+        } else {
+            $api.addCls(el, 'active');
+            el.innerHTML = '&#xe688;';
+        }
+    }
+    function downVideo() {
+        api.execScript({
+            name: 'douquan_douquan_frm',
+            script: 'downVideo();'
+        });
+    }
+    function copyTaoKL() {
+        api.execScript({
+            name: 'douquan_douquan_frm',
+            script: 'copyTaoKL();'
+        });
+    }
+    function toCourse() {
+        api.execScript({
+            name: 'douquan_douquan_frm',
+            script: 'toCourse();'
+        });
+    }
+</script>
+</html>

@@ -1,0 +1,189 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="../../css/api.css"/>
+    <script type="text/javascript" src="../../script/api.js"></script>
+    <style>
+    #ddlanmu .cf_xl .kedian a.cur {
+        border: red 1px solid;
+        color: red
+    }
+
+    #ddlanmu .cf_xl .kedian a:hover {
+        border: red 1px solid;
+        color: red
+    }
+
+    #ddlanmu .cf_xl {
+        background: #fff;
+        width: 100%;
+        border-bottom: 1px solid #ccc;
+        position: absolute;
+        left: 0;
+        z-index: 99;
+        padding: 8px 0;
+        padding-bottom: 0px;
+        overflow-x: hidden;
+        overflow-y: visible
+    }
+
+    #ddlanmu .cf_xl a {
+        padding: 6px 20px;
+        color: #333;
+        text-align: center;
+        display: inline-block;
+        font-size: 12px;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        margin-bottom: 13px;
+        margin-left: 3%
+    }
+
+    #ddlanmu .cf_xl a.more {
+        border: none;
+        font-weight: 700;
+        padding: 0;
+        display: block;
+        text-align: left;
+        padding: 0 5px
+    }
+
+    #ddlanmu .cf_xl a {
+        font-size: 13px;
+        color: #666;
+        text-decoration: none;
+        cursor: pointer
+    }
+
+    .hidden {
+        display: none;
+    }
+    </style>
+</head>
+<body style="background-color:#f5f5f5">
+  <div style="padding-bottom:1em;">
+    <img style="width:100%; height:auto;" src="http://imgyun.zzstudio.xyz/images/upload/2019/0814/13145353463.jpg" >
+  </div>
+<div id="wrap">
+    <div style="position:fixed; width:100%; top:0; z-index:9" id="ddlanmu"><div id="cf_xl" class="cf_xl hidden"><div class="kedian" id="cid_arr"></div></div></div>
+<div id="goods"></div>
+<div id="loading"><span class="loading-img"></span>数据加载中</div>
+</div>
+</body>
+</html>
+<script type="text/javascript">
+    var iosAudit=0,q='',is='',code='',cid=0,type='',sort=0,is_rank='',user={},_user = {
+        'level': 0,
+        'type': 0
+    };
+
+    function catShowHidden(){
+        $api.toggleCls($api.dom('#cf_xl'), 'hidden');
+    }
+
+    function catClick(_cid,type){
+        type=type||0;
+        cid=_cid;
+        var data={'q':q,'type':type,'is':is,'is_rand':is_rand,'cid':cid,'code':code,'sort':1,'pagesize':20};
+        if(is!=''){
+            data[is]=1;
+        }
+        var url=buildUrl('goods',data);
+        getTbData.reset();
+        getTbData.go(data);
+        // var $dom=$api.domAll('#cid_arr a');
+        // for(i=0;i<$dom.length;i++){
+        //     $api.removeCls($dom[i],'cur');
+        // }
+        // $api.addCls($api.dom('#cid_'+cid),'cur');
+        // if(type==1){
+        //     catShowHidden();
+        // }
+    }
+
+    function sortClick(_sort){
+        sort=_sort;
+        var data={'q':q,'type':type,'is':is,'is_rand':is_rand,'cid':cid,'code':code,'sort':sort,'pagesize':20};
+        if(is!=''){
+            data[is]=1;
+        }
+        getTbData.reset();
+        getTbData.go(data);
+    }
+
+    function setCatHtml(){
+    	// var cat=api.pageParam.cat;
+      //   var html1='';
+      //   for(var i in cat){
+      //       var row=cat[i];
+      //       html1+='<a id="cid_'+row['cid']+'" onClick="catClick('+row['cid']+',1);">'+row['title']+'</a>';
+      //   }
+      //   $api.dom('#cid_arr').innerHTML=html1;
+    }
+
+    function setTitleFun(title) {
+        setTitle(title);
+    }
+
+    function picLazyLoad() {
+        $('.lazyimg').picLazyLoad();
+    }
+
+    function reStart(_q){
+        _q=_q||'';
+        if(_q!=''){
+            q=_q;
+        }
+        clear(2);
+        getTbData.reset();
+        start();
+    }
+
+    function start(){
+        var data={'q':q,'type':type,'is':is,'is_rand':is_rand,'cid':cid,'code':code,'sort':1,'pagesize':20,'volume':100};
+        if(is!=''){
+            data[is]=1;
+        }
+        getTbData.go(data);
+    }
+
+    ready(function(){
+        q=api.pageParam.q||'';
+        type=api.pageParam.type||'';
+        is=api.pageParam.is||'';
+        is_rand=api.pageParam.is_rank||'';
+        sort=api.pageParam.sort||'';
+        code=api.pageParam.code||'';
+        cid=api.pageParam.cid||'';
+        user=checkLogin();
+        if(user==false){
+            user=_user;
+        }
+        iosAudit=iosShenhe();
+        setTimeout(function(){
+            setCatHtml();
+            if(cid>0){
+                var $dom=$api.domAll('#cid_arr a');
+                for(i=0;i<$dom.length;i++){
+                    $api.removeCls($dom[i],'cur');
+                }
+                $api.addCls($api.dom('#cid_'+cid),'cur');
+            }
+        },1000);
+        start();
+        setBounce(reStart);
+        api.addEventListener({
+            name: 'tbSearch'
+        }, function(ret, err){
+            if (ret) {
+                 q = ret.value.q;
+                 getTbData.reset();
+                 start();
+            }
+        });
+    },2);
+</script>

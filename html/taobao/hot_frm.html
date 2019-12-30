@@ -1,0 +1,395 @@
+<html style="font-size: 100px; -webkit-touch-callout: default;">
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0">
+		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="../../css/api.css">
+		<script type="text/javascript" src="../../script/api.js"></script>
+		<style>
+			html,
+			body {
+				background: #f4f4f4;
+			}
+
+			.swiper-container {
+				width: 100%;
+				height: 85px;
+				background: #fff;
+				border-radius: 10px;
+				box-shadow: 0 0 8px #cacaca;
+				overflow: hidden;
+			}
+
+			.swiper-slide {
+				text-align: center;
+				font-size: 18px;
+				background: #fff;
+				-webkit-box-pack: center;
+				-ms-flex-pack: center;
+				-webkit-justify-content: center;
+				justify-content: center;
+				-webkit-box-align: center;
+				-ms-flex-align: center;
+				-webkit-align-items: center;
+				align-items: center;
+			}
+			.topfix{
+				position: fixed;
+				top: 0;
+				left: 0;
+				z-index: 999;
+				width: 100%;
+				background: #f4f4f4;
+			}
+			.fenlei {
+				margin: 10px;
+			}
+
+			.swiper-slide {
+				font-size: 14px;
+				color: #605553;
+			}
+
+			.swiper-slide img {
+				width: 35px;
+				margin: 5px 0 0;
+				padding: 10px;
+			}
+
+			.swiper-slide p {
+				display: inline-block;
+			}
+
+			.swiper-slide.active {
+				color: #f95e4c;
+			}
+
+			.swiper-slide.active img {
+				background: #ffecea;
+				border-radius: 100%;
+				padding: 10px;
+			}
+
+			.hottab {
+				width: 240px;
+				float: left;
+			}
+
+			.hotdiv {
+				width: 120px;
+				float: left;
+				background: #fff;
+				border-radius: 20px 20px 0 0;
+				padding: 10px 0;
+				text-align: center;
+				color: #656363;
+				z-index: 0
+			}
+
+			.hotdiv.red {
+				background: #f55853;
+				color: #fff;
+				z-index: 9;
+				position: relative;
+			}
+
+			.hotdiv:nth-child(1).red {
+				margin-right: -20px;
+			}
+
+			.hotdiv:nth-child(2).red {
+				z-index: 0;
+				margin-left: -20px;
+			}
+			.houlist{
+				margin: 195px 10px 0;
+			}
+			.houlist li{
+				display: flex;
+				width: 100%;
+				background: #fcfcfc;
+			}
+			.houlist li .hotimg{
+				width: 125px;
+				height: 125px;
+				margin: 10px 10px 10px 5px;
+				flex: 1;
+			}
+			.hotright{
+				flex: 2;
+				position: relative;
+				height: 125px;
+				margin-top: 10px;
+				width: 60%;
+			}
+			.fengqiang{
+				font-size: 16px;
+			}
+			.fengqiang em{
+				font-size: 18px;
+				font-style: normal;
+				color: #fe4d3d;
+			}
+			.hottitle{
+				white-space: nowrap;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				width: 95%;
+				float: left;
+				margin-top: 10px;
+				display: inline-block;
+			}
+			.hottitle img{
+				width: 16px;
+				border-radius: 100%;
+				margin-right: 5px;
+				margin-bottom: -3px;;
+			}
+			.hotquan{
+				border: 2px solid #ff7c76;
+				display: inline-block;
+				color: #ff7c76;
+				padding: 0 5px;
+				margin-top: 10px;
+			}
+			.hotquan em{
+				border-left: 1px dashed #ff7c76;
+				display: inline-block;
+				padding-left: 5px;
+				margin-left: 5px;
+			}
+			.hotbottom{
+				position: absolute;
+				bottom: 0;
+				left: 0;
+				font-size: 14px;
+				color: #fe4d3d;
+				width: 100%;
+			}
+			.hotbottom em{
+				font-size: 18px;
+			}
+			.sharebtn{
+				background-image: linear-gradient(to right, #ed6b4d , #eb4f5a);
+				float: right;
+				padding: 0 5px;
+				border-radius: 10px 0 0 10px;
+				color: #fff;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="topfix">
+			<img src="../../img/hot/hot.png" width="100%">
+			<div class="fenlei">
+				<div class="hottab">
+					<div class="hotdiv red" onclick="set_tab($(this),1)">近两小时</div>
+					<div class="hotdiv" onclick="set_tab($(this),2)">全天疯抢</div>
+				</div>
+				<div class="swiper-container">
+					<div class="swiper-wrapper">
+						<div class="swiper-slide active" id="cid_0" onClick="catClick($(this),0);">
+							<div><img src="../../img/hot/1.png"></div>
+							<p>全部</p>
+						</div>
+						<div class="swiper-slide" onClick="catClick($(this),4);">
+							<div><img src="../../img/hot/2.png"></div>
+							<p>居家</p>
+						</div>
+						<div class="swiper-slide" onClick="catClick($(this),6);">
+							<div><img src="../../img/hot/3.png"></div>
+							<p>美食</p>
+						</div>
+						<div class="swiper-slide" onClick="catClick($(this),2);">
+							<div><img src="../../img/hot/4.png"></div>
+							<p>母婴</p>
+						</div>
+						<div class="swiper-slide" onClick="catClick($(this),1);">
+							<div><img src="../../img/hot/5.png"></div>
+							<p>女装</p>
+						</div>
+						<div class="swiper-slide" onClick="catClick($(this),9);">
+							<div><img src="../../img/hot/6.png"></div>
+							<p>男装</p>
+						</div>
+						<div class="swiper-slide" onClick="catClick($(this),10);">
+							<div><img src="../../img/hot/7.png"></div>
+							<p>内衣</p>
+						</div>
+						<div class="swiper-slide" onClick="catClick($(this),3);">
+							<div><img src="../../img/hot/8.png"></div>
+							<p>美妆</p>
+						</div>
+						<div class="swiper-slide" onClick="catClick($(this),12);">
+							<div><img src="../../img/hot/9.png"></div>
+							<p>配饰</p>
+						</div>
+						<div class="swiper-slide" onClick="catClick($(this),5);">
+							<div><img src="../../img/hot/10.png"></div>
+							<p>鞋品</p>
+						</div>
+						<div class="swiper-slide" onClick="catClick($(this),11);">
+							<div><img src="../../img/hot/11.png"></div>
+							<p>箱包</p>
+						</div>
+						<div class="swiper-slide" onClick="catClick($(this),2);">
+							<div><img src="../../img/hot/12.png"></div>
+							<p>母婴</p>
+						</div>
+						<div class="swiper-slide" onClick="catClick($(this),8);">
+							<div><img src="../../img/hot/13.png"></div>
+							<p>数码</p>
+						</div>
+						
+						<div class="swiper-slide" onClick="catClick($(this),7);">
+							<div><img src="../../img/hot/15.png"></div>
+							<p>车品</p>
+						</div>
+						<div class="swiper-slide" onClick="catClick($(this),13);">
+							<div><img src="../../img/hot/16.png"></div>
+							<p>文体</p>
+						</div>
+						<div class="swiper-slide" onClick="catClick($(this),14);">
+							<div><img src="../../img/hot/17.png"></div>
+							<p>其他</p>
+						</div>
+					</div>
+					<!-- Add Pagination -->
+					<div class="swiper-pagination"></div>
+				</div>
+			</div>
+		</div>
+		<div class="houlist">
+			<ul id="list_data">
+				
+			</ul>
+			<div id="loading"><span class="loading-img"></span>数据加载中</div>
+		</div>
+
+		<script>
+		var code=1;
+		var cid=0, iosAudit;
+		function set_tab(tb,t){
+			code=t;
+			cid=0;
+			$('.swiper-slide').removeClass('active');
+			$('#cid_0').addClass('active');
+			$('.hotdiv').removeClass('red');
+			tb.addClass('red');
+			getData(1);
+		}
+		function catClick(tb,_cid){
+			cid=_cid;
+			$('.swiper-slide').removeClass('active');
+			tb.addClass('active');
+			getData(1);
+		}
+		function getData(unlock){
+			getData1(unlock);
+		}
+
+		function goodsTpl(){/*<% for(var i = 0; i < this.length; i++) {var data = this[i]; %>
+	    <li onClick="ddevent.taobaoView('<%data.num_iid%>');">
+	    <img class="hotimg lazyimg" src="../../img/site/loading_300_300.png" data-img="<%data.img%>_200x200.jpg">
+				<div class="hotright">
+				<%if(code==1){%>
+					<p class="fengqiang">近2小时已疯抢<em><%data.twoHoursSales%></em>件</p>
+				<%}else if(code==2){%>
+					<p class="fengqiang">全天已疯抢<em><%data.dailySales%></em>件</p>
+				<%}%>
+				<p class="hottitle"><%if(data.laiyuan_type==1){%><img src="../../img/hot/tb.png">
+             <%}else if(data.laiyuan_type==2){%><img src="../../img/hot/tmall.png"><%}%><%data.title%></p>
+				<div class="hotquan"><%if(0<data.price_jian){%><span>券<em>¥<%parseFloat(data.price_jian)%></em></span><%}%></div>
+				<div class="hotbottom">券后¥<em><%parseFloat(data.quan_price)%></em>
+			<%if(iosShenhe()==1){%>
+			  <span class="sharebtn">立即查看</span>
+            <%}else{%>
+          	  <span class="sharebtn">赚<%if(typeof user.id!=='undefined' && typeof user.rate!='undefined' && typeof user.rate.tb!='undefined' && 0<user.rate.tb){%>¥<%parseFloat(toFixed(data.fanli_bl*user.rate.tb*data.quan_price))%><%}%></span>
+            <%}%>
+				</div>
+			</div>
+		</li><% } %>*/;}
+
+		function getData1(unlock){  /*获取云端数据*/
+			unlock=unlock||0;
+		    var _this=this;
+		    if(unlock==1){
+		        this.lock=0;
+		        this.page=0;
+				$('#loading').show();
+		    }
+		    if(typeof this.lock!='undefined' && this.lock==1){
+		        return false;
+		    }
+		    if(typeof this.page=='undefined'){
+		        this.page=0;
+		    }
+		    this.page++;
+		  	this.lock=1;
+		  	if(this.page==1){
+		  		$('#list_data').html('');
+		  	}
+		    var url=goodsUrl()+'&page='+this.page;
+		    getJson(url,'数据获取中',function(ret){
+				$('#loading').hide();
+		        if(_this.page==1){
+		            $('#list_data').html('');
+		        }
+		        _this.lock=0;
+		        if(ret.s==1){
+		            var data = ret.r;
+		            var html=barretTpl(goodsTpl,data);
+		            if(html==''){
+		                if(_this.page==1){
+		                    html=emptyData('暂无数据~~~');
+		                }else{
+		                    toastOpen('没有啦');
+		                }
+					    _this.lock=1;
+		            }
+		            $('#list_data').append(html);
+		            setTimeout(function() {
+		                loadLazyImg();
+		            },100)
+		      			if(html=='' || size(ret.r)<20){
+		      				_this.lock=1;
+		      				$('#loading').hide();
+		      			}
+		        }else{
+		            toastOpen('没有啦');
+		            _this.lock=1;
+		        }
+		    },3600);
+		}
+
+		function goodsUrl(){
+			var url=createUrl('goods',{'fun':'rank_list','cid':cid,'type':code});
+			return url;
+		}
+
+		function start(){
+			getData();
+		}
+		ready(function() {
+			iosAudit = iosShenhe();
+			setTitle('实时榜单');
+			start();
+			setBounce();
+			infinite(function(){
+				getData();
+			});
+			loadScript.go('/script/swiper_min.js',function(){
+				var swiper = new Swiper('.swiper-container', {
+				    slidesPerView: 5.6,
+					spaceBetween: 0,
+					freeMode: true,
+				});
+			},'/css/swiper_min.css');
+		},2);
+		</script>
+	</body>
+
+</html>

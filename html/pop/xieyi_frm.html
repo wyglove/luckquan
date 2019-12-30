@@ -1,0 +1,89 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="../../css/api.css" />
+    <script src="../../script/api.js"></script>
+    <script src="../../script/config.js"></script>
+    <script src="../../script/zepto.js"></script>
+</head>
+
+<body style="background-color:rgba(0, 0, 0, 0.3);">
+    <div id="main" style="position:fixed;top:0;width:100%;visibility:hidden">
+    <div  style="padding:20px 0; background-color:#ffffff;border-radius:5px;width:80%;margin:auto;">
+        <div style="width:90%;margin:auto;text-align:center">
+        <div style="font-size:18px;font-weight:bold">温馨提示</div>
+        <div style="width:100%;" id="webview"></div>
+        <div style="margin-top:10px">
+            <div style="border-radius:30px;background-color:#ea3729;line-height:2.5;color:#ffffff;box-shadow: 0px 2px 5px #ec1e1e;" tapmode onclick="tongyi()">同意</div>
+            <div style="border-radius:30px;background-color:#f4f4f4;line-height:2.5;color:#666666;margin-top:15px;" tapmode onclick="butongyi()">不同意</div>
+        </div>
+    </div>
+    </div>
+</div>
+</body>
+<script>
+    function popClose(time) {
+        var browser = api.require('webBrowser');
+        browser.closeView();
+        time = time || 0;
+        setTimeout(function() {
+            api.execScript({
+                script: 'window.pop="";'
+            });
+            api.closeFrame();
+        }, time);
+    }
+
+    function tongyi(){
+        set('DD_xieyi',1);
+        popClose();
+        if(api.pageParam.functionName){
+            api.execScript({
+                name: 'root_root',
+                script: api.pageParam.functionName+'();'
+            });
+        }
+        
+    }
+
+    function butongyi(){
+        openConfirm("您需要同意本隐私权政策才能继续使用","若您不同意本隐私权政策，很遗憾我们将无法为您提供服务",['仍不同意','查看协议'],function(data){
+            if(data==1){
+                openAlert("不同意协议，退出应用",function(){
+                    api.closeWidget({'silent':true});
+                });
+            }
+        });
+    }
+
+    function start(){
+        $('#webview').height(parseInt(api.winHeight*0.6));
+        var top=($(window).height()-$('#main').height())/2;
+        $('#main').css('top',top+'px').css("visibility","");
+        browser = api.require('webBrowser');
+        var offset = $api.offset($api.dom('#webview'));
+        browser.openView({
+            url: createUrl("xieyi"),
+            rect: {
+                x: parseInt(offset.l),
+                y: parseInt(offset.t),
+                w: parseInt(offset.w),
+                h: parseInt(offset.h)
+            }
+        }, function(ret, err) {
+
+        });
+    }
+
+    ready(function() {
+        api.removeLaunchView();
+        start();
+    });
+</script>
+
+</html>

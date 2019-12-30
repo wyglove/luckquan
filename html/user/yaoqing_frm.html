@@ -1,0 +1,84 @@
+
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="../../css/api.css"/>
+    <script src="../../script/api.js"></script>
+    <style>
+*{-webkit-user-select: none;}
+html,body{ width:100%;height:99% !important;}
+body{ box-sizing: border-box; background:#2f3032 !important;font-family:'STHeiti','Microsoft YaHei',Helvetica,Arial,sans-serif; text-align:center; color:#fff;}
+.clearfix:after{ content:''; display:block; clear:both;}
+#aheader{ margin-top:8px; height: 8%; min-height: 38px;}
+.h_text{ font-size:11px; line-height: 1.6}
+.h_name{ color:#fc4b75;}
+#acontent{ width:90%; margin:0 auto; box-shadow:0 3px 5px 5px #000; height: 80%; min-height: 373px; overflow: hidden; border-radius:6px;}
+.c_top{ padding:16px 16px;  background:#fff; }
+.c_text{ font-size:13px; color:#3A3A3A; text-align:left; font-weight:bold; line-height:32px;}
+.c_top img{ float:left; width:56px; height:56px; border-radius:50%; margin-right:8px;}
+.c_main{ background:-webkit-linear-gradient(-90deg,#ff4b00,#ff3946,#ff3946,#ff3946,#E61E46); padding-bottom:100%; }
+.c_title{ font-size:19px; padding:19px 0 8px 0;}
+.c_img{ width:176px; height:176px; border:8px solid #fff;box-sizing: border-box; background-color:#fff; margin:16px 0 16px 0;}
+    </style>
+</head>
+<body>
+<div id="aheader">
+    <p class="h_text">
+        <span class="h_name username"></span>
+        <span>专属二维码</span>
+    </p>
+    <p class="h_text">长按保存图片，分享此图赚钱</p>
+</div>
+<div id="acontent">
+    <div class="c_top clearfix">
+        <img id="avatar" src="">
+        <p class="c_text c_algin">我是<span class="h_name username" id="nick"></span></p>
+        <p class="c_text">我为<span class="h_name" id="webname"></span>代言</p>
+    </div>
+    <div class="c_main">
+        <p class="c_title">分享赚钱，如此简单</p>
+        <img class="c_img lazyimg" src="" id="erweima" ontouchstart="mousedown()" ontouchend="mouseup()">
+        <p id="changan" class="h_text">长按二维码，保存图片</p>
+    </div>
+</div>
+                </body>
+                </html>
+<script>
+var timer,img;
+function mousedown(){
+	var t=time();
+    timer = setTimeout(function () {
+        toastOpen('保存图片');
+        down(img,function(data){
+            saveImage(data,function(re,err){
+                toastClose();
+                if(re==1){
+                    toast('存储成功');
+                }else{
+                    openAlert(err);
+                }
+            });
+        },"fs://down/tuiguang_"+t+".jpg");
+    }, 1000);
+}
+
+function mouseup(){
+    clearTimeout(timer);
+}
+
+function start(){
+    $('#nick').html(user.nick);
+    $('#webname').html(appInfo.name);
+    img=addUrlParam(createUrl('img',{'fun':'qrcode'}));
+    $('#erweima').attr('src',img);
+    $('#avatar').attr('src',user.avatar);
+}
+ready(function(){
+    setTitle('我的二维码');
+    start();
+},1);
+</script>

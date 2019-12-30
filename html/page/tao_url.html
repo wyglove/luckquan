@@ -1,0 +1,382 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="../../css/api.css"/>
+    <script src="../../script/api.js"></script>
+    <style>
+    .titlebg{ padding: 3px 8px; border-radius: 10px; background-color: red; color: #FFF}
+    </style>
+</head>
+<body>
+<div id="wrap" class="flex-wrap flex-vertical">
+    <header style="background: #FFFFFF;color:#5f646d;border-bottom: 1px solid #DDDFE3;">
+            <div class="topbar">
+                <div id="left" style="color:#5f646d;position:relative" tapmode="hover" class="egret-img fl" onClick="leftClick()">
+                    <span class="iconfont">&#xe607;</span>
+                </div>
+                <div id="cha" style="color:#5f646d;position:relative; width:30px" tapmode="hover" class="egret-img fl" onClick="_closeWin()">
+                    <span class="iconfont">&#xe622;</span>
+                </div>
+                <div id="right" style="color:#5f646d" class="egret-img fr" tapmode="hover" onclick="rightClick()">
+                    <span class="iconfont">&#xe669;</span>
+                </div>
+                <div style="color:#5f646d" class="egret-img fr" tapmode="hover">
+                </div>
+                <div tapmode="hover" onclick="titleClick()" style="display: -webkit-flex;display: flex;-webkit-align-items: center;align-items: center;height: 100%;color:#333;justify-content: center;" class="egret-header-box">
+                    <div id="title" style="text-align:center;margin:auto;width:100%;white-space:nowrap;word-break:break-all;text-overflow:ellipsis;overflow:hidden;">
+                        <span style="text-indent:-1000px;display: inline-block;">标题</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+    <div id="main" class="flex-con">
+
+    </div>
+    <div id="footer"></div>
+</div>
+</body>
+</html>
+<script type="text/javascript">
+    var browser,url,itemId=0,leftFun=0,frmArr=[],title;
+    var _user={'type':0,'level':0};
+
+    function jscode(){/*
+    (function() {
+        var p = setInterval(function() {
+            if (document.body != 'undefined') {
+                clearInterval(p);
+                start();
+            }
+        }, 200);
+        function start(){
+            var loca = window.location;
+            var host = loca.host;
+            var path = loca.pathname;
+            var body = get('body');
+            var text = '奖励获取中';
+
+            switch (path) {
+                case 'detail.m.tmall.com':
+                    tmallFn();
+                    break;
+                case '/item.htm':
+                    tmallFn();
+                    break;
+                case 'h5.m.taobao.com':
+                    taobaoFn();
+                    break;
+                case '/awp/core/detail.htm':
+                    taobaoFn();
+                    break;
+                case '/m/jusp/alone/detailwap/mtp.htm':
+                    jhsFn();
+                    break;
+                default:
+                    break;
+            }
+
+            function taobaoFn() {
+                var oBar = get('.bottom-bar');
+                if (oBar && !oBar.length) {
+                    deleteBar(oBar, text);
+                }
+            }
+
+            function jhsFn() {
+                var oBottom = get('#J_bottombar');
+                var oBar = oBottom.children[0];
+                if (oBar) {
+                    deleteBar(oBar, text);
+                }
+            }
+
+            function tmallFn() {
+                var oBar = document.querySelector('#s-actionBar-container');
+                if (oBar) {
+                    deleteBar(oBar, text);
+                }
+            }
+
+            function get(selector) {
+                var elem = document.querySelectorAll(selector);
+                if (elem.length === 1) {
+                    return elem[0];
+                } else {
+                    return elem;
+                }
+            }
+
+            function deleteBar(oBar, context) {
+                var newElem = createElem('div', context, {
+                    background: '#F60',
+                    color:'#FFFFFF',
+                    position: 'absolute',
+                    width: '100%',
+                    height: '110%',
+                    top: '-5%',
+                    left: '0',
+                    zIndex: '99999999999',
+                    borderTop: '1px solid #f2f2f2',
+                    textAlign: 'center',
+                    overflow: 'hidden',
+                    lineHeight: oBar.offsetHeight + 'px',
+                    fontSize: '16px',
+                });
+                newElem.id = 'ddSetTip';
+                oBar.appendChild(newElem);
+                var url='http://lanjieapp/url/' + encodeURIComponent(window.location.href)+'/'+oBar.offsetHeight;
+                window.location.href = url;
+            }
+
+            function createElem(elemName, context, styles) {
+                elemName = elemName || 'div';
+                context = context || '';
+                var oElem = document.createElement(elemName);
+                oElem.innerHTML = context;
+                oElem.addEventListener('click', function() {
+                    window.location.href = 'http://lanjieapp/taobaoView';
+                }, false);
+                if (styles) {
+                    for (k in styles) {
+                        oElem['style'][k] = styles[k];
+                    }
+                }
+                return oElem;
+            }
+        }
+    })()
+        */;}
+
+    ready(function(){
+// var webView=api.require('uexWebView');
+// url="http://m.baidu.com";
+// var rect={'x':0,'y':100,'w':500,'h':500};
+// webView.openView({
+//     'url':url,'rect':rect,'intercept':[],'isHeader':'0','httpHeader':{},'color':'#DC143C'
+// },function(ret, err){
+// });
+//
+// setTimeout(function(){
+//     var rect={'x':0,'y':200,'w':200,'h':200};
+//     openFrame({'rect':rect,'mod':'page','act':'tao_url_footer_frm'});
+// },3000);
+//
+//
+// return false;
+
+//         url='http://m.baidu.com';
+// var browser = api.require('webBrowser');
+//         browser.openView({
+//             url: url,
+//             rect: {
+//                 x: 0,
+//                 y: 100,
+//                 w: 500,
+//                 h: 500
+//             }
+//         }, function(ret, err) {
+//         });
+//
+//
+//         setTimeout(function(){
+//             var rect={'x':0,'y':200,'w':200,'h':200};
+//             openFrame({'rect':rect,'mod':'page','act':'tao_url_footer_frm'});
+//         },3000);
+//         return false;
+
+        api.addEventListener({
+            name: 'reStart'
+        }, function(ret, err) {
+            bcWebView.close();
+            openWebView(url);
+        });
+        var cha=api.pageParam.cha;
+        if(cha==1){
+            var child=document.getElementById("cha");
+            child.parentNode.removeChild(child);
+        }
+        var title=getGlobalData('title');
+        if(title!=''){
+            $api.dom('#title').innerHTML=title;
+        }
+        headerFuns('url');
+        url=api.pageParam.url;
+        openWebView(url);
+    },0);
+
+    function setFanli(a){
+    	var user=get('userInfo')||_user;
+    	if(typeof user.type=='undefined'){
+    		user.type=0;
+    	}
+    	var fxbl=siteInfo.fxbl[user.type];
+    	a=parseFloat(a);
+    	var fanli=parseFloat(toFixed(fxbl*a));
+    	return fanli;
+    }
+
+    function getFanli(url,height){
+        var taoId=getTaoId(url);
+        if(taoId>0){
+            itemId=taoId;
+            var url=createUrl('goods',{'fun':'jiheApi','iid':taoId});
+            getAjax(url,function(data){
+                if(data.s==1 && !data.r.title){
+                    data.s=0;
+                }
+                if(data.s==1){
+                    var price=data.r.discount_price-data.r.price_jian;
+                    var commission=toFixed(data.r.rate*price);
+                    var fanli=setFanli(commission);
+                    if(data.r.price_jian>0){
+                        var wenzi='('+data.r.price_jian+')元券 赚¥'+fanli+' 立即购买';
+                    }else{
+                        var wenzi='优惠赚¥'+fanli+' 立即购买';
+                    }
+                }else{
+                    var wenzi='很遗憾，该商品没有奖励呢^^';
+                }
+                bcWebView.loadScript('document.getElementById("ddSetTip").innerHTML="'+wenzi+'"');
+            },'',3600);
+            //var rect={'marginLeft':0,'marginTop':ddInt(api.winHeight)-ddInt(height)-ddInt(api.safeArea.bottom),'marginRight':0,'marginBottom':api.safeArea.bottom};
+            //openFrame({'rect':rect,'mod':'page','act':'tao_url_footer_frm'});
+        }
+    }
+
+    function openWebView(url){
+        if(url=='' || typeof url=='undefined'){
+            alert('网址未定义');
+        }
+        var offset = $api.offset($api.dom('#main'));
+        var intercept=['http://lanjieapp','https://m.baidu.com'];
+        var js=getTpl(jscode);
+        var ua=navigator.userAgent;
+        ua=ua.replace(/ duoduo:(\d+)? (\w+)?;/,'');
+        ua+=' duoduo:'+get('DD_DDUSERID')+' '+get('DD_PASSWORD')+';';
+        bcWebView.setUa(ua);
+        bcWebView.open(url,{'x':offset.l,'y':offset.t,'w':offset.w,'h':offset.h},js,intercept,{
+            'title':function(str){
+                title=str;
+                document.getElementById('title').innerHTML=title;
+            },
+            'reStart':function(){
+                console.log('开始了');
+                itemId='';
+            },
+            'url':function(str,urls){
+                //淘宝详情页有框架，苹果下判断不出来哪个是当前网址
+                if(typeof urls=='object' && urls.length>1){
+                    for(var i in urls){
+                        if(urls[i]=='https://h5.m.taobao.com/applink/smb-fid-sender.html'){
+                            str=urls[str.length-1-i];
+                            break;
+                        }
+                    }
+                }
+                url=str;
+            },
+            'intercept':function(data){
+                if(data.indexOf('http://lanjieapp')==0){
+                    data=data.replace(/http:\/\/lanjieapp\//,'');
+                    data=data.split('/');
+                    if(typeof data[1]!='undefined' && data[1].indexOf('?')==0){
+                        var myURL = parseURL(data[1]);
+                    }
+                    if(data[0]=='close'){
+                        if(typeof data[1]!='undefined' && data[1]!=''){
+                            data=decodeURIComponent(data[1]);
+                            openAlert(data,function(){
+                                closeWin();
+                            });
+                        }else{
+                            closeWin();
+                        }
+                    }else if(data[0]=='login'){
+                        openPage('user','login');
+                        setPageParam('from','url');
+                    }else if(data[0]=='tblogin'){
+                        var from=api.pageParam.from;
+                        var webid=data[1];
+                        var nick=data[2];
+                        api.execScript({
+                            name: 'user_'+from,
+                            frameName: 'user_'+from+'_frm',
+                            script: 'apilogin.login("tb","'+webid+'","'+nick+'","");'
+                        });
+                        closeWin();
+                    }else if(data[0]=='fun'){
+                        ddevent.fun(data[1]);
+                    }else if(data[0]=='url'){
+                        getFanli(decodeURIComponent(data[1]),data[2]);
+                    }else if(data[0]=='taobaoView'){
+                        buy();
+                    }
+                }else if(data.indexOf('weixin://')==0){
+                    openApp(data);
+                    closeWin();
+                }else if(data.indexOf('https://uland')==0 || data.indexOf('https://s.click.taobao.com')==0){
+                    data=data.replace('https','taobao');
+                    openApp(data);
+                }
+            }
+        });
+    }
+
+    function _closeWin(){
+        bcWebView.close();
+        closeWin();
+    }
+
+    function leftClick(){
+        if(frmArr.length>0){
+            closeFrm(frmArr[frmArr.length-1])
+        }else{
+            bcWebView.back(function(){
+                _closeWin();
+            });
+        }
+    }
+
+    function closeFrm(name){
+        for(var i in frmArr){
+            if(frmArr[i]==name){
+                frmArr.splice(i,1);
+            }
+        }
+        api.closeFrame({'name':name});
+    }
+
+    function rightClick(){
+        ddevent.taobaoShare(itemId);
+    }
+
+    function buy(){
+        if(checkLogin(1)==false){
+            return false;
+        }
+        if(itemId==''){
+            return false;
+        }
+        var url = createUrl('goods', {'fun': 'clickUrl','iid': itemId,'ver':1});
+        getAjax(url, function(data) {
+            if (data.s == 1) {
+                baichuan.open(data.r.url);
+            } else if(data.s==2){
+                qudaoShouquan(data);
+            }else {
+                clear(2);
+                openAlert(data.r);
+            }
+        });
+    }
+
+    function titleClick(){
+        if(itemId){
+            ddevent.taobaoView(itemId);
+        }
+    }
+</script>

@@ -1,0 +1,398 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+<title></title>
+<link rel="stylesheet" type="text/css" href="../../css/api.css"/>
+<script src="../../script/api.js"></script>
+<style>
+		html, body {
+        background: #000;
+		}
+
+</style>
+</head>
+
+<body>
+		<div id="app"></div>
+
+</body>
+<script type="text/javascript">
+		var scrollVideo = null,
+				api_url = 'http://quan.meiquan8.com/page/cms.php?mod=goods&key=4713d9a0f6ea51f31e47c3bbe9c7845e&site_id=255004&code=douhuo&ajax_load_num=0',
+				page = 1,
+				pagesize = 10,
+				videoData = [], // 播放库
+				loadData = [], // 读取暂存库
+				reloadSize = 5, // 预加载数量
+				index = 0, // 播放位置
+				is_play = false, // 播放
+				is_lock = false; // 锁定
+
+		function getVideoData(callback) {
+				if (is_lock) {
+						return;
+				}
+        var url = api_url +'&page='+ page +'&pagesize='+ pagesize;
+        getJson(url, '', function(ret) {
+            // console.log(JSON.stringify(ret));
+            if (ret.s == 1) {
+								var datas = ret.data.goods, ln = datas.length;
+								if (ln == pagesize) {
+										++page;
+								} else {
+										is_lock = true;
+								}
+
+                for (var i = 0, arr = []; i < ln; i++) {
+                    if (datas[i].is_video == 1) {
+                        arr.push({
+														video_data: {
+																uid: datas[i].num_iid,
+		                            imageUrl: 'http://img01.xiaoxishengqian.com/app/img/black.png',
+		                            videoUrl: datas[i].video,
+		                            scalingMode: 1
+														},
+                            num_iid: datas[i].num_iid,
+                            img: datas[i].img,
+                            title: datas[i].title,
+														content: datas[i].content,
+														video: datas[i].video,
+                            sell: datas[i].sell,
+														quan_price: datas[i].quan_price,
+														price_jian: datas[i].price_jian,
+														fanli_bl: datas[i].fanli_bl
+                        })
+                    }
+                }
+                if (typeof callback == 'function') {
+                    callback(arr);
+                }
+            } else {
+            		is_lock == true;
+            }
+        });
+
+    }
+		function pauseVideo() {
+				is_play = false;
+				scrollVideo.pause();
+				openPauseBtn();
+		};
+    function openScrollVideo(data, callback) {
+        scrollVideo.openScrollVideo({
+            userData: data,
+						scalingMode: 1
+        }, function(ret, err) {
+						console.log(JSON.stringify(ret));
+            if (ret.status) {
+                if (typeof callback == 'function') {
+                    callback();
+
+                    scrollVideo.addEventListener(function(ret, err){
+                        if (ret.status) {
+                            if (ret.evenType == 'onPageSelected') { // 视频载入完成事件
+																if (!is_play) {
+																		closePauseBtn();
+																}
+																is_play = true;
+																index = ret.xh;
+
+																// 加载&&切换商品数据
+																sendEvtGoods();
+
+																// 加载下一页数据
+																if (videoData.length+1 >= loadData.length) {
+																		getVideoData(function(data) {
+																				loadData = loadData.concat(data);
+																		})
+																}
+
+																// 添加视频到播放库，该模块只能一个一个加
+																if (index + reloadSize >= videoData.length && videoData.length < loadData.length) {
+																		var add_video = loadData[videoData.length];
+																		if (typeof add_video == 'object' && add_video.video_data) {
+																				scrollVideo.addVideoData(add_video.video_data,function(ret,err){
+																						if (ret.status) {
+																								videoData.push(add_video);
+																						}
+																				});
+																		}
+																}
+
+                            } else if (ret.evenType == 'onSingleTapUp') { // 视频点击事件
+																if (is_play) {
+																		is_play = false;
+																		scrollVideo.pause();
+																		openPauseBtn();
+																} else {
+																		is_play = true;
+																		scrollVideo.play();
+																		closePauseBtn();
+																}
+                            }
+                        }
+                    });
+                }
+            } else {
+                console.log(JSON.stringify(err.msg))
+            }
+        });
+    }
+
+		// 打开页面头部+菜单栏
+		function openVideoHeader(title) {
+				var safeAreaTop = get('safeAreaTop') || 30;
+				api.openFrame({
+						name: 'douquan_header',
+						url: './header_frm.html',
+						rect: {
+								x: 0,
+								y: safeAreaTop,
+								w: api.winWidth,
+								h: 90
+						},
+						bgColor: 'rgba(0,0,0,0)',
+						pageParam: {
+								curPageBarColor: 'light',
+								title: title
+						}
+				});
+		};
+		// 打开右侧按钮组
+		function openVideoBtns() {
+				var safeAreaBottom = get('safeAreaBottom');
+				api.openFrame({
+						name: 'douquan_btns',
+						url: './btns_frm.html',
+						rect: {
+								x: api.winWidth-60,
+								// y: api.winHeight-130-200-safeAreaBottom,
+								y: api.winHeight-130-240-safeAreaBottom,
+								w: 50,
+								h: 240
+						},
+						bgColor: 'rgba(0,0,0,0)'
+				});
+		};
+		// 打开底部商品
+		function openVideoGoods(data) {
+				var safeAreaBottom = get('safeAreaBottom');
+				api.openFrame({
+						name: 'douquan_goods',
+						url: './goods_frm.html',
+						rect: {
+								x: 0,
+								y: api.winHeight-130-safeAreaBottom,
+								w: api.winWidth,
+								h: 120
+						},
+						bgColor: 'rgba(0,0,0,0)',
+						pageParam: {
+								curPageBarColor: 'light',
+								data: data
+						}
+				});
+		}
+		// 打开暂停按钮
+		function openPauseBtn() {
+				api.openFrame({
+						name: 'douquan_pausebtn',
+						url: './pausebtn_frm.html',
+						rect: {
+								x: api.winWidth/2-100,
+								y: api.winHeight/2-100,
+								w: 200,
+								h: 200
+						},
+						bgColor: 'rgba(0,0,0,0)'
+				});
+		}
+		// 关闭暂停按钮
+		function closePauseBtn() {
+				api.closeFrame({
+						name: 'douquan_pausebtn'
+				});
+		}
+
+		function sendEvtGoods() {
+				var obj = videoData[index];
+				api.sendEvent({
+						name: 'setGoods',
+						extra: {
+								data: obj
+						}
+				});
+		};
+		function openWenan() {
+				var obj = videoData[index];
+				var content = obj.content;
+				dlAlert({
+						title: '分享文案',
+						content: content,
+						leftColor: '#999',
+						rightBtnText: '复制',
+						rightback: function() {
+								clipboardSet(content);
+								toast('复制成功');
+						}
+				})
+		};
+		function downVideo(callback) {
+				var obj = videoData[index];
+				var savePath = 'fs://down/douquan/'+obj.num_iid+'.mp4';
+				down(obj.video, function(ret) {
+						// console.log(JSON.stringify(ret));
+						if (ret.state == 0) {
+								api.showProgress({
+										title: '视频下载中...',
+										text: ret.percent +'%'
+								});
+						} else if (ret.state == 1) {
+								api.showProgress({
+										title: '视频下载成功',
+										text: '正在保存...'
+								});
+								// 保存到相册（下载到UZMap下找不到）
+								api.saveMediaToAlbum({
+										path: savePath
+								}, function(ret, err) {
+										if (ret && ret.status) {
+												api.hideProgress();
+												toast('下载成功', 1500);
+												if (typeof callback == 'function') {
+														callback();
+												}
+										}
+								});
+						}
+				}, savePath, true);
+		};
+		function shareVideo() {
+				var obj = videoData[index];
+				var buttons = ['微信','QQ'];
+				var apps = ['weixin','mqq'];
+				fnActionSheet(buttons, function(index) {
+						var videoFsPath = 'fs://down/douquan/'+ obj.num_iid +'.mp4';
+						var fs = api.require('fs');
+						var fsret = fs.existSync({
+								path: videoFsPath
+						});
+						clipboardSet(obj.content);
+						if (!fsret.exist) {
+								downVideo(function() {
+										dlAlert({
+												title: '视频已保存至相册',
+												content: '商品的分享文案已复制； \n 分享视频后，请您记得回来复制淘口令到评论区',
+												leftColor: '#999',
+												leftBtnText: '稍后再说',
+												rightBtnText: '继续分享',
+												rightback: function() {
+														openApp(apps[index] +'://');
+												}
+										})
+								})
+						} else {
+								dlAlert({
+										title: '视频已保存至相册',
+										content: '商品的分享文案已复制； \n 分享视频后，请您记得回来复制淘口令到评论区',
+										leftColor: '#999',
+										leftBtnText: '稍后再说',
+										rightBtnText: '继续分享',
+										rightback: function() {
+												openApp(apps[index] +'://');
+										}
+								})
+						}
+				})
+		};
+		function copyTaoKL() {
+				var obj = videoData[index];
+				var url = createUrl('goods', {'fun': 'wenan', 'iid': obj.num_iid, 'ver': 1});
+				getJson(url, '', function(ret) {
+						if (ret.s == 1) {
+								var koulingText = '︶ㄣ復.制这条信息ㄣ，'+ ret.r.kouling +'，打开手機綯寳，即可抢购';
+								clipboardSet(koulingText);
+								toast('口令复制成功！');
+						} else {
+							 	openAlert(ret.r);
+						}
+				})
+		};
+		function fnActionSheet(buttons,callback) {
+				api.actionSheet({
+						title: '分享到',
+						cancelTitle: '取消',
+						destructiveTitle: '',
+						buttons: buttons
+				}, function(ret, err) {
+						var index = ret.buttonIndex - 1;
+						if (index>buttons.length-1) {
+								return false;
+						}
+						if (typeof callback == 'function') {
+								callback(index);
+						}
+				});
+		};
+		function toCourse() {
+				openPage('douquan','course');
+		}
+
+		function iniScrollVideo() {
+				getVideoData(function(data) {
+						loadData = data;
+						videoData = data;
+						for (var i = 0, ln = data.length, arr = []; i < ln; i++) {
+								arr.push(data[i].video_data);
+						}
+						setTimeout(function() {
+								openScrollVideo(arr, function() {
+										scrollVideo.play();
+										iniFixFrames();
+								})
+						}, 300)
+				});
+		}
+
+		function iniFixFrames() {
+				var obj = videoData[index];
+				openVideoHeader(obj.title);
+				openVideoGoods(obj);
+				openVideoBtns();
+		}
+
+		ready(function() {
+				scrollVideo = api.require('scrollVideo');
+				iniScrollVideo();
+				// 监听继续播放按钮
+				api.addEventListener({
+						name: 'goonPlay'
+				}, function(ret, err){
+						scrollVideo.play();
+						is_play = true;
+						closePauseBtn();
+				});
+
+				// 监听返回按钮
+				api.addEventListener({
+						name: 'closeDouquan'
+				}, function(ret, err){
+						if (ret) {
+								scrollVideo.closeScrollVideo();
+								api.closeWin();
+						}
+				});
+
+				api.addEventListener({
+						name: 'pause' // 监听app退到后台
+				}, function(ret, err){
+						pauseVideo(); // 暂停播放
+				});
+
+		}, 1);
+
+</script>
+</html>

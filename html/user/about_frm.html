@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+  <html>
+  <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+      <title>title</title>
+      <link rel="stylesheet" type="text/css" href="../../css/api.css"/>
+      <script type="text/javascript" src="../../script/api.js"></script>
+      <style>
+          body{
+              height: 100%;
+          }
+          header {
+              padding: 40px;
+          }
+          img.app-logo {
+              display: block;
+              width: 80px; height: 80px;
+              border-radius: 15px;
+              margin: auto;
+          }
+          .app-name {
+              margin-top: 15px;
+              font-size: 20px; line-height: 30px; text-align: center; font-weight: bold; color: #333;
+          }
+          .app-version {
+              text-align: center; color: #333;
+          }
+          section {
+              padding: 20px 0;
+          }
+          ul.list {
+              padding: 0 15px;
+              border-top: 1px solid #f5f5f5;
+              border-bottom: 1px solid #f5f5f5;
+          }
+          li.li-row {
+              height: 50px;
+              font-size: 15px; color: #333;
+              border-bottom: 1px solid #f5f5f5;
+          }
+          li.li-row:last-of-type {
+              border-bottom: 0
+          }
+          li.li-row i.iconfont {
+              font-size: 13px; color: #999;
+          }
+          footer {
+              padding: 10px;
+          }
+          footer p {
+              font-size: 12px; text-align: center; color: #999; letter-spacing: 1px;
+          }
+      </style>
+  </head>
+  <body class="flex-wrap flex-vertical">
+      <header>
+          <img class="app-logo" src="../../img/blank.png" alt="">
+          <p class="app-name">幸运券</p>
+          <p class="app-version"></p>
+      </header>
+      <section class="flex-con">
+          <ul class="list">
+              <li class="li-row flex-wrap flex-align flex-justify-sb" tapmode onclick="updateBanben();">
+                  <span>版本更新</span>
+                  <i class="iconfont">&#xe610;</i>
+              </li>
+          </ul>
+      </section>
+      <footer>
+          <p>湖州多多信息科技有限公司 版权所有</p>
+          <p><small>Copyright©2019-至今 luckq.com</small></p>
+          <p><small>All Rights Reserved</small></p>
+      </footer>
+
+  </body>
+  <script type="text/javascript">
+      function updateBanben() {
+          if (api.systemType == 'ios') {
+              if (appVersion() > appInfo.ios_banben) {
+                  toast('当前已是最高版本');
+              } else {
+                  set('updateTip', 0);
+                  versionUpdate.check();
+              }
+          } else {
+              if (appVersion() > appInfo.android_banben) {
+                  toast('当前已是最高版本');
+              } else {
+                  set('updateTip', 0);
+                  versionUpdate.check();
+              }
+          }
+      }
+
+      ready(function(){
+          setTitle('关于我们');
+          $('.app-logo').attr('src', appInfo.logo);
+          $('.app-version').html('V 1.'+ appVersion());
+      },1);
+  </script>
+  </html>

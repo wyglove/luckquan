@@ -1,0 +1,416 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="../../css/api.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/new_list0.css" />
+    <script src="../../script/rem.js"></script>
+    <script src="../../script/api.js"></script>
+    <style>
+        html,body {
+            background: #f5f5f5;
+        }
+        #ddlanmu{ position:fixed; top:0; z-index:999; width:100%; }
+        #paixu {
+            display: none;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 99;
+            background: #f5f5f5;
+        }
+
+        .paixu {
+            display: -webkit-flex;display: flex;
+            height: 35px;
+            line-height: 35px;
+        }
+        .paixu .item{-webkit-flex: 1;flex:1; border-right: 1px solid #e2e2e2;border-bottom: 1px solid #e2e2e2; text-align: center;box-sizing: border-box;}
+        .paixu .item:last-child{border-right: 0}
+        .paixu .item.cur{color: #f2676c;border-bottom: 1px solid #f2676c}
+
+        #zhuti-html #swiper-wrapper1{}
+        #zhuti-html .refreshtip {position: absolute;left: 0;width: 100%;margin: 8px 0;text-align: center;color: #999;}
+        #zhuti-html .swiper-container{overflow: visible;}
+        #zhuti-html .list-group-item{    position: relative; display: block;padding: 8px}
+
+        #ddlanmu .cf_xl a{
+        	border: 0 none;
+        	margin-left: 0;
+        	padding: 0;
+        	width: 20%;
+        	line-height: 16px;
+        }
+        #ddlanmu .cf_xl .kedian a:hover{border: 0 none;}
+        #ddlanmu .cf_xl a img{width: 80%; display: block; margin: 0 auto;}
+        #ddlanmu .swiper-wrapper{padding: 0; font-size: 16px;}
+        #ddlanmu .swiper-wrapper{border-bottom: 0 none;}
+        #ddlanmu .swiper-slide{text-align: center; padding: 8px 0!important; line-height: inherit; font-size: 16px;}
+        #ddlanmu .swiper-slide.cur {
+            color: #f5f5f5;
+            background: #fd1a34;
+            border-bottom: 0 none;
+        }
+        #ddlanmu .swiper-slide p{font-size: 10px;}
+        .jxxzhezhao{position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; opacity: 0.5 !important; z-index: 99; display: none;}
+
+        .arrow-down {
+            width:0;
+            height:0;
+            border-left:8px solid transparent;
+            border-right:8px solid transparent;
+            border-top:8px solid #f5f5f5;
+        	display: block;
+        	position: absolute;
+        	left: 50%;
+        	bottom: -8px;
+        	transform: translateX(-50%);
+        }
+        #ddlanmu .swiper-slide.cur .arrow-down{
+            width:0;
+            height:0;
+            border-left:8px solid transparent;
+            border-right:8px solid transparent;
+            border-top:8px solid #fd1a34;
+        	display: block;
+        	position: absolute;
+        	left: 50%;
+        	bottom: -8px;
+        	transform: translateX(-50%);
+        }
+
+        .wap-navTime {
+        	width: 100%; height: 42px;
+          position: fixed; top: 0;
+          margin: 0 0 16px;
+          color: #fff;
+        	background-color: #f5f5f5;
+          z-index: 1000;
+        }
+        .swiper-time {
+        	text-align: center;
+        	vertical-align: middle;
+        	padding: 8px 0;
+        	color: #5b5b5b;
+        	font-family: Arial;
+        	text-decoration: none;
+        	font-size: 16px;
+        	height: 32px !important;
+        	-webkit-flex: 1; flex: 1;
+        	position: relative;
+        }
+        .swiper-time.swiper-slide-next{
+        	color: #fff;
+        	background: #fd1a34;
+        }
+        .swiper-time .arrow-down{
+        	display: none;
+        }
+        .swiper-time.swiper-slide-next .arrow-down{
+        	display: block;
+        	position: absolute;
+        	left: 50%;
+        	bottom: -8px;
+        	transform: translateX(-50%);
+            width:0;
+            height:0;
+            border-left:8px solid transparent;
+            border-right:8px solid transparent;
+            border-top:8px solid #fd1a34;
+        }
+        .swiper-time p {
+        	font-size: 10px;
+        	color: #999;
+        	font-family: "Microsoft yahei";
+        	margin-top: -1px;
+        }
+        .swiper-time.swiper-slide-next p{
+        	color: #fff;
+        }
+        .arrow-down {
+            width:0;
+            height:0;
+            border-left:8px solid transparent;
+            border-right:8px solid transparent;
+            border-top:8px solid #fff;
+        	display: block;
+        	position: absolute;
+        	left: 50%;
+        	bottom: -8px;
+        	transform: translateX(-50%);
+        }
+        #goods {
+            margin: 0.6rem 0.1rem 0;
+        }
+
+    </style>
+</head>
+
+<body>
+    <div class="wap-navTime">
+	<div style="display: -webkit-flex; display: flex;" id="daojishitimeline">
+	<span class="swiper-time " onclick="setPageParam('time',1);ddevent.fun('page=taobao&time')"> 0:00<p>已开抢</p><div class="arrow-down"></div></span>
+	<span class="swiper-time " onclick="setPageParam('time',2);ddevent.fun('page=taobao&time')"> 10:00<p>已开抢</p><div class="arrow-down"></div></span>
+	<span class="swiper-time " onclick="setPageParam('time',3);ddevent.fun('page=taobao&time')"> 15:00<p>正在疯抢</p><div class="arrow-down"></div></span>
+	<span class="swiper-time " onclick="setPageParam('time',4);ddevent.fun('page=taobao&time')"> 19:00<p>即将开抢</p><div class="arrow-down"></div></span>
+	<span class="swiper-time " onclick="setPageParam('time',5);ddevent.fun('page=taobao&time')"> 20:00<p>即将开抢</p><div class="arrow-down"></div></span>
+	</div>
+</div>
+</div>
+<div id="goods">
+<div class="waterfall-list" id="list_data"></div></div>
+<div id="loading"><span class="loading-img"></span>数据加载中</div>
+<div style="text-align: center; padding-top: 40%; display:none" class="nodata nostart">
+	<p class="iconfont" style="font-size: 3em;">&#xe691;</p>
+	<p>活动尚未开始，请准点关注哦</p>
+</div>
+<div style="text-align: center; padding-top: 40%; display:none" class="nodata endding">
+	<p class="iconfont" style="font-size: 3em;">&#xe690;</p>
+	<p>本场活动已结束，请关注其它优惠活动</p>
+</div>
+<div style="text-align: center; color: #333;  padding-top: 40%; display:none" class="nodata starting">
+    <p class="iconfont" style="font-size: 3em;">&#xe6b4;</p>
+    <p>暂无数据</p>
+</div>
+<div class="jxxzhezhao"></div>
+</body>
+</html>
+<script>
+var hour,imgw=0,zuori=0,_user={'type':0,'level':-1};
+var iosAudit,cacheClass;
+/*快抢*/
+var hours=new Array();
+hours[1]="0";
+hours[2]="10";
+hours[3]="15";//13
+hours[4]="19";//18
+hours[5]="21";
+nowhour=0;
+function DownCount() {
+    var date = new Date();
+	var nowtime = parseInt(date.getTime() / 1000);
+	var Y = date.getFullYear();
+	var M = (date.getMonth()+1 < 10 ? '0'+(date.getMonth()+1) : date.getMonth()+1);
+	var D = date.getDate();
+	var h = date.getHours();
+
+	var nexttime='';
+	var t='';
+	var daojishitimeline='';
+	for(i in hours){
+		if(hours[i]>h && nexttime==''){
+			t=i;
+			nexttime=Y+'/'+M+'/'+D+' '+hours[i]+':00:00';
+		}
+		str2='';
+		str1='';
+		if(i==hours.length-1){
+			nt=24;
+		}else{
+			j=parseInt(parseInt(i)+1);
+			nt=hours[j];
+		}
+
+		if(i==hour){
+			str2='swiper-slide-next';
+		}
+		if(zuori==1){
+			str1='已开抢';
+		}else{
+			if((hours[i]<h && nt>h) || hours[i]==h){
+				nowhour=i;
+				str1='正在疯抢';
+			}else if(hours[i]>h){
+				str1='即将开抢';
+			}else{
+				str1='已开抢';
+			}
+		}
+    daojishitimeline+='<span class="swiper-time '+str2+'" onClick="setNav(\''+i+'\')"> '+hours[i]+':00<p>'+str1+'</p><div class="arrow-down"></div></span>';
+
+	}
+	$('#daojishitimeline').html(daojishitimeline);
+	/*
+	var _date = new Date(nexttime);
+	var etime =  parseInt(_date.getTime() / 1000);
+	var minus =parseInt(etime-nowtime);
+	timechange(minus);
+	window.setTimeout("DownCount()", 1000);
+	*/
+
+}
+function timechange(minus) {
+    CSecond = minus % 60;
+    CMinute = parseInt(minus % 3600 / 60);
+    CHour = parseInt(minus / 3600);
+    if (CMinute < 10) {
+        CMinute = "0" + CMinute;
+    }
+    if (CHour < 10) {
+        CHour = "0" + CHour;
+    }
+    if (CSecond < 10) {
+        CSecond = "0" + CSecond;
+    }
+    $("#qhour").html(CHour);
+    $("#qminute").html(CMinute);
+    $("#qsecond").html(CSecond);
+}
+/*快抢*/
+function shareGoods(iid){
+	if(nowhour<hour && zuori==0){
+		toastOpen('即将开始');
+	}else{
+		ddevent.shareGoods(iid);event.stopPropagation();
+	}
+}
+
+    function toView(iid){
+    	if(nowhour<hour && zuori==0){
+    		toastOpen('活动即将开始');
+    	}else{
+    		ddevent.taobaoView(iid);
+    	}
+    }
+
+
+function setNav(h){
+	hour=h;
+	DownCount();
+    getData(1);
+}
+function getData(unlock){
+	getData1(unlock);
+}
+
+function loadLazyImg(){
+	$('img.lazyimg').picLazyLoad();
+}
+
+function getData1(unlock){  /*获取云端数据*/
+  	unlock=unlock||0;
+    var _this=this;
+    if(unlock==1){
+        this.lock=0;
+        this.page=0;
+    }
+    if(typeof this.lock!='undefined' && this.lock==1){
+        return false;
+    }
+    if(typeof this.page=='undefined'){
+        this.page=0;
+    }
+    this.page++;
+  	this.lock=1;
+  	if(this.page==1){
+  		  $('#list_data').html('');
+  	}
+  	$('.nodata').hide();
+  	$('#loading').show();
+    var url=goodsUrl()+'&page='+this.page;
+    getJson(url,'数据获取中',function(ret){
+  		  $('#loading').hide();
+        var html='';
+        if(ret.s==1){
+      			if(_this.page==1){
+      				  $('#list_data').html('');
+      			}
+            if (typeof ret.data != 'undefined' && typeof ret.data.goods != 'undefined') {
+                var isWait = (nowhour<hour && zuori==0)?true:false;
+                html = transGoodsHtml({
+                    data: ret.data.goods,
+                    laiyuan: 'tb',
+                    isWait: isWait
+                });
+            }
+
+      			if(html!=''){
+        				$('#list_data').append(html);
+                loadLazyImg();
+      			}else{
+        				if(nowhour==hour){
+        					  $('.starting').show();
+        				}else if(nowhour>hour){
+        					  $('.endding').show();
+        				}else if(nowhour<hour){
+        					  $('.nostart').show();
+        				}
+      			}
+        }
+    })
+}
+
+function catClick(_cid,type){
+    type=type||0;
+	cid=_cid;
+	getData(1);
+	if(type==1){
+	    $('.jiantou span').toggleClass('fangxiang');
+        $('.cf_xl').toggle();
+		$('.jxxzhezhao').toggle();
+	}else{
+		$('.cf_xl').hide();
+		$('.jxxzhezhao').hide();
+	}
+	if(cid==0){
+		$('#scroller .swiper-slide').removeClass('cur');
+    	$('#cid_0').addClass('cur');
+    	$('#cid_arr a').removeClass('cur');
+    	$('#cid1_0').addClass('cur');
+	}else{
+		setCurCid();
+	}
+}
+
+function goodsUrl(){
+	var data={'code':'qiang','hour':hour,'zuori':zuori,'is_x':'1','pagesize':20};
+	var url=buildUrl('app_goods',data);
+	return url;
+}
+
+function rightClick(){
+	if(zuori==0){
+		zuori=1;
+		rightHtml('<span>返回</span>');
+
+	}else{
+		zuori=0;
+		rightHtml('<span>昨日<br/>回顾</span>');
+	}
+	DownCount();
+	getData(1);
+}
+
+function start(){
+	DownCount();
+    getData(1);
+}
+
+function reStart() {
+    console.log('111');
+}
+
+ready(function() {
+    iosAudit=iosShenhe();
+    imgw=api.winWidth*0.42;
+    hour=api.pageParam.time;
+    setTitle('快抢商品');
+	rightHtml('<span>昨日<br/>回顾</span>',1);
+    start();
+    setBounce();
+    infinite(function(){
+        getData();
+    });
+    loadScript.go('/script/swiper_min.js',function(){
+		var swiper = new Swiper('.swiper-container6', {
+			pagination: '.swiper-pagination',
+			slidesPerView: 5,
+			paginationClickable: true
+		});
+	},'/css/swiper_min.css');
+},2);
+</script>

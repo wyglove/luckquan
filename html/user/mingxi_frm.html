@@ -1,0 +1,253 @@
+
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="../../css/api.css"/>
+    <script src="../../script/api.js"></script>
+    <style>
+.dmingxi{
+    background: #fff;
+}
+.dtable{
+    display: block;
+    width: 95%;
+    margin: 0 auto;
+}
+.dtable_ul{
+    display: flex;
+    width: 100%;
+}
+.dtable_ul li{
+    flex: 1;
+    text-align: center;
+    padding: 8px 0;
+    border-bottom: 2px solid #fff;
+}
+.dtable_ul li.current{
+    border-bottom: 2px solid #ee3d47;
+    color: #ee3d47;
+}
+.dline{
+    width: 100%;
+    float: left;
+    border-bottom:1px solid #dfdfdf;
+}
+.tongji{
+    padding: 16px 0;
+    text-align: center;
+}
+.tongji .tiotle{
+    font-size: 14px;
+    margin-bottom: 8px;
+}
+.yue{
+    color: #ee3d47;
+    font-size: 20px;
+}
+.list_jilu .li{
+    display: flex;
+    padding: 8px 0;
+    border-top: 1px solid #dfdfdf;
+}
+
+.list_jilu .li .leftnr{
+    flex: 1;
+    text-align: left;
+    padding-left: 16px;
+}
+.list_jilu .li .rightnr{
+    flex: 1;
+    text-align: right;
+    padding-right: 16px;
+    padding-top: 12px;
+}
+.time{
+    color: #a7a7a7;
+    font-size: 14px;
+    margin-top: 8px;
+}
+.rightnr.sucess{
+    color: #ee3d47;
+}
+    </style>
+</head>
+<body>
+<div class="bc-bg bgccc">
+
+            <div class="dmingxi">
+                <div class="dtable">
+                    <ul id="typeArr" class="dtable_ul">
+
+                    </ul>
+                </div>
+                <div class="dline"></div>
+                <div class="clear"></div>
+                <div class="tongji">
+                    <p class="tiotle"><span id="title"></span>（元）</p>
+                    <p class="yue" id="money">0.00</p>
+                </div>
+                <div class="list_jilu">
+                    <ul id="list_data">
+
+
+
+
+                    </ul>
+                </div>
+                <div id="loading"><span class="loading-img"></span>数据加载中</div>
+            </div>
+        </div>
+                </body>
+                </html>
+<script>
+var type=0;
+var typeArr=['全部','自购','推单','粉单','代理'];
+
+function view(shijian,id){
+	if(shijian=='tao_beidong' || shijian=='jd_beidong' || shijian=='pdd_beidong'){
+		var $id=$('#jiangli_'+id);
+		var a=$id.css('display');
+		if(a=='none'){
+			var url=createUrl('caiwu',{'fun':'duoji_order','page':1,'id':id});
+			getJson(url,'数据获取中',function(data){
+				if(data.s==1 && typeof data.r[0]!='undefined'){
+					data=data.r[0];
+					$id.toggle();
+					$id.find('.dengji').html('【'+String.fromCharCode(64+parseInt(data.level))+'】');
+					$id.find('.haoyou').html(data.name);
+					$id.find('.danhao').html(data.trade_id);
+					$id.find('.shijian').html(data.create_time);
+					if(data.type==1){
+						data.type='【淘宝】';
+					}else if(data.type==2){
+						data.type='【京东】';
+					}else if(data.type==3){
+						data.type='【拼多多】';
+					}
+					$id.find('.pingtai').html(data.type);
+				}
+			});
+		}else{
+			$id.toggle();
+		}
+	}
+}
+
+function dataTpl(){/*<% for(var i = 0; i < this.length; i++) {var data = this[i]; %><li onclick="view('<%data.shijian%>',<%data.id%>)">
+<div class="li">
+<div class="leftnr">
+    <p><%data.title%></p>
+    <p class="time"><%data.addtime%></p>
+</div>
+<div class="rightnr sucess">+<%data._money%></div>
+
+<div id="jiangli_<%data.id%>" style="display:none;background: #F1EDED;line-height: 2;padding: 0 16px;font-size: 14px;">
+    <div style="display:flex">
+        <div style="flex:1;">等级</div><div class="dengji"></div>
+    </div>
+    <div style="display:flex">
+        <div style="flex:1;">好友</div><div class="haoyou"></div>
+    </div>
+    <div style="display:flex">
+        <div style="flex:1;">订单号</div><div class="danhao"></div>
+    </div>
+    <div style="display:flex">
+        <div style="flex:1;">下单时间</div><div class="shijian"></div>
+    </div>
+    <div style="display:flex">
+        <div style="flex:1;">平台</div><div class="pingtai"></div>
+    </div>
+</div>
+</div>
+                            <% } %>*/;}
+
+function getData1(a){
+    type=a;
+	$('#list_data').html('');
+    getData(1);
+}
+
+function getData(unlock){
+    unlock=unlock||0;
+    var _this=this;
+    if(unlock==1){
+        this.lock=0;
+        this.page=0;
+		$('#loading').show();
+    }
+    if(typeof this.lock!='undefined' && this.lock==1){
+        return false;
+    }
+    this.lock=1;
+    if(typeof this.page=='undefined'){
+        this.page=0;
+    }
+    this.page++;
+    $('.dtable_ul li').removeClass('current');
+    $('.dtable_ul li').eq(type).addClass('current');
+    var url=createUrl('caiwu',{'fun':'mingxi','page':this.page,'type':type});
+    getJson(url,'数据获取中',function(data){
+        _this.lock=0;
+        if(data.s==1){
+            if(_this.page==1){
+                $('#money').html(toFixed(data.r.total));
+                $('#list_data').html('');
+                $('#title').html(typeArr[type]);
+            }
+            var html=barretTpl(dataTpl,data.r.data);
+            if(html==''){
+                if(_this.page==1){
+                    html=emptyData('暂无数据~~~');
+                }else{
+                    toastOpen('没有啦');
+                }
+            }
+            $('#list_data').append(html);
+			if(html=='' || size(data.r.data)<20){
+				_this.lock=1;
+				$('#loading').hide();
+			}
+        }else{
+            toastOpen('数据获取失败');
+        }
+    },3600);
+}
+
+function start(){
+    getData();
+    infinite(function(){
+        getData();
+    });
+}
+
+function reStart(){
+    clear(2);
+    getData(1);
+}
+
+ready(function(){
+    setTitle('奖励明细');
+    start();
+
+      if (iosShenhe() == 1) {
+        $('.ios_hide_new').hide();
+        var typeArr=['全部','自购'];
+    }
+
+	setBounce(reStart);
+    var html='';
+    for(var i in typeArr){
+        if(i==0){
+            var c='class="current"';
+        }else{
+            var c='';
+        }
+        html+='<li tapmode onclick="getData1('+i+')" '+c+'>'+typeArr[i]+'</li>';
+    }
+    $('#typeArr').html(html);
+},1);
+</script>

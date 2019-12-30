@@ -1,0 +1,145 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="../../css/api.css"/>
+    <script src="../../script/api.js"></script>
+    <style>
+body{
+  text-align: center;
+  background-color: #FFFFFF;
+  background:url(../../img/signBg.jpg);background-size:cover
+}
+
+.container{
+padding-bottom: 0.8em;
+    background: #fff;
+
+}
+.center{
+    text-align: center;
+    width: 100%;
+}
+.center .gold_image{
+
+}
+.center .gold_image img{
+  margin-top:1em;
+  width:6em;
+  height: 6em;
+}
+.point_num{
+  margin-top:0.27em;
+  font-size:2em;
+}
+.point_num .desc{
+  font-size:0.75em;
+  color: rgba(0,0,0,0.68);
+  letter-spacing: 0;
+}
+.point_num .num{
+  color: #FF5E22;
+  font-size:0.75em;
+}
+.to_sign{
+  width:8em;
+  height:2em;
+  line-height:2em;
+  background-color: #FF5E22;
+  border-radius: 1em;
+  margin:0 auto;
+}
+.sign_fond{
+  font-size:0.9em;
+  color: #FFFFFF;
+  letter-spacing: 0;
+
+
+}
+.to_sign img{
+  position: absolute;
+  margin-top:0.4em;
+  margin-left:-0.2em;
+  width: 1.25em;
+  height:1.25em;
+}
+.main-title {
+    background: #FF5E22;
+    padding: 0.5em 0.625em;
+    width: 100%;
+    z-index: 12;
+    display: block;
+    box-sizing: border-box;
+}
+.main-title .menu-detail {
+    font-family: Simhei;
+    font-size: 1em;
+    height: 1.5em;
+    line-height: 1.5em;
+    color: white;
+    text-align: center;
+}
+.Customer_radius_image{
+  line-height: 3em;
+  height:3em;
+
+}
+.Customer_radius_image .please{
+  display: block;
+  width: 9.84em;
+  font-size: 0.52em;
+  position:relative;
+  top:3.2em;
+  left:-11.5em;
+}
+.Customer_radius_image img{
+  width:0.81em;
+  height:0.81em;
+  position: absolute;
+  left:0.625em;
+  top:0.3em;
+}
+.Customer_radius_image span{
+  font-size:0.60em;
+  color: #FFFFFF;
+  position: absolute;
+  left:58px;
+  letter-spacing: 0;
+}
+</style>
+</head>
+<body>
+    <img src="../../img/sign_banner.jpg" style="display:block; width:100%" />
+    <div class="center">
+            <div class="gold_image"><img src="../../img/jifenbao.png" alt=""></div>
+            <div class="point_num"><span class="desc"><span class="tbname"></span>数量</span> <span class="num"></span></div>
+                    <div class="to_sign" style="margin-top: 1em" onClick="sub()"><span class="iconfont" style="color: #ffffff">&#xe641;</span> <span class="sign_fond">每日签到领<span id="jifenbao"></span></span>
+            </div>
+                </div>
+</body>
+</html>
+<script>
+function sub(){
+    var url=createUrl('caiwu',{'fun':'sign'});
+    getJson(url,'数据提交中',function(data){
+        if(data.s==1){
+            openAlert(data.r);
+			var num=ddInt($('.point_num .num').text());
+			num+=ddInt(data.str);
+			$('.point_num .num').text(num);
+            updateUserIndex(1);
+        }else{
+            openAlert(data.r);
+        }
+    },0);
+}
+ready(function(){
+    setTitle('每日签到');
+    $('.tbname').html(siteInfo.TBMONEY);
+    $('#jifenbao').html(String(appInfo.sign_jifenbao)+'个');
+    $('.point_num .num').text(user.jifenbao);
+},2);
+</script>

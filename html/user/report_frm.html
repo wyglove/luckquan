@@ -1,0 +1,238 @@
+
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="../../css/api.css"/>
+    <script src="../../script/api.js"></script>
+    <style>
+    i,em{font-style: normal}
+.duser{
+    background: #ed3b49;
+    width: 100%;
+    display: inline-block;
+    margin-bottom: 10px;
+}
+.duser_header{
+    text-align: center;
+    color: #fff;
+    padding: 16px 0;
+}
+.duser_header .lilv{
+    font-size: 40px;
+}
+.duser_header .lilv em{
+    font-size: 10px;
+}
+.duser_header .tip{
+    font-size: 14px;
+    margin-top: 8px;
+}
+.xintism{
+    width: 90%;
+    display: block;
+    margin: 0 auto;
+    border-top: 1px solid #fff;
+}
+.xx_list{
+    display: flex;
+    padding: 12px 0;
+    width: 100%;
+}
+.xx_list li{
+    flex: 1;
+    color: #fff;
+    text-align: center;
+    font-size: 12px;
+    border-right:1px solid #FFF
+}
+.xx_list li:last-child{ border:0}
+.xx_list .fa{
+    margin-right: 10px;
+}
+.zhanshibk{
+    padding-bottom: 10px;
+    display: flex;
+    width: 100%;
+    background: #fff;
+}
+.xx_zhanshi_left,.xx_zhanshi_right{
+    flex: 1;
+}
+.zs_list{
+    text-align: center;
+    font-size: 14px;
+    padding: 16px 0;
+}
+.zs_list .number{
+    color: #ed3b49;
+    font-size: 24px;
+    margin-top: 8px;
+}
+.clickbtn{
+    border: 1px solid #ed3b49;
+    border-radius: 16px;
+    color: #ed3b49;
+    padding: 8px 32px;
+}
+.zs_line{
+    border-left: 1px solid #dfdfdf;
+    flex: 0.001;
+    height: 128px;
+    margin-top: 40px;
+}
+.tongzhi{
+    background: #fff;
+    margin-top: 10px;
+    padding: 10px 0;
+    padding-left: 10px;
+}
+.tongzhi{
+    font-size: 12px;
+    color: #666;
+}
+.tongzhi em{
+    color: #ed3b49;
+    font-weight: bold;
+    margin-right: 8px;
+    font-size: 16px;
+    font-family: 微软雅黑;
+}
+.share_xx{
+    margin-top: 10px;
+    background: #fff;
+    text-align: center;
+    padding: 16px 0;
+}
+.share_list{
+    width: 95%;
+    display: block;
+    margin: 0 auto;
+}
+.share_list .dlist{
+    display: flex;
+    margin-left: 10px
+}
+.share_list .dlist span{
+    flex: 1;
+    margin-top: 16px;
+    background: #fef0f0;
+    padding: 16px;
+    margin-right: 10px;
+    font-size: 14px;
+    border-radius: 8px;
+}
+.share_list .dlist img{
+    width: 80%;
+    display: block;
+    margin: 0 auto 8px;
+}
+    </style>
+</head>
+<body>
+    <div class="bc-bg bgccc">
+            <div class="duser">
+                <div class="duser_header">
+                    <p class="lilv"><span id="zong">0</span><em>元</em></p>
+                    <p class="tip">总资产</p>
+                </div>
+                <div class="xintism">
+                    <ul class="xx_list">
+                        <li onClick="zhuanqian()"><span class="iconfont">&#xe636;</span>如何赚钱</li>
+                        <li onClick="openPage('user','fenbu')"><span class="iconfont">&#xe630;</span>收益分布</li>
+                        <li onClick="openPage('user','yuebao')"><span class="iconfont">&#xe615;</span>收益月报</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="zhanshibk">
+                <div class="xx_zhanshi_left">
+                    <div class="zs_list">
+                        <p>今日预估(元)</p>
+                        <p class="number" id="jryg">0</p>
+                    </div>
+                    <div class="zs_list">
+                        <p>今日结算(元)</p>
+                        <p class="number" id="jrjs">0</p>
+                    </div>
+                    <div class="zs_list">
+                        <span tapmode onClick="openPage('user','duoji_order')" class="clickbtn">粉丝订单</span>
+                    </div>
+                </div>
+                <div class="zs_line"></div>
+                <div class="xx_zhanshi_right">
+                    <div class="zs_list">
+                        <p>昨日预估(元)</p>
+                        <p class="number" id="zryg">0</p>
+                    </div>
+                    <div class="zs_list">
+                        <p>昨日结算(元)</p>
+                        <p class="number" id="zrjs">0</p>
+                    </div>
+                    <div class="zs_list">
+                        <span tapmode onClick="tuidanSelect()" class="clickbtn">推广订单</span>
+                    </div>
+                </div>
+            </div>
+            <div class="share_xx">
+                <p>分享赚</p>
+                <div class="share_list">
+                    <div class="dlist">
+                        <span tapmode onClick="openPage('user','yaoqing')">
+                            <img src="../../img/fenxiang1.png">
+                            <em>面对面扫</em>
+                        </span>
+                        <span tapmode onClick="share()">
+                            <img src="../../img/fenxiang2.png">
+                            <em>分享链接</em>
+                        </span>
+                        <span tapmode onClick="ddevent.openPage('user','haibao')">
+                            <img src="../../img/fenxiang3.png">
+                            <em>分享海报</em>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+</body>
+</html>
+<script>
+function zhuanqian(){
+    ddevent.url(URL+'plugin.php?mod=meiquan&act=article&id=zhuanqian');
+}
+
+function tuidanSelect(){
+	ddActionSheet('选择订单','取消','淘宝,京东,拼多多',function(data){
+		setPageParam('tuidan',1);
+		if(data==0){
+			openPage('user','taobao');
+		}else if(data==1){
+			openPage('user','jd');
+		}else if(data==2){
+			openPage('user','pdd');
+		}
+	});
+}
+
+function start(){
+    $('#TBMONEY').html(siteInfo.TBMONEY);
+    var url=createUrl('caiwu',{'fun':'report'});
+    getJson(url,'数据获取中',function(data){
+        if(data.s==1){
+            for(var i in data.r){
+                $('#'+i).html(data.r[i].toFixed(2));
+            }
+        }else{
+            openAlert(data.r);
+        }
+    },0);
+}
+
+ready(function(){
+    setTitle('收益报表');
+    start();
+    setBounce(reStart);
+},1);
+</script>

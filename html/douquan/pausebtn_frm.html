@@ -1,0 +1,65 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+<title></title>
+<link rel="stylesheet" type="text/css" href="../../css/api.css"/>
+<style>
+    html, body {
+        background: rgba(0,0,0,0);
+    }
+    .iconbox {
+        width: 200px; height: 200px;
+        background: -webkit-radial-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0) 70%);
+        background: radial-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0) 70%);
+    }
+    .iconbox img {
+        width: 30%;
+        margin-left: 3%;
+        opacity: 0.8;
+        -webkit-transition: opacity 0.3s, width 0.3s;
+        transition: opacity 0.3s, width 0.3s;
+    }
+    .iconbox img.active {
+        width: 80%;
+        opacity: 0;
+    }
+</style>
+</head>
+
+<body>
+    <div class="iconbox flex-wrap flex-align flex-justify">
+        <img id="iconbtn" src="../../img/fq_play.png" alt="" onclick="toplay();">
+    </div>
+</body>
+<script type="text/javascript">
+    var el = document.getElementById('iconbtn');
+    function toplay() {
+        if (!hasCls(el, 'active')) {
+            addCls(el, 'active');
+        }
+        setTimeout(function() {
+            api.sendEvent({
+                name: 'goonPlay'
+            });
+        },300);
+    }
+
+    function hasCls(el, cls) {
+        return el.className.indexOf(cls) > -1 ? true : false;
+    }
+
+    function addCls(el, cls) {
+        if ('classList' in el) {
+            el.classList.add(cls);
+        } else {
+            var preCls = el.className;
+            var newCls = preCls + ' ' + cls;
+            el.className = newCls;
+        }
+        return el;
+    }
+</script>
+</html>

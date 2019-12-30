@@ -1,0 +1,104 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title></title>
+    <style>
+    html,body,table,tr{height: 100%}
+    </style>
+    <script type="text/javascript" src="script/api.js"></script>
+</head>
+
+<body>
+    <table style="display:none">
+        <tr><td>
+            <img src="img/index.gif" style="display: block;width: 100%;margin: auto;">
+        </td></tr>
+    </table>
+
+</body>
+<script type="text/javascript">
+    var apiStart=0,ROOT=1,fs;
+    setTimeout(function(){
+        if(apiStart==0){
+            start();
+        }
+    },2000);
+
+    function start(){
+        var fs = api.require('fs');
+		var fsArr=['img','script','css'];
+		for(var i in fsArr){
+			var ret = fs.readDirSync({
+				path: 'widget://'+fsArr[i]+'/'
+			});
+			if (!ret.status) {
+				alert('列目录错误');
+				return false;
+			}
+			var file=ret.data;
+			for(var i in file){
+				var ret = fs.removeSync({
+					path: 'fs://'+fsArr[i]+'/'+file[i]
+				});
+				var ret = fs.copyToSync({
+					oldPath: 'widget://'+fsArr[i]+'/'+file[i],
+					newPath: 'fs://'+fsArr[i]+'/'
+				});
+				if(!ret.status){
+					//alert('widget://'+fsArr[i]+'/'+file[i]+':复制错误');
+				}
+			}
+		}
+
+        document.getElementsByTagName('table')[0].style.display='block';
+        setTimeout(function(){
+            document.getElementsByTagName('table')[0].style.display='none';
+        },3000);
+        apiStart=1;
+        var tplVerson = ddInt(get('DD_tplVerson'));
+        var fs = api.require('fs');
+        var ret = fs.existSync({path: 'fs://template/'+TPL_NAME+'_'+TPL_VERSION+'/script/root.js'});
+        if(ret.exist==false){
+            tplVerson=0;
+            set('DD_tplVerson',0);
+        }
+        if(tplVerson>=TPL_VERSION_NUM){
+            var jsPath='fs://template/'+TPL_NAME+'_'+TPL_VERSION+'/script/root.js';
+            var jsCode=api.readFile({sync: true,path: jsPath});
+            loadJsCode(jsCode);
+            setTimeout(function(){
+                htmlLoad();
+            },500);
+        }else{
+            var jsPath='script/root.js';
+            loadScript.go(jsPath,function(){
+                if(typeof htmlLoad=='function'){
+                    htmlLoad();
+                }else{
+                    setTimeout(function(){
+                        alert(htmlLoad);
+                    },1000);
+                }
+            });
+        }
+    }
+
+    function reStart(){
+        api.closeToWin({name: 'root'});
+        setTimeout(function(){
+            start();
+        },1000);
+    }
+
+    apiready = function() {
+        setTimeout(function(){
+            api.removeLaunchView(true);
+        },3000);
+        start();
+    }
+</script>
+</html>

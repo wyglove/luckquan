@@ -1,0 +1,416 @@
+
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="../../css/api.css" />
+    <style>
+        body {
+            background: #FFFFFF
+        }
+
+        .top_head {
+            background: #f3fae8;
+            width: 100%;
+            padding: 12px 0;
+            border-bottom: 1px solid #c7cdbf;
+            color: #627f25;
+            text-indent: 16px;
+            font-size: 16px;
+        }
+
+        .top_head .iconfont {
+            margin-right: 8px;
+            margin-top: 4px;
+        }
+
+        .guize {
+            float: right;
+            color: #666;
+            margin-right: 4px;
+        }
+
+        .mid_con {
+            padding: 5%;
+        }
+
+        .xz_title {
+            color: #888;
+            font-size: 16px;
+            margin-bottom: 8px;
+            display: inline-block;
+            width: 100%;
+        }
+
+        .xz_img img {
+            width: 93%;
+            display: block;
+            margin: 0 auto;
+            border: 1px solid #e2e2e2;
+            border-radius: 4px;
+            position: relative;
+        }
+
+        .change {
+            position: absolute;
+            right: 4px;
+            top: 4px;
+            font-size: 20px;
+            color: #d6d6d6;
+        }
+
+        .change_on {
+            color: #e54300;
+        }
+
+        .xz_mess {
+            margin-top: 11px;
+            margin-bottom: 11px;
+            line-height: 24px;
+        }
+
+        .xz_mess .firstspan {
+            color: #666;
+        }
+
+        .xz_mess .firstspan em {
+            color: #f00;
+        }
+
+        .xz_mess .twospan {
+            float: right;
+            color: #e54300;
+        }
+
+        .xz_mess #wenan {
+            display: block;
+            border: 1px solid #d6d6d6;
+            resize: none;
+            height: 112px;
+            padding: 3%;
+            width: 94%;
+            font-size: 16px
+        }
+
+        .borbottom {
+            border-bottom: 1px solid #d6d6d6;
+            margin-bottom: 8px;
+        }
+
+        .bottom_fixed {
+            width: 100%;
+            background: #FFFFFF
+        }
+
+        .bt_bot {
+            border-top: 1px solid #e2e2e2;
+            width: 100%;
+            display: inline-block;
+            position: relative;
+            text-align: center;
+            margin-bottom: 32px;
+        }
+
+        .bt_bot span {
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            margin-left: -48px;
+            background: #fff;
+            padding: 0 16px;
+            color: #888;
+        }
+
+        .share_xz {
+            display: flex;
+            margin-bottom: 16px;
+            padding: 0 16px;
+        }
+
+        .share_xz .shares {
+            flex: 1;
+            text-align: center;
+        }
+
+        .share_xz .shares img {
+            width: 50%;
+            display: block;
+            margin: 0 auto 0;
+        }
+
+        .share_xz .shares p {
+            margin-top: 8px;
+            font-size: 13px;
+            color: #666
+        }
+        /*弹窗*/
+
+        .layui-m-layercont {
+            padding: 0 !important;
+        }
+
+        .tc_top {
+            background: #f15b43;
+            color: #fff;
+            font-size: 24px;
+            float: left;
+            padding: 8px 0;
+            border-radius: 4px 4px 0 0;
+            width: 100%;
+        }
+
+        .tc_top span {
+            float: left;
+            width: 50%;
+            margin-top: 13%;
+        }
+
+        .tc_top img {
+            float: left;
+            width: 50%;
+        }
+
+        .layui-m-layerbtn span[yes] {
+            color: #333 !important;
+        }
+
+        .matop {
+            margin: 16px 0;
+        }
+    </style>
+</head>
+
+<body>
+    <header id="guize" class="top_head" style="display: none;">
+        <i class="iconfont">&#xe619;</i>预计收入<span id="shouru"></span>
+        <span class="guize">规则<i class="iconfont">&#xe610;</i></span>
+    </header>
+    <div class="mid_con">
+        <span class="xz_title">选择图片</span>
+        <div class="swiper-container swiper-container-horizontal swiper-container-free-mode">
+            <div class="swiper-wrapper"></div>
+        </div>
+        <div class="xz_mess">
+            <span class="firstspan"><em>&nbsp;</em></span>
+            <span id="baocun" class="twospan" onClick="baocun()"><i class="iconfont">&#xe601;</i>保存到本地相册</span>
+        </div>
+        <div class="borbottom"></div>
+        <span class="xz_title" style="margin-bottom: 0;">编辑分享文案</span>
+        <div class="xz_mess bornone">
+            <textarea id="wenan" style="line-height:1.5"></textarea>
+        </div>
+        <div class="xz_mess">
+            <span class="firstspan">请不要更改{}之间的文字~</span>
+            <span class="twospan" onClick="shareWenan()"><i class="iconfont">&#xe68f;</i>仅复制分享文案</span>
+        </div>
+    </div>
+    <div class="bottom_fixed">
+        <div class="bt_bot">
+            <span>图文分享到</span>
+        </div>
+        <div class="share_xz">
+            <span class="shares" onClick="share('weixin')">
+                <img src="../../img/weixin.png"><p>微信</p>
+            </span>
+            <span class="shares" onClick="share('pyq')">
+                <img src="../../img/weixin2.png"><p>朋友圈</p>
+            </span>
+            <span class="shares" onClick="share('qq')">
+                <img src="../../img/qq.png"><p>QQ</p>
+            </span>
+            <span class="shares" onClick="share('kongjian')">
+                <img src="../../img/qq2.png"><p>空间</p>
+            </span>
+        </div>
+    </div>
+
+</body>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script>
+    var id,_user = {
+        'level': 0,
+        'type': 4
+    };
+
+    function hecheng() {
+        var img = [];
+        $('.swiper-wrapper .change_on').parent('a').find('img').each(function(i) {
+            var url = $(this).attr('src');
+            if (i == 0) {
+                img.push(addUrlParam(createUrl('pdd',{'fun':'img','id':id,'img':url})));
+            } else {
+                img.push(url);
+            }
+        });
+        if (img.length == 0) {
+            openAlert('请选择图片');
+            return false;
+        }
+        return img;
+    }
+
+    function baocunImg(img, i) {
+        var url = img[i];
+        down(url, function(data) {
+            saveImage(data, function(ok, errStr) {
+                i++;
+                if (ok) {
+                    if (i == img.length) {
+                        toastOpen('保存成功', 1000);
+                    } else {
+                        baocunImg(img, i);
+                    }
+                } else {
+                    openAlert("储存失败:" + errStr);
+                    return false;
+                }
+            });
+        });
+    }
+
+    function baocun() {
+        toastOpen('数据获取中...');
+        var img = hecheng();
+        baocunImg(img, 0);
+    }
+
+    function share(code) {
+        var img = hecheng();
+        if(img.length==0){
+            openAlert('请选择图片');
+            return false;
+        }
+        getWenan(function(w) {
+            clipboardSet(w);
+            shareImg(img, 0, w, code);
+        });
+    }
+
+    function shareImg(img, i, wenan, code) {
+        var url = img[i];
+        /*苹果下每次下载这个文件，会产品缓存，所以先删除*/
+        // var fs = api.require('fs');
+        // var ret = fs.removeSync({
+        //     path: "fs://down/shareimg_" + i + ".jpg"
+        // });
+        down(url, function(data) {
+            img[i] = data;
+            i++;
+            if (i == img.length) {
+                toastClose();
+                if(code=='pyq'){
+                    for(var j in img){
+                        if(i>0){
+                            saveImage(img[j],function(){});
+                        }
+                    }
+                }
+                shareImgPage(img,code);
+            } else {
+                shareImg(img,i, wenan, code);
+            }
+        }, "fs://down/shareimg_"+id+"_" + i + ".png");
+    }
+
+    function imgTpl() {
+        /*
+        <% for(var i = 0; i < this.length; i++) {var data = this[i]; %>
+                      <div class="swiper-slide" tapmode>
+                           <a href="#0" class="xz_img">
+                            <img src="<%data%>">
+                            <i class="iconfont change">&#xe602;</i>
+                           </a>
+                      </div>
+                      <% } %>
+        */
+        ;
+    }
+
+    function setImgTpl(data) {
+        var html = barretTpl(imgTpl, data);
+        api.parseTapmode();
+        var $swiper = $('.swiper-wrapper');
+        $swiper.html(html);
+        $swiper.find('.change').eq(0).addClass('change_on');
+        $swiper.find('.swiper-slide').on('touchend',function() {
+            $(this).find('.change').toggleClass('change_on');
+        });
+    }
+
+    function shareWenan() {
+        getWenan(function(w) {
+            clipboardSet(w);
+            toastOpen('内容已复制', 1000);
+            api.actionSheet({
+                title: '分享到',
+                cancelTitle: '取消',
+                destructiveTitle: '',
+                buttons: ['微信', 'QQ', '微博', '淘宝']
+            }, function(ret, err) {
+                var index = ret.buttonIndex - 1;
+                var a = ['weixin', 'mqq', 'weibo', 'taobao'];
+                if (typeof a[index] != 'undefined') {
+                    openApp(a[index] + '://');
+                }
+            });
+        });
+    }
+
+    function getWenan(callback) {
+        var w=$('#wenan').val();
+	    callback(w);
+    }
+
+    function start() {
+        var url=createUrl('pdd',{'fun':'item','id':id,'type':1});
+        getAjax(url,function(data){
+            if(data.s==1){
+                goods=data.r;
+                if(data.r.has_coupon==false){
+    				var v="【标题】"+goods.goods_name+"\r\n【在售价】￥"+goods.daoshou;
+                }else{
+    				var v="【标题】"+goods.goods_name+"\r\n【券后价】￥"+goods.daoshou;
+                }
+    			if(goods.goods_desc!=''){
+    				v+="\r\n"+goods.goods_desc.substr(0,80)+'...';
+    			}
+    			v+="\r\n【点击购买】"+goods.short_url;
+    			$('#wenan').val(v);
+    			var imgArr=data.r.goods_gallery_urls;
+                setImgTpl(imgArr);
+    			loadScript.go('/script/swiper_min.js',function(){
+    				var swiper = new Swiper('.swiper-container', {
+    					slidesPerView: 3.2,
+    					paginationClickable: true,
+    					freeMode: true
+    				});
+    			},'/css/swiper_min.css');
+                if(user.level>=appInfo.show_jfb_level || user.type==4){
+                    $('#shouru').text(goods.fxje);
+                }
+            }else{
+                openAlert(data.r);
+            }
+        },'数据获取中',3600);
+    }
+
+    ready(function() {
+        id = api.pageParam.id;
+        setTitle('分享赚');
+        loadScript.go('/script/layer.js', '', '../../css/layer.css');
+        $('#guize').on('touchend',function() {
+            layer.open({
+                content: '<div class="tc_top"><span>收入计算规则</span><img src="../../img/righting.png"></div><div style="clear:both"></div><div class="matop"><p>此处展示预估的收入情况</p><p>实际结果可能偏高，也可能偏低</p><p>最终以实际计算结果为准</p><p style="margin-top:16px;">佣金计算规则：宝贝成交价格 X 计算比率</p></div>',
+                btn: '知道了'
+            });
+        });
+        start();
+        setBounce(start);
+    }, 2);
+</script>
+
+</html>

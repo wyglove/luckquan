@@ -1,0 +1,301 @@
+
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="../../css/api.css" />
+    <script src="../../script/api.js"></script>
+    <style>
+        header {
+            height: 50px;
+            padding: 0 20px;
+        }
+        .appname {
+            color: #3E1700;
+        }
+        h1.title {
+            margin-top: 25px; margin-bottom: 50px; padding: 0 20px;
+            font-weight: bold; letter-spacing: 2px;
+        }
+        .mdmlogin {
+            margin: 20px;
+        }
+        .mdmlogin .zhanghao {
+            border-bottom: 1px solid #f5f5f5;
+        }
+        .zhanghao .loginbtn {
+            width: auto;
+            padding: 6px;
+            font-size: 14px; color: #3E1700;
+            border: 1px solid #A0A0A0;
+        }
+        input.subbtn {
+            display: block;
+            width: 100%; height: 50px;
+            margin-top: 20px;
+            font-size: 18px; letter-spacing: 5px; text-indent: 5px;
+            background: #FFD401;
+            border-radius: 25px;
+            box-shadow: 0 2px 1px 1px rgba(111,92,1,0.1);
+        }
+        .zhanghao input[type=number] {
+            color: #333; font-weight: bold; letter-spacing: 1px;
+        }
+        .zhanghao input::-webkit-input-placeholder {
+            color: #ccc; font-weight: normal; letter-spacing: 0;
+        }
+        .loginflex img{
+            width: 50px !important; height: 50px;
+        }
+    </style>
+</head>
+
+<body style="font-size:16px">
+    <div id="loginHtml">
+      <form id="regsubfrom" onSubmit="return login();">
+        <div class="mdmlogin">
+            <div class="zhanghao">
+              <i class="iconfont">&#xe67e;</i>
+              <input type="number" value="" name="mobile" id="mobile" placeholder="输入新手机号码">
+            </div>
+            <div class="zhanghao">
+              <input type="number" placeholder="请输入验证码" value="" style="width:6em" name="dxm" id="dxm" >
+              <input data="0" type="button" value="发送验证码" class="loginbtn" id="jym" getYzmTime="0" YZM_EFFE="60" YZM_EFFE_USE="60" onClick="yzm_dxm.getDxm()">
+            </div>
+            <input type="submit" value="短信登录" class="subbtn">
+        </div>
+        <p id="xieyi" style="font-size: 0.875em; color: #9b9b9b;" align="center">登录即代表同意
+            <font color="#ff3249" tapmode onClick="ddevent.openPage('user','xieyi')">[幸运券用户协议]</font>
+        </p>
+      </form>
+
+      <div class="qitazh" style="display:none;font-weight:600;"><span>推荐使用淘宝登陆</span></div>
+      <div class="loginFs"></div>
+    </div>
+</body>
+<script>
+    var web, webid, webname, unionid;
+
+    function start() {
+        var html = '';
+        for (var i in appInfo.applogin) {
+            if(HUNXIAO==1){
+                var tag='-'+APP_TAG;
+            }else{
+                var tag='';
+            }
+            if(appInfo.applogin[i]==1){
+                html += '<span class="loginflex" onclick="apiLoginButton(\'' + i + '\')"><img src="../../img/' + i +tag+ '.png"></span>';
+            }
+        }
+        if (iosShenhe() == 0) {
+            if (html != '') {
+                $('.qitazh').show();
+                $('.loginFs').html(html);
+            }
+        }
+    }
+
+   function login() {
+        /*var ddusername = $('#ddusername').val();
+        var ddpassword = $('#ddpassword').val();
+        var url = createUrl('user', {
+            'fun': 'login',
+            'ddusername': ddusername,
+            'ddpassword': ddpassword
+        });*/
+		var mobile=$('#mobile').val();
+        var dxm=$('#dxm').val();
+        var url=createUrl('user',{
+			'fun':'login',
+			'mobile':mobile,
+			'dxm':dxm
+		});
+        sub(url);
+        return false;
+    }
+
+    function sub(url, web) {
+        getAjax(url, function(data) {
+            if (data.s == 1) {
+                set('DD_DDUSERID', data.r.id);
+                set('DD_PASSWORD', data.r.ddpassword);
+				updateUser(data.r);
+                api.sendEvent({
+                    name: 'reStart',
+                    extra: {}
+                });
+                var ajpush = api.require('ajpush');
+                var param = {alias:String(data.r.id),tags:[]};
+                ajpush.bindAliasAndTags(param,function(ret) {
+                    set('DD_bingjiguang',1);
+                });
+                subQudao(web=='tb'?true:false,function(){
+                    toastOpen('登录成功', 1000, function() {
+                         closeWin();
+                    });
+                });
+            } else {
+                if (typeof data.weblogin != 'undefined') {
+                    set('web', apilogin.web);
+                    set('webid', apilogin.webid);
+                    set('webname', apilogin.webname);
+                    set('unionid', apilogin.unionid);
+                    set('avatar', apilogin.avatar);
+                    openAlert('首次登录，请完善注册信息', function() {
+                        openPage('user', 'register');
+                    });
+                } else {
+                    openAlert(data.r);
+                }
+            }
+        },'数据加载中', 0);
+    }
+
+    var apilogin = {
+        web: '',
+        webid: '',
+        webname: '',
+        avatar: '',
+        unionid: '',
+        login: function(web, webid, webname, avatar, unionid) {
+            if (web != '' && webid != '' && webname != '') {
+                this.web = web;
+                this.webid = webid;
+                this.webname = webname;
+                this.avatar = avatar;
+                this.unionid = unionid;
+                var url = createUrl('user', {
+                    'fun': 'login',
+                    'web': web,
+                    'webid': webid,
+                    'webname': webname,
+                    'avatar': avatar,
+                    'unionid': unionid
+                });
+                sub(url,web);
+            }
+        },
+        run: function(code) {
+            this[code]();
+        },
+        weixin: function() {
+            var _this = this;
+            var wxKey=api.loadSecureValue({sync: true,key: 'wx_key'});
+            toastOpen('微信启动中',30000);
+            var wx = api.require('wx');
+            wx.auth({
+                apiKey:wxKey,
+                scope: 'snsapi_userinfo'
+            }, function(ret, err) {
+                if (ret.status) {
+                    var url = createUrl('api', {'fun': 'weixinCodeToTokenUserInfo','appid': wxKey,'code': ret.code});
+                    getAjax(url, function(data) {
+                        if (data.s==1) {
+                            if (typeof data.r.unionid != 'undefined' && data.r.unionid != '' && typeof data.r.nickname != 'undefined' && data.r.nickname != '') {
+                                _this.login(appInfo.WEIXIN_TAG, data.r.unionid, data.r.nickname, data.r.headimgurl);
+                            } else {
+                                openAlert('数据错误，请从新登录');
+                            }
+                        } else {
+                            openAlert('get:'+data.r);
+                        }
+                    },'',0);
+                } else {
+                    openAlert('auth:'+err.code);
+                }
+            });
+        },
+        tb: function() {
+            var _this = this;
+            toastOpen('淘宝登陆');
+            baichuan.login(function(data) {
+                if(typeof appInfo.tbloginForWeb!='undefined' && appInfo.tbloginForWeb==1){
+                    setPageParam('from','login');
+                    ddevent.url(URL+'/plugin.php?mod='+APP_FRAME+'&act=goods&fun=login&do=go');
+                }else{
+                    if (typeof data.nick != 'undefined') {
+                        _this.login('tb', data.openId, data.nick, data.avatarUrl);
+                    } else {
+                        toastOpen('登陆取消');
+                    }
+                }
+            }, 1);
+        },
+        qq: function() {
+            var _this = this;
+            toastOpen('QQ登录',30000);
+            var qq = api.require('QQPlus');
+            qq.login(function(re, err) {
+                getAjax('https://graph.qq.com/oauth2.0/me?access_token=' + re.accessToken + '&unionid=1', function(re1) {
+                    try {
+                        re1 = re1.replace('callback(', '').replace(');', '');
+                        re1 = trim(re1);
+                        re1 = JSON.parse(re1);
+                        if (typeof re1.unionid != 'undefined') {
+                            unionid = re1.unionid;
+                        } else {
+                            unionid = '';
+                        }
+                    } catch (e) {
+                        unionid = '';
+                    }
+                    qq.getUserInfo(function(re2, err) {
+                        toastClose();
+                        if (re2.status) {
+                            if (typeof re.openId != 'undefined' && re.openId != '') {
+                                if(typeof re2.info=='string'){
+                                    re2.info=JSON.parse(re2.info);
+                                }
+                                _this.login('qq', re.openId, re2.info.nickname, re2.info.figureurl_qq_2, unionid);
+                            } else {
+                                openAlert('数据错误，请从新登录');
+                            }
+                        } else {
+                            api.alert({ msg: err.msg });
+                        }
+                    });
+                },'',0,'txt');
+            });
+        }
+    };
+
+    function subQudao(run,callback){
+        if(run==true && typeof hideGetQudao!='undefined' && hideGetQudao==1){
+            run=true;
+        }else{
+            run=false;
+            callback();
+            return false;
+        }
+        var url=createUrl('tbnick',{'fun':'getRelationId_2'});
+        getAjax(url,function(data){
+            if(data.s==1){
+                callback();
+            }else{
+                qudaoShouquan(data,function(){
+                    setTimeout(function(){
+                        callback();
+                    },1000);
+                });
+
+            }
+        },'登录初始化',0);
+    }
+
+    function apiLoginButton(code) {
+        apilogin.run(code);
+    }
+
+    ready(function(){
+        $('.appname').html(appInfo.name);
+        $('header').css('padding-top', api.safeArea.top +'px');
+        setTitle('用户登录');
+        start();
+    },1);
+</script>
+</html>

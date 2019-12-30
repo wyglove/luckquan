@@ -1,0 +1,100 @@
+
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title></title>
+    <style>
+    html,body,table,tr{height: 100%;background-color: #FFFFFF}
+    </style>
+    <script type="text/javascript" src="script/api.js"></script>
+    <script type="text/javascript" src="script/config.js"></script>
+</head>
+
+<body>
+    <table style="width:100%;display:none">
+        <tr><td>
+            <img src="img/index.gif" style="display: block;width: 15%;margin: auto;">
+        </td></tr>
+    </table>
+
+</body>
+<script type="text/javascript">
+    var apiStart=0,ROOT=1,fs;
+
+    function start(){
+        // var fs = api.require('fs');
+        // var ret = fs.readDirSync({
+        //     path: 'widget://img/'
+        // });
+        // if (!ret.status) {
+        //     alert('列目录错误');
+        //     return false;
+        // }
+        // var file=ret.data;
+        // for(var i in file){
+        //     var ret = fs.removeSync({
+        //         path: 'fs://img/'+file[i]
+        //     });
+        //     var ret = fs.copyToSync({
+        //         oldPath: 'widget://img/'+file[i],
+        //         newPath: 'fs://img/'
+        //     });
+        //     if(!ret.status){
+        //         //alert('widget://img/'+file[i]+':复制错误');
+        //     }
+        // }
+
+        // var needCopyFile={"script":["api.js","swiper_min.js","zepto.js","zepto_lazyload.js","layer.js"],"css":["swiper_min.css","amazeui_min.css","broadcast.css","layer.css"]};
+        // for(var i in needCopyFile){
+        //     var row=needCopyFile[i];
+        //     for(var j  in row){
+        //         var ret = fs.removeSync({
+        //             path: 'fs://'+i+'/'+row[j]
+        //         });
+        //         var ret = fs.copyToSync({
+        //             oldPath: 'widget://'+i+'/'+row[j],
+        //             newPath: 'fs://'+i+'/'
+        //         });
+        //         if(!ret.status){
+        //             alert('widget://'+i+'/'+row[j]+':复制错误');
+        //         }
+        //     }
+        // }
+
+        document.getElementsByTagName('table')[0].style.display='block';
+        setTimeout(function(){
+            document.getElementsByTagName('table')[0].style.display='none';
+        },3000);
+
+        api.pageParam.curPageBarColor='light';
+        openWin({'mod':'root','act':'root','animation':{'type':'none','duration':10},'slidBackEnabled':false});
+    }
+
+    function reStart(){
+        api.closeToWin({name: 'root'});
+        setTimeout(function(){
+            start();
+        },1000);
+    }
+
+    apiready = function() {
+        setTimeout(function(){
+            api.removeLaunchView(true);
+        },3000);
+        if(api.fullScreen==true){
+            api.setFullScreen({
+                fullScreen: false
+            });
+        }
+        getPermission(function(){
+            start();
+        },'storage','缺少存储空间管理权限',function(){
+            api.rebootApp();
+        });
+    }
+</script>
+</html>

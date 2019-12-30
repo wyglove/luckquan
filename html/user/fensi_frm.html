@@ -1,0 +1,98 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="../../css/api.css"/>
+    <script src="../../script/api.js"></script>
+    <style>
+        .list_jilu li {
+            display: flex;
+            padding: 0.5em 0;
+            border-bottom: 1px solid #f3f3f3;
+            width: 95%;
+            margin: auto;
+        }
+
+        .list_jilu li .leftnr {
+            flex: 1;
+            text-align: left;
+            line-height: 1.5;
+        }
+
+
+        .list_jilu li .rightnr {
+            flex: 1;
+            text-align: right;
+            padding-top: 0.75em;
+        }
+
+        .list_jilu li .rightnr .shouyi {
+            font-size: 0.8em;
+            color: #999999
+        }
+
+        .time {
+            color: #a7a7a7;
+            font-size: 0.875em;
+            margin-top: 0.5em;
+        }
+
+        .rightnr.sucess {
+            color: #ee3d47;
+        }
+    </style>
+</head>
+<body>
+    <div><img src="../../img/discenter_defimg.png" style="display: block; width: 100%"></div>
+    <div style="display:-webkit-flex;text-align:center;border-bottom:4px solid #f3f3f3;display:" id="yaoqingrenshu">
+        <div style="-webkit-flex:1;padding:10px 0px"><div style="line-height:1.5; border-right:1px solid #f3f3f3;"><div style="color:red;font-size:22px;font-weight:bold" id="num0">0</div><div style="color:#868686">今日邀请人数</div></div></div>
+        <div style="-webkit-flex:1;padding:10px 0px"><div style="line-height:1.5; border-right:1px solid #f3f3f3;"><div style="color:red;font-size:22px;font-weight:bold" id="num1">0</div><div style="color:#868686">昨日邀请人数</div></div></div>
+        <div style="-webkit-flex:1;padding:10px 0px"><div style="line-height:1.5;"><div style="color:red;font-size:22px;font-weight:bold" id="num2">0</div><div style="color:#868686">总邀请人数</div></div></div>
+    </div>
+    <div class="list_jilu" style="margin-top:10px">
+                        <ul>
+
+                        </ul>
+                    </div>
+
+                <div tapmode="hover" onClick="openPage('user','tuiguang')"  style="border: 1px solid red;color:red;background-color:#fff;border-radius: 19px;padding: 10px 40px;text-align: center;margin: auto;margin-top: 30px;display: table;">我要推广</div>
+
+                </body>
+                </html>
+<script>
+function view(level){
+	set('level',level);
+	openPage('user','fensilist');
+}
+
+function start(){
+    var url=createUrl('caiwu',{'fun':'fensi'});
+    getJson(url,'数据获取中',function(data){
+        if(data.s==1){
+            var html='';
+            for(var i in data.r){
+                html+='<li onclick="view('+i+')"><div class="leftnr"><p>'+String.fromCharCode(64+parseInt(i))+'级粉丝</p><p class="time">粉丝总数：'+data.r[i].num+'人</p></div><div class="rightnr sucess"><span class="shouyi">带来收益</span>+'+toFixed(data.r[i].money)+'元&nbsp;&nbsp;<span class="iconfont" style="color:#999">&#xe610;</span></div></li>';
+            }
+            $('.list_jilu ul').html(html);
+            if(data.str){
+                $('#yaoqingrenshu').show();
+                for(var i in data.str){
+                    $('#num'+i).html(data.str[i]);
+                }
+            }
+        }else{
+            toastOpen('数据获取失败');
+        }
+    });
+}
+
+
+ready(function(){
+    setTitle('我的粉丝');
+    start();
+	setBounce(reStart);
+},1);
+</script>

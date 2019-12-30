@@ -1,0 +1,100 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="../../css/api.css"/>
+    <script src="../../script/api.js"></script>
+</head>
+<body>
+    <header id="header" style="background: #000000;color:#5f646d;">
+            <div class="topbar">
+                <div id="left" style="color:#ffffff" tapmode="hover" class="egret-img fl" onClick="fanhui()" >
+                    <div><span class="iconfont">&#xe607;</span></div>
+                </div>
+                <div id="right" style="color:#ffffff" class="egret-img fr" tapmode="hover" onclick="xiazai()">
+                    <span class="iconfont">&#xe601;</span>
+                </div>
+                <div id="title" tapmode="hover" style="display: -webkit-flex;display: flex;-webkit-justify-content: center;justify-content: center;-webkit-align-items: center;align-items: center;height: 100%;color:#333;font-size:16px;" class="egret-header-box"><span style="color:#FFFFFF">标题</span></div>
+            </div>
+        </header>
+</body>
+<script>
+var imgs=[],index=0,photoBrowser,topColor;
+
+function fanhui(){
+    setStatusBarStyle(topColor);
+    closeWin();
+}
+
+function biaoti(i){
+    i=ddInt(i)+1;
+    var str=i+'/'+imgs.length;
+    api.execScript({
+        frameName: 'page_imgs_header_frm',
+        script: 'biaoti("'+str+'")'
+    });
+}
+
+function xiazai(){
+    var photoBrowser = api.require('photoBrowser');
+    photoBrowser.getIndex(function(ret, err) {
+        photoBrowser.getImage({
+            index: ret.index
+        }, function(ret, err) {
+            saveImage(ret.path,function(re){
+                if(re==1){
+                    toastOpen('保存成功',1000);
+                }else{
+                    openAlert(re);
+                }
+            });
+        });
+    });
+}
+
+function start(){
+    photoBrowser.open({
+        images: imgs,
+        placeholderImg: 'widget://res/image/loading_300_300.gif',
+        bgColor: '#000'
+    }, function(ret, err) {
+        if (ret) {
+            if (ret.eventType == 'show') {
+                openFrame({mod:'page',act:'imgs_header_frm','bgColor':'#000000','id':'header',pageParam:{'imgsNum':imgs.length}});
+            }
+            api.bringFrameToFront({
+                from: 'page_imgs_header_frm'
+            });
+            if(ret.eventType=='change'){
+                biaoti(ret.index);
+            }
+        }
+    });
+}
+ready(function(){
+    $('#header').css('padding-top',api.safeArea.top+'px');
+    photoBrowser = api.require('photoBrowser');
+    imgs=JSON.parse(api.pageParam.imgs);
+    topColor=api.pageParam.topColor;
+    api.setStatusBarStyle({style: 'light'});
+    start();
+    api.addEventListener({
+        name: 'page_imgs'
+    }, function(ret, err) {
+        if(ret.value.fun=='fanhui'){
+            fanhui();
+        }else if(ret.value.fun=='xiazai'){
+            xiazai();
+        }
+    });
+    api.addEventListener({
+        name: 'keyback'
+    }, function(ret, err) {
+        fanhui();
+    });
+},1);
+</script>
+</html>

@@ -1,0 +1,112 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="../../css/api.css"/>
+    <script src="../../script/api.js"></script>
+</head>
+<body>
+<div id="wrap" class="flex-wrap flex-vertical">
+    <header style="background: #FFFFFF;color:#5f646d;border-bottom: 1px solid #DDDFE3;">
+            <div class="topbar">
+                <div id="left" style="color:#5f646d;width:100px" class="egret-img fl">
+                    <div><span style="padding:5px" tapmode="hover" onClick="leftClick()" class="iconfont">&#xe607;</span><span style="display: inline-block;margin-left: 30px;padding:5px" tapmode="hover" onClick="closeWin()" class="iconfont">&#xe622;</span></div>
+                </div>
+                <div id="right" onclick="rightClick()" style="color:#5f646d;width:100px" class="egret-img fr" tapmode="hover"><span class="iconfont">&#xe669;</span></div>
+                <div tapmode="hover" style="display: -webkit-flex;display: flex;-webkit-align-items: center;align-items: center;height: 100%;color:#333;justify-content: center;" class="egret-header-box"><div id="title" style="overflow: hidden;text-overflow: ellipsis;white-space: nowrap;"><span style="text-indent:-100px">&nbsp;</span></div></div>
+            </div>
+        </header>
+    <div id="main" class="flex-con">
+
+    </div>
+    <div id="footer"></div>
+</div>
+</body>
+</html>
+<script type="text/javascript">
+    var browser,url,leftFun=0,frmArr=[],title,from;
+
+    ready(function(){
+        from=api.pageParam.from;
+        var title=getGlobalData('title');
+        if(title!=''){
+            $api.dom('#title').innerHTML=title;
+        }
+        url=api.pageParam.url;
+        if(url=='' || typeof url=='undefined'){
+            alert('网址未定义');
+        }
+        headerFuns('url');
+        var offset = $api.offset($api.dom('#main'));
+        var intercept=['http://lanjieapp'];
+		var js="";
+        var ua=navigator.userAgent;
+        ua=ua.replace(/ duoduo:\d+ \w+;/,'');
+        ua+=' duoduo:'+get('DD_DDUSERID')+' '+get('DD_PASSWORD')+';';
+        uexWebView.setUa(ua);
+
+        uexWebView.open(url,{'x':offset.l,'y':offset.t,'w':offset.w,'h':offset.h},js,intercept,{
+            'title':function(str){
+                title=str;
+                $api.dom('#title').innerHTML=title;
+            },
+            'url':function(str){
+                url=str;
+            },
+            'intercept':function(data){
+                data=data.replace(/http:\/\/lanjieapp_\w+\//,'');
+                data=data.split('/');
+                if(data[0]=='close'){
+                    if(typeof data[1]!='undefined' && data[1]!=''){
+                        data=decodeURIComponent(data[1]);
+                        openAlert(data,function(){
+                            closeWin();
+                        });
+                    }else{
+                        closeWin();
+                    }
+                }else if(data[0]=='info'){
+                    var webid=data[1];
+                    var nick=data[2];
+                    api.execScript({
+                        name: 'user_'+from,
+                        frameName: 'user_'+from+'_frm',
+                        script: 'apilogin.login("tb","'+webid+'","'+nick+'","");'
+                    });
+
+                    ddevent.fun(data[1]);
+                }else if(data[0]=='fun'){
+                    ddevent.fun(data[1]);
+                }
+            }
+        });
+    },0);
+
+    function leftClick(){
+        if(frmArr.length>0){
+            closeFrm(frmArr[frmArr.length-1])
+        }else{
+            uexWebView.back(function(){
+                uexWebView.close();
+                closeWin();
+            });
+        }
+    }
+
+    function closeFrm(name){
+        for(var i in frmArr){
+            if(frmArr[i]==name){
+                frmArr.splice(i,1);
+            }
+        }
+        api.closeFrame({'name':name});
+    }
+
+    function rightClick(){
+        //frmArr.push('page_share_frm');
+        share(title,url,'','','page_url');
+    }
+</script>

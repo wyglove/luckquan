@@ -1,0 +1,161 @@
+
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="../../css/api.css"/>
+    <script src="../../script/api.js"></script>
+    <style>
+body{background: #eaeaea}
+i,em{font-style: normal}
+.fenleixinxi{
+    display: flex;
+    padding: 13px;
+    background: #fff;
+}
+.fenleixinxi span{
+    flex: 1;
+    text-align: center;
+    color: #424242;
+    border-right: 1px solid #efefef;
+}
+.fenleixinxi span:last-child{
+    border-right: 0 none;
+}
+.fenleixinxi span p{
+    color: #fd0624;
+    font-size: 20px;
+}
+
+.share_xx{
+    margin-top: 10px;
+    background: #fff;
+    text-align: center;
+    padding: 16px 0;
+}
+.share_list{
+    width: 95%;
+    display: block;
+    margin: 0 auto;
+}
+.share_list .dlist{
+    display: flex;
+    margin-left: 10px
+}
+.share_list .dlist span{
+    flex: 1;
+    margin-top: 16px;
+    background: #fef0f0;
+    padding: 16px;
+    margin-right: 10px;
+    font-size: 14px;
+    border-radius: 8px;
+}
+.share_list .dlist img{
+    width: 80%;
+    display: block;
+    margin: 0 auto 8px;
+}
+    </style>
+</head>
+<body>
+<div><img src="../../img/yaoqinghaoyou.png" style="display: block; width: 100%"></div>
+
+
+<div class="fenleixinxi">
+                    <span onclick="openPage('user','mingxi')"><p id="jiangli">0</p>累计推广奖励</span>
+                    <span onclick="openPage('user','fensi')"><p id="renshu">0</p>累计推广人数</span>
+                </div>
+<div class="share_xx" id="tjmdiv" style="display:none">
+    <p>我的推广码</p>
+    <span id="tjm" style="padding: 8px 13px; border-radius: 5px; background-color: #F3F2F2; display: inline-block; margin: auto; margin-top: 8px"></span>
+    &nbsp;<span onclick="xiugai()">修改</span>
+</div>
+<div class="share_xx">
+                <p>分享渠道</p>
+                <div class="share_list">
+                    <div class="dlist">
+                        <span tapmode onclick="openPage('user','yaoqing')">
+                            <img src="../../img/fenxiang1.png">
+                            <em>面对面扫</em>
+                        </span>
+                        <span tapmode onclick="shareUrl()">
+                            <img src="../../img/fenxiang2.png">
+                            <em>分享链接</em>
+                        </span>
+                        <span tapmode onclick="openPage('user','haibao')">
+                            <img src="../../img/fenxiang3.png">
+                            <em>分享海报</em>
+                        </span>
+                    </div>
+                </div>
+            </div>
+                </body>
+                </html>
+<script>
+function shareUrl(){
+    var user=checkLogin(1);
+    if(user==false){
+        return false;
+    }
+    var url=appInfo.shareUrl+user.id;
+    share(appInfo.shareTitle, url, appInfo.shareImg, appInfo.shareDesc, api.winName);
+}
+
+function xiugai(){
+	if(typeof appInfo.tjm_set_by_admin=='undefined'){
+		appInfo.tjm_set_by_admin=0;
+	}
+	if(appInfo.tjm_set_by_admin==1){
+		openAlert(appInfo.tjm_set_by_admin_tip);
+		return false;
+	}
+    api.prompt({
+        title:'设置个性推广码',
+        msg:'最多20位，限数字和字母，不区分大小写',
+        buttons: ['取消', '确定']
+    }, function(ret, err) {
+        var index = ret.buttonIndex;
+        var data = ret.text;
+        if(index==2){
+            var url=createUrl('user',{'fun':'upTjm','tjm':data});
+            getJson(url,'数据获取中',function(data){
+                if(data.s==1){
+                    $('#tjm').html(data.r);
+                    updateUser('tjm',data.r);
+                }else{
+                    openAlert(data.r);
+                }
+            });
+        }
+    });
+}
+
+function start(){
+    var url=createUrl('user',{'fun':'tuiguang'});
+    getJson(url,'数据获取中',function(data){
+        if(data.s==1){
+            $('#jiangli').html(toFixed(data.r.money));
+            $('#renshu').html(data.r.num);
+        }else{
+            toastOpen('数据获取失败');
+        }
+    });
+    $('#tjm').html(user.tjm);
+    $('#tjm').click(function(){
+        toastOpen('推广码已复制');
+        clipboardSet($(this).html());
+    });
+	if(typeof appInfo.reg_need_tjr!='undefined' && appInfo.reg_need_tjr>0){
+		$('#tjmdiv').show();
+	}
+}
+
+ready(function(){
+    setTitle('我要推广');
+    start();
+},1);
+</script>

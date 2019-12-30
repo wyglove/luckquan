@@ -1,0 +1,950 @@
+
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="../../css/api.css" />
+    <script src="../../script/api.js"></script>
+    <style>
+        body {
+            background: #f1f1f2;
+        }
+
+        i,
+        em {
+            font-style: normal;
+        }
+
+        input {
+            outline: none;
+        }
+
+        .fl {
+            float: left;
+        }
+
+        .fr {
+            float: right;
+        }
+
+        .clear {
+            clear: both;
+        }
+        /*会员中心*/
+
+        .headr_xinxi {
+            /*border-bottom: 1px solid #E0E0E0;*/
+            background: -webkit-linear-gradient(top left, #FDE006, #FFCC00);
+            background-size: cover;
+            -moz-background-size: cover;
+            position: relative;
+        }
+
+        .headr_xinxi .touxiang img {
+            border-radius: 100%;
+            width: 80px;
+            max-height: 80px;
+        }
+
+        .headr_xinxi .mdmxinxi p {
+            margin-top: 2px;
+        }
+
+        .headr_xinxi .mdmxinxi p.two {
+            color: #fff;
+            margin-top: 8px;
+            font-size: 13px;
+            color: #fff;
+        }
+
+        .shenqing {
+            position: absolute;
+            right: 0;
+            top: 40%;
+            border-radius: 16px 0 0 16px;
+            border: 1px solid #fff;
+            color: #fff;
+            padding: 4px 4px 4px 11px;
+            border-right: 0 none;
+        }
+
+        .middle_xinxi {
+            border-bottom: 1px solid #E0E0E0;
+            padding-bottom: 10px;
+            background: #fff;
+        }
+
+        .leiji,
+        .gouwu {
+            padding: 16px 0 0 16px;
+            color: #757575;
+            font-size: 14px;
+        }
+
+        .leiji b {
+            color: #fc4f3e;
+        }
+
+        .gouwu b {
+            color: #fc4f3e;
+        }
+
+        .gouwu span {
+            color: #008ac4;
+            font-size: 14px;
+        }
+
+        .fenleixinxi {
+            display: flex;
+            padding: 13px;
+            background: #fff;
+        }
+
+        .fenleixinxi span {
+            flex: 1;
+            text-align: center;
+            color: #616161;
+            border-right: 1px solid #efefef;
+            font-size: 14px;
+        }
+
+        .fenleixinxi span:last-child {
+            border-right: 0 none;
+        }
+        .fenleixinxi span img {
+            display: block;
+            width: 24px; height: 24px;
+            margin: auto; margin-bottom: 5px;
+        }
+
+        .fenleixinxi span p {
+            color: #fc4f3e;
+            font-size: 20px;
+        }
+
+        .caozuolist {
+            margin-top: 10px;
+            background: #fff;
+        }
+
+        .caozuolist li {
+            width: 25%;
+            float: left;
+            text-align: center;
+            padding: 16px 0 10px 0;
+            color: #535353;
+            border-bottom: 1px solid #F7F6F6;
+        }
+
+        .caozuolist li .iconfont {
+            font-size: 20px;
+            color: #ffffff;
+            padding: 3px;
+            border-radius: 5px
+        }
+        .caozuolist li img {
+            display: block;
+            width: 26px; height: 26px;
+            margin: auto;
+            border-radius: 5px;
+        }
+
+        .caozuolist p {
+            font-size: 13px;
+            /*margin-top: 16px;*/
+            margin-top: 10px
+        }
+
+        .bgcolor1 {
+            background: linear-gradient(120deg, #F60, #F60);
+        }
+
+        .bgcolor2 {
+            background: linear-gradient(120deg, #ff5858, #ff5858);
+        }
+
+        .bgcolor3 {
+            background: linear-gradient(120deg, #fc4970, #fc4970);
+        }
+
+        .bgcolor4 {
+            background: linear-gradient(120deg, #7fc7ef, #7fc7ef);
+        }
+
+        .bgcolor5 {
+            background: linear-gradient(120deg, #7ec46b, #7ec46b);
+        }
+
+        .bgcolor6 {
+            background: linear-gradient(120deg, #fb7059, #fb7059);
+        }
+
+        .bgcolor7 {
+            background: linear-gradient(120deg, #3fccd6, #3fccd6);
+        }
+
+        .bgcolor8 {
+            background: linear-gradient(120deg, #f190b9, #f190b9);
+        }
+
+        .bgcolor9 {
+            background: linear-gradient(120deg, #858adc, #858adc);
+        }
+
+        .bgcolor10 {
+            background: linear-gradient(120deg, #f6b909, #f6b909);
+        }
+
+        .bgcolor11 {
+            background: linear-gradient(120deg, #77a2d7, #77a2d7);
+        }
+
+        .bgcolor12 {
+            background: linear-gradient(120deg, #05c1f9, #5ed7fb);
+        }
+
+        .bgcolor13 {
+            background: linear-gradient(120deg, #07f746, #78f799);
+        }
+
+        .bgcolor14 {
+            background: linear-gradient(120deg, #fb8c02, #fbb55f);
+        }
+
+        .bgcolor15 {
+            background: linear-gradient(120deg, #05E4FB, #74E3EF);
+        }
+
+        .bgcolor16 {
+            background: linear-gradient(120deg, #f90505, #f97272);
+        }
+
+        .bgcolor2n {
+            background: linear-gradient(120deg, #ff5858, #ff5858);
+        }
+
+        .bgcolor3n {
+            background: linear-gradient(120deg, #f40009, #ff5858);
+        }
+
+        .disanfang li img {
+            width: 70%
+        }
+
+        .caozuolist li .mdmlogo {
+            background: #ff4100;
+            width: 40px;
+            height: 40px;
+            border-radius: 80px;
+            line-height: 40px;
+            text-align: center;
+            font-size: 20px;
+            display: inline-block;
+            color: #fff;
+            margin-bottom: 8px;
+        }
+
+        .quitbtn {
+            border: 1px solid #ff2945;
+            color: #ff2945;
+            display: block;
+            text-align: center;
+            font-size: 16px;
+            background: #f1f1f2;
+            padding: 6px 27px;
+            border-radius: 4px;
+            margin: 16px auto;
+            margin-bottom: 0;
+        }
+
+        #level_name {
+            display: none
+        }
+
+        .levelshow {
+            text-align: left;
+            padding: 16px 32px
+        }
+
+        .levelshow li {
+            line-height: 2
+        }
+
+        .kefu {
+            text-align: center;
+            line-height: 40px;
+            border: 1px solid #ffffff;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: inline-block;
+            position: fixed;
+            right: 8px;
+            z-index: 99;
+            transition-duration: 0.2s;
+            top: 84px;
+            background: #ffffff
+        }
+
+        .kefu span {
+            color: red;
+            font-size: 35px
+        }
+        /*ao-新样式*/
+        .topicon {
+            padding: 10px 20px 5px;
+            font-size: 14px; color: #402D00;
+        }
+        .user-info {
+            padding: 20px;
+            padding-right: 0;
+        }
+        .user-head {
+            width: 60px; height: 60px;
+            margin-right: 10px;
+            border: 1px solid #fff;
+            border-radius: 50%;
+            overflow: hidden;
+        }
+        .user-head img {
+            width: 100%;
+        }
+        .user-name {
+            margin-bottom: 0px;
+            font-size: 20px; font-weight: bold; color: #030508;
+        }
+        .user-alipay {
+            font-size: 12px; color: #402D00;
+        }
+        .user-level {
+            padding: 5px 10px 5px 5px;
+            color: #965D09;
+            background: rgba(255,255,255,0.8);
+            border-radius: 15px 0 0 15px;
+        }
+        .user-level .iconfont {
+            display: inline-block;
+            width: 16px; height: 16px;
+            margin-right: 5px;
+            font-size: 16px; line-height: 16px; text-align: center;
+            border: 1px solid;
+            border-radius: 50%;
+        }
+
+        .user-qianbao {
+            padding: 0 20px 20px 20px;
+        }
+        .qianbao-right .qianbao-item {
+            text-align: center;
+        }
+        .qianbao-top {
+            height: 25px;
+        }
+        .qianbao-right .qianbao-top {
+            padding: 0 10px;
+        }
+        .qianbao-left .qianbao-top {
+            height: 30px;
+        }
+        .qianbao-top img {
+            width: 26px;
+        }
+        .qianbao-top span {
+            font-size: 24px; font-weight: bold; color: #030508;
+        }
+        .user-qianbao p {
+            margin-top: 5px;
+            font-size: 13px; color: #402D00;
+        }
+        .fg-line {
+            width: 1px; height: 30px;
+            margin: 0 12px;
+            background: #E6AE21;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="ub-f1 tx-l lenren_main" id="usermain" style="position: relative;  padding-bottom:16px;">
+        <!-- <div style="position:relative; right:8px; top:80px">
+            <div tapmode onclick="kefu()" id="kefudiv" class="kefu">
+                <span class="iconfont">&#xe7b0;</span>
+            </div>
+        </div> -->
+        <!-- <div style="position:absolute; left:8px; top:8px; z-index:9; font-size:19px" tapmode onClick="ddevent.openPage('page','set')">
+            <span class="iconfont" style="color:#FFFFFF">&#xe65c;</span>
+        </div> -->
+        <div class="headr_xinxi">
+            <!-- <div style="padding:32px 16px 16px 32px">
+                <span class="fl touxiang" tapmode onClick="userPage('set')">
+                    <img id="face" src="../../img/default_head_img.jpg" _src="../../img/default_head_img.jpg">
+                </span>
+                <span class="fl mdmxinxi" style="margin-top: 3px; margin-left:5px">
+                    <p id="nick" style="font-size:19px;  color:#fff;"></p>
+                    <p id="alipay" class="two" tapmode onClick="userPage('alipay')"></p>
+                    <p id="dengji" class="two" tapmode onClick="showLevel()"><span id="level_name" style="background:#cb2738; color:#FFF; display:inline-block;border-radius: 16px;padding: 2px 10px; font-size:14px"></span></p>
+                </span>
+                <div id="login_tip" tapmode onClick="ddevent.openPage('user','login')" style="position: absolute; top:40%; left: 115px">
+                    <span style=" padding: 3px 13px; border: 1px solid #fff; border-radius: 3px; color: #fff;">点击登录</span></div>
+
+                <div class="clear"></div>
+                <div style="position: absolute; right: 8px; top: 11px;color: #FFFFFF; font-size: 14px" tapmode onClick="userPage('set')">个人设置</div>
+            </div> -->
+
+            <div class="topicon flex-wrap flex-align flex-justify-sb">
+                <i style="font-size:18px;" class="iconfont" tapmode onClick="ddevent.openPage('page','set')">&#xe65c;</i>
+                <span tapmode onClick="userPage('set')">个人设置</span>
+            </div>
+
+            <div class="user-info flex-wrap flex-align">
+                <div class="user-head">
+                    <img id="face" src="../../img/default_head_img.jpg" _src="../../img/default_head_img.jpg">
+                </div>
+                <div class="user-msgs flex-con">
+                    <p id="nick" class="user-name">昵称未设置</p>
+                    <p id="alipay" class="user-alipay" tapmode onClick="userPage('alipay')">支付宝：未设置</p>
+                    <div id="login_tip" style="display:none" tapmode onClick="openPage('user','login')">
+                        <span style="padding: 3px 13px; border: 1px solid #444; border-radius: 3px;">点击登录</span>
+                    </div>
+                </div>
+                <div id="level_name" class="user-level ios_hide_new" onClick="showLevel()" >
+                    <i class="iconfont">&#xe6bf;</i>-
+                </div>
+
+            </div>
+
+            <div class="user-qianbao flex-wrap flex-align flex-justify-sb ios_hide_new">
+                <div class="qianbao-left">
+                    <div class="qianbao-item" tapmode onClick="ddevent.fun('tixian')">
+                        <div class="qianbao-top">
+                            <img class="icon-qianbao" src="../../img/tixian.png" alt="">
+                        </div>
+                        <p>我要提现</p>
+                    </div>
+                </div>
+                <div class="qianbao-right flex-wrap flex-align">
+                    <div class="qianbao-item">
+                        <div class="qianbao-top">
+                            <span id="live_money" class="qianbao-num">0.00</span>
+                        </div>
+                        <p>￥可提现</p>
+                    </div>
+                    <div class="fg-line"></div>
+                    <div class="qianbao-item">
+                        <div class="qianbao-top">
+                            <span id="yugu" class="qianbao-num">0.00</span>
+                        </div>
+                        <p>￥待奖励</p>
+                    </div>
+                </div>
+            </div>
+            <div class="bg-blank" style="height:40px;"></div>
+
+            <!-- <div style="padding: 8px 0;width: 95%;margin: auto;border-top-right-radius: 8px;border-top-left-radius: 8px;background: -webkit-linear-gradient(bottom, #212120, #50504e); font-size:13px">
+                <table border="0" style="width: 90%;margin: auto;">
+                    <tbody>
+                        <tr>
+                            <td>
+                                <div style="color: #FBEAC7;">可用余额&nbsp;&nbsp;&nbsp;<span id="money">0.00</span>元</div>
+                                <div style="color: #B7B7B7;margin-top: 8px;">可用<span class="tbmoney"></span>&nbsp;&nbsp;&nbsp;<span id="jifenbao">0</span>个</div>
+                            </td>
+                            <td style="text-align: right;"><span tapmode onClick="ddevent.fun('tixian')" style="display:inline-block;padding:5px 10px;background: #FBEAC7;border-radius: 6px;">立即提取</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div> -->
+
+        </div>
+        <!-- <div style="width:95%; margin:auto;"> -->
+        <div style="width:95%; margin:auto;position: relative;top: -50px;">
+            <!-- <div class="fenleixinxi" style="border-bottom-right-radius: 8px;border-bottom-left-radius: 8px;">
+                <span>
+      <p id="leiji_money">0</p>累计金额</span>
+                <span>
+      <p id="leiji_jifenbao">0</p>累计<span class="tbmoney"></span></span>
+                <span tapmode onClick="whatJifenbao()">
+      <p id="money_text">
+        <i style="color: #424242;" class="iconfont">&#xe77d;</i></p>什么是集分宝</span>
+            </div> -->
+
+            <div class="ios_hide_new caozuolist" style="margin-top:13px;border-radius: 8px;">
+              <div style="margin-top:13px;border-radius: 8px; background:#ffffff">
+                  <div style=" border-top:0; line-height:32px;height:32px;display: flex;border-bottom: 1px solid #F1F1F1;">
+                      <div style="flex:1; text-indent: 16px">订单中心</div>
+                      <div style="flex:1; text-align: right; font-size: 11px" class="ios_hide_new">
+                          <span style="padding: 5px 8px; border-radius: 16px; border: 1px solid #ff5c46; color: #ff5c46;background: -webkit-linear-gradient(left, #ff5c46 , #fdaa9f);-webkit-background-clip: text;-webkit-text-fill-color: transparent;font-weight: bold">自购推广</span>&nbsp;&nbsp;</div>
+                  </div></div>
+                <ul>
+                    <li tapmode onclick="ddevent.fun('!page=user&taobao')" style="width:33%;">
+                        <!-- <span class="iconfont bgcolor1">&#xe633;</span> -->
+                        <img src="../../img/order-tb.png" alt="">
+                        <p>淘宝订单</p>
+                    </li>
+                    <li tapmode onclick="ddevent.fun('!page=user&jd')" style="width:33%;">
+                        <!-- <span class="iconfont bgcolor2">&#xe812;</span> -->
+                        <img src="../../img/order-jd.png" alt="">
+                        <p>京东订单</p>
+                    </li>
+                    <li tapmode onclick="ddevent.fun('!page=user&pdd')" style="width:33%;">
+                        <!-- <span class="iconfont bgcolor3">&#xe62c;</span> -->
+                        <img src="../../img/order-pdd.png" alt="">
+                        <p>拼多多订单</p>
+                    </li>
+                    <!--<li tapmode onclick="ddevent.fun('!page=user&malls')">
+                         <span class="iconfont bgcolor4">&#xe62d;</span>
+                        <img src="../../img/logo.png" alt="">
+                        <p>商城订单</p>
+                    </li> -->
+                </ul>
+                <div style="clear:both"></div>
+            </div>
+
+
+            <div id="tuiguangzhongxin" style="margin-top:13px;border-radius: 8px; background:#ffffff">
+                <div style=" border-top:0; line-height:32px;height:32px;display: flex;border-bottom: 1px solid #F1F1F1;">
+                    <div style="flex:1; text-indent: 16px">推广赚钱</div>
+                    <div style="flex:1; text-align: right; font-size: 11px">
+                        <span style="padding: 5px 8px; border-radius: 16px; border: 1px solid #ff5c46; color: #ff5c46;background: -webkit-linear-gradient(left, #ff5c46 , #fdaa9f);-webkit-background-clip: text;-webkit-text-fill-color: transparent;font-weight: bold">推广中心</span>&nbsp;&nbsp;</div>
+                </div>
+                <div class="fenleixinxi" style="background:none">
+                    <span tapmode onClick="userPage('report')">
+                        <!-- <p><i style="color:#ff5c46; font-size: 21px " class="iconfont">&#xe6d6;</i></p> -->
+                        <img src="../../img/tuiguang_bb.png" alt="">
+                        <i style="font-size: 13px">收益报表</i>
+                    </span>
+                    <span tapmode onClick="userPage('tuiguang')">
+                        <!-- <p><i style="color:#ff5c46; font-size: 21px " class="iconfont">&#xe638;</i></p> -->
+                        <img src="../../img/tuiguang_tg.png" alt="">
+                        <i style="font-size: 13px">我要推广</i>
+                    </span>
+                    <span tapmode onClick="userPage('fensi')">
+                        <!-- <p><i style="color:#ff5c46; font-size: 21px " class="iconfont">&#xe61b;</i></p> -->
+                        <img src="../../img/tuiguang_fs.png" alt="">
+                        <i style="font-size: 13px">我的粉丝</i>
+                    </span>
+                </div>
+            </div>
+
+            <div class="fenleixinxi" id="superJl" style="display:none; margin-top:13px;border-radius: 8px; background:#ffffff">
+                <span tapmode onclick="userPage('superJl')">
+                <p>￥0</p>超级奖励池</span>
+                <span tapmode onclick="set('status',1);userPage('superJl')">
+                <p>￥0</p>已领超级奖励</span>
+            </div>
+
+            <div class="caozuolist" id="caozuolist" style="margin-top:13px;border-radius: 8px;">
+                <div style=" border-top:0; line-height:32px;height:32px;display: flex;border-bottom: 1px solid #F1F1F1;">
+                    <div style="flex:1; text-indent: 16px">常用服务</div>
+                </div>
+                <ul></ul>
+            </div>
+
+
+            <div class="caozuolist " style="margin-top:13px;border-radius: 8px;">
+              <div style="margin-top:13px;border-radius: 8px; background:#ffffff">
+                  <div style=" border-top:0; line-height:32px;height:32px;display: flex;border-bottom: 1px solid #F1F1F1;">
+                      <div style="flex:1; text-indent: 16px">各大榜单</div>
+
+                  </div></div>
+                <ul>
+                    <li tapmode onclick="ddevent.fun('!page=huodong&time')" style="width:33%;">
+                        <!-- <span class="iconfont bgcolor1">&#xe633;</span> -->
+                        <img src="../../img/bd_tb.png" alt="">
+                        <p>淘宝榜单</p>
+                    </li>
+                    <li tapmode onclick="ddevent.fun('!page=jd&list_phb')" style="width:33%;">
+                        <!-- <span class="iconfont bgcolor2">&#xe812;</span> -->
+                        <img src="../../img/bd_jd.png" alt="">
+                        <p>京东榜单</p>
+                    </li>
+                    <li tapmode onclick="ddevent.fun('!page=pdd&list_phb')" style="width:33%;">
+                        <!-- <span class="iconfont bgcolor3">&#xe62c;</span> -->
+                        <img src="../../img/bd_pdd.png" alt="">
+                        <p>拼多多榜单</p>
+                    </li>
+                    <!--<li tapmode onclick="ddevent.fun('!page=user&malls')">
+                         <span class="iconfont bgcolor4">&#xe62d;</span>
+                        <img src="../../img/logo.png" alt="">
+                        <p>商城订单</p>
+                    </li> -->
+                </ul>
+                <div style="clear:both"></div>
+            </div>
+
+
+        </div>
+        <div style="height:16px">&nbsp;</div>
+
+    </div>
+
+</body>
+<script type="text/javascript">
+    var levelIcon = ['&#xe6bf;', '&#xe6c0;', '&#xe6c1;', '&#xe6c9;', '&#xe68e;'];
+    var iosAudit=0;
+
+    function setHeaderBg($color) {
+        var safeAreaTop = parseInt(localStorage.getItem('safeAreaTop'));
+        document.body.style.position = 'relative';
+        document.body.style.paddingTop = safeAreaTop + 'px';
+        document.body.appendHTML('<div id="iosheader" style="height:' + safeAreaTop + 'px;z-index:999; background:-webkit-linear-gradient(left top, #FDE006, #FFCC00); position:fixed; top:0; width:100%"></div>');
+        //$("body").css({'position':'relative','padding-top':safeAreaTop+'px'}).prepend('<div id="iosheader" style="height:'+safeAreaTop+'px;z-index:999; background:-webkit-linear-gradient(right, #ff0036 , #ff464e); position:fixed; top:0; width:100%"></div>');
+    }
+
+    setHeaderBg();
+
+    function tuidanSelect() {
+        ddActionSheet('选择订单', '取消', '淘宝,京东,拼多多', function(data) {
+            setPageParam('tuidan',1);
+            if (data == 0) {
+                userPage('taobao');
+            } else if (data == 1) {
+                userPage('jd');
+            } else if (data == 2) {
+                userPage('pdd');
+            }
+        });
+    }
+
+    var nav = [{
+        "title": "我的收藏",
+        "icon": "&#xe69c;",
+        "img": "../../img/fw_sc.png",
+        "mod": "user",
+        "act": "shoucang"
+    }, {
+        "title": "我的足迹",
+        "icon": "&#xe6a5;",
+        "img": "../../img/fw_zj.png",
+        "mod": "user",
+        "act": "zuji"
+    }, {
+        "title": "我的消息",
+        "icon": "&#xe672;",
+        "img": "../../img/fw_xx.png",
+        "mod": "user",
+        "act": "msg"
+    }, {
+        "title": "微信客服",
+        "icon": "&#xe60a;",
+        "img": "../../img/fw_tg.png",
+        "mod": "wxkefu"
+    }];
+
+    function v5Kefu(name, id, avatar, type, userinfoParams) {
+        type = String(type);
+        id = String(id);
+        userinfoParams = JSON.stringify(userinfoParams);
+        if (typeof uexV5KeFu.putParams == 'function') {
+            var baseParams = {
+                'nickname': name,
+                'gender': '1',
+                'openid': id,
+                'avatar': avatar,
+                'vip': type
+            };
+            baseParams = JSON.stringify(baseParams);
+            uexV5KeFu.putParams(baseParams, userinfoParams, "");
+            uexV5KeFu.startKeFu();
+        } else {
+            var baseParams = {
+                'nickname': name,
+                'gender': '1',
+                'openId': id,
+                'avatar': avatar,
+                'vip': type
+            };
+            baseParams = JSON.stringify(baseParams);
+            var iphoneX = get('iphoneX');
+            if (iphoneX == 1) {
+                var h = get('iosHeaderPx');
+            } else {
+                var h = 20;
+            }
+            h += 2;
+            uexV5KeFu.openKeFu(baseParams, userinfoParams, '{"BtnY":"100","BtnR":"200","BtnG":"170","BtnB":"150"}', '{"TopH":"' + h + '","TopR":"255","TopG":"255","TopB":"255"}');
+        }
+    }
+
+    function kefu() {
+        openQq(appInfo.qq);
+    }
+
+    function showLevel() {
+        var html = '';
+        for (var i in siteInfo.level) {
+            html += '<li><span class="iconfont">' + levelIcon[i] + '</span>' + siteInfo.level[i].title + ' 所需等级:' + siteInfo.level[i].level + '</li>';
+        }
+        if (appInfo.daili.status == 1) {
+            if (appInfo.daili.feiyong > 0) {
+                html += '<li><span class="iconfont">' + levelIcon[4] + '</span> 代理 所需等级:优惠价(' + appInfo.daili.feiyong + ')元</li>';
+            } else {
+                html += '<li><span class="iconfont">' + levelIcon[4] + '</span> 代理 所需等级:免费开通</li>';
+            }
+        }
+        html += '<li>成功购物一次等级加1</li>';
+        ddLayer.open('<ul class="levelshow">' + html + '</ul>', '等级说明', '等级越高奖励越多哦');
+    }
+
+    function setNav() {
+      if (iosShenhe() == 1) {
+      }else{
+        nav.push({
+            "title": "提取记录",
+            "icon": "&#xe657;",
+            "img": "../../img/fw_jl.png",
+            "mod": "user",
+            "act": "tixianlist"
+        });
+        nav.push({
+            "title": "奖励明细",
+            "icon": "&#xe615;",
+            "img": "../../img/fw_mx.png",
+            "mod": "user",
+            "act": "mingxi"
+        });
+        nav.push({
+            "title": "帮助文档",
+            "icon": "&#xe647;",
+            "img": "../../img/fw_bz.png",
+            "mod": "help",
+            "act": "help"
+        });
+      }
+        var l = size(nav);
+        var n = (Math.ceil(l / 4) - 1) * 4;
+        var html = '';
+        for (var i in nav) {
+            var row = nav[i];
+            if (i >= n) {
+                var style = " style='border-bottom:0'";
+            } else {
+                var style = "";
+            }
+            if (typeof row.mod != 'undefined') {
+                var str = 'page=' + row.mod + '&' + row.act;
+                var fun = "ddevent.fun('!" + str + "')";
+				if(row.mod=='wxkefu'){
+					var fun ='wxKefu();' ;
+				}
+            } else {
+                var fun = "ddevent.fun('!" + row.click + "')";
+            }
+            // html += '<li' + style + ' tapmode onclick="' + fun + '"><span class="iconfont bgcolor' + (ddInt(i) + 1) + '">' + row.icon + '</span><p>' + row.title + '</p></li>';
+
+            html += '<li' + style + ' tapmode onclick="' + fun + '"><img src="'+row.img+'" alt="" /></span><p>' + row.title + '</p></li>';
+        }
+        $('#caozuolist ul').html(html + '<div class="clear"></div>');
+        api.parseTapmode();
+    }
+
+    function userPage(act) {
+        ddevent.fun('!page=user&' + act);
+    }
+
+    function userWin(act) {
+        ddevent.fun('!win=user&' + act);
+    }
+
+	function wxKefu(){
+		clipboardSet(appInfo.weixin);
+        toast('复制成功，请打开微信添加客服');
+        setTimeout(function() {
+            openApp('weixin://');
+        },1000)
+    }
+
+    function whatJifenbao() {
+        ddLayer.open('<img src="../../img/what_jifenbao.png" style="padding:1em;width:90%; display:block">', '什么是集分宝');
+    }
+
+    function getUserInfo(tip, callback) {
+        var url = createUrl('user', {
+            'fun': 'userInfo'
+        });
+        getAjax(url,function(data) {
+            updateUser( data);
+            callback(data);
+        }, tip,0);
+    }
+
+    function setUserInfo(user) {
+        $('#face').attr('src', user.avatar);
+        if (typeof user.nick == 'undefined' || user.nick == '') {
+            var nick = '昵称未设置';
+        } else {
+            var nick = user.nick;
+        }
+        $('#nick').html('<span onclick="ddevent.openPage(\'user\',\'set\')">' + nick + '</span>');
+        if (user.alipay == '' || user.alipay == null) {
+            $('#alipay').html('支付宝：未设置');
+        } else {
+            $('#alipay').html('支付宝：' + user.alipay);
+        }
+        // $('#money').html(toFixed(user.money));
+        $('#live_money').html(toFixed(user.live_money));
+        // $('#jifenbao').html(user.jifenbao);
+        if (iosShenhe() == 1) {
+
+        }else{
+          $('#level_name').show().html('<span class="iconfont">' + levelIcon[user.type] + '</span>' + user.level_name);
+        }
+        $('#login_tip').hide();
+        var url = createUrl('user', {
+            'fun': 'userInfo1'
+        });
+        getAjax(url, function(data) {
+            if (data.s == 1) {
+              // $('#yugu').html('<i style="font-size:0.625em;">￥</i>'+toFixed(data.r.yugu));
+                //console.log(JSON.stringify(data));
+                // $('#leiji_jifenbao').html(data.r.leiji_jifenbao);
+                // $('#leiji_money').html(toFixed(data.r.leiji_money));
+				$('#yugu').html(toFixed(data.r.yugu));
+                updateUser('tjm', data.r.tjm, user);
+            } else {
+                toastOpen('累计数据获取失败');
+            }
+        }, '');
+        if (typeof appInfo.super_jl != 'undefined' && appInfo.super_jl.open == 1) {
+            $superJl = $('#superJl');
+            var url = createUrl('user', {
+                'fun': 'superJiangli'
+            });
+            getAjax(url,function(data) {
+                if (data.s == 1) {
+                    if (data.r.money > 0) {
+                        $('#money').html('￥' + data.r.money);
+                        $('#leiji_money').html('￥' + data.r.leiji_money);
+                    }
+                    $superJl.find('p').eq(0).html('￥' + data.r.zong_money);
+                    $superJl.find('p').eq(1).html('￥' + data.r.yiling_money);
+                } else {
+                    toastOpen('超级奖励获取失败');
+                }
+            }, '');
+        }
+    }
+
+    function start(reload) {
+        reload = reload || 0;
+        var user = checkLogin();
+        if (user === false) {
+            $('#face').attr('src', $('#face').attr('_src'));
+            $('#nick').html('');
+            $('#alipay').html('');
+            // $('#money').html(0.00);
+            $('#live_money').html(0.00);
+            // $('#jifenbao').html(0);
+            $('#level_name').hide();
+            $('#login_tip').show();
+            // $('#leiji_jifenbao').html(0);
+            // $('#leiji_money').html(0.00);
+        } else {
+            if (reload == 1) {
+                getUserInfo('',function(data) {
+                    setUserInfo(data);
+                });
+            } else {
+                setUserInfo(user);
+            }
+        }
+    }
+
+    function txjl() {
+        var url = createUrl('caiwu', {
+            'fun': 'tixian_jiangli_get'
+        });
+        getAjax(url, function(data) {
+            if (data.s == 1) {
+                var str = "<div style='line-height: 2;font-size: 1.5em;'>推广人数：" + data.r.c0 + "人<br/>提现一次：" + data.r.c1 + "人 " + data.r.c1_m + "元<br/>提现二次：" + data.r.c2 + "人 " + data.r.c2_m + "元<br/>提现三次：" + data.r.c3 + "人 " + data.r.c3_m +
+                    "元</div>";
+                ddLayer.open(str, '超级奖励', '');
+            } else {
+                openAlert(data.r);
+            }
+        }, '数据获取中');
+    }
+
+    function reStart(){
+        start(1);
+    }
+
+    ready(function() {
+      if (iosShenhe() == 1) {
+        $('.ios_hide_new').hide();
+    }
+
+        iosAudit=iosShenhe();
+        api.setFrameAttr({
+            name: 'user_user_frm',
+            bgColor: '#f1f1f2'
+        });
+        api.addEventListener({
+            name: 'reStart'
+        }, function(ret, err) {
+            start(1);
+        });
+        if (iosAudit == 1) {
+            var _nav=[];
+            $('#tuiguangzhongxin').remove();
+            for (var i in nav) {
+                if (nav[i]['act'] != 'tuiguang' && nav[i]['act'] != 'help') {
+                    _nav.push(nav[i]);
+                }
+            }
+            appInfo.daili.status = 0;
+            nav=_nav;
+        }
+        if (appInfo.daili.status == 1) {
+            nav.push({
+                "title": "成为代理",
+                "icon": "&#xe61e;",
+                "img": "../../img/logo.png",
+                "mod": "user",
+                "act": "daili"
+            });
+        }
+        var ok = 0;
+        for (var i in appInfo.applogin) {
+            if (appInfo.applogin[i] == 1) {
+                ok = 1;
+            }
+        }
+        if (ok == 1 &&　iosShenhe() !== 1) {
+            nav.push({
+                "title": "登录绑定",
+                "icon": "&#xe7bb;",
+                "img": "../../img/fw_bd.png",
+                "mod": "user",
+                "act": "bangding"
+            });
+        }
+        if (appInfo.duihuan == 1) {
+            nav.push({
+                "title": "我的兑换",
+                "icon": "&#xe60c;",
+                "img": "../../img/logo.png",
+                "mod": "user",
+                "act": "duihuan"
+            });
+        }
+        if (appInfo.fanli_type == 1) {
+            $('.gouwu').eq(0).hide();
+            //$('.fenleixinxi span').eq(1).hide();
+        }
+        if (typeof appInfo.super_jl != 'undefined' && appInfo.super_jl.open == 1) {
+            $superJl = $('#superJl');
+            $superJl.show();
+        }
+
+        setNav();
+        start();
+        setBounce(reStart);
+        $('.tbmoney').html(siteInfo.TBMONEY);
+    }, 1);
+</script>
+
+</html>

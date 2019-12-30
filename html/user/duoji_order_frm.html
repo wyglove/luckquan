@@ -1,0 +1,230 @@
+
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="../../css/api.css"/>
+    <script src="../../script/api.js"></script>
+    <style>
+    /*我的订单*/
+     i,em{
+        font-style: normal;
+    }
+    .fl{
+        float: left;
+    }
+    .fr{
+        float: right;
+    }
+    .clear{
+        clear: both;
+    }
+    .order_ul li{
+        width: 100%;
+        display: inline-block;
+        background: #fff;
+        margin-bottom: 10px;
+        border-bottom: 5px solid #f2f2f2;
+    }
+    .order_ul li .time{
+        padding: 12px 8px;
+        display: block;
+        color: #999999;
+        border-bottom: 2px solid #eeeeee;
+        font-size:13px
+    }
+    .order_ul li img{
+        margin: 8px;
+        width: 35%;
+        float: left;
+        border-radius: 8px;
+    }
+    .order_ul .mypei{
+        padding: 0 8px;
+        margin: 8px 0;
+    }
+    .order_ul .mypei .first{
+        font-size: 16px;
+        color: #555555;
+        margin-bottom: 8px;
+        overflow:hidden;
+        text-overflow:ellipsis;
+        display:-webkit-box;
+        -webkit-box-orient:vertical;
+        -webkit-line-clamp:2;
+        min-height: 40px;
+    }
+    .order_ul .mypei .two{
+        font-size: 14px;
+        color: #999;
+        margin-bottom: 8px;
+    }
+    .order_ul .mypei .three{
+        margin-bottom: 12px;
+    }
+    .order_ul .mypei .three .jfb_num{
+        color: #ff2945;
+        font-size: 14px;
+    }
+    .order_ul .mypei .four{
+        font-size: 14px;
+        color: #999;
+    }
+    .order_ul .mypei .four .fukuanbtn{
+        background: #ff2945;
+        color: #fff;
+        padding: 4px;
+        border-radius: 4px;
+    }
+
+    /*隐私模式*/
+    .list_jilu li.yinsi{
+        display: flex;
+        padding: 8px 0;
+    }
+    .list_jilu li.yinsi .leftnr{
+        flex: 1;
+        text-align: left;
+        padding-left: 16px;
+    }
+    .list_jilu li.yinsi .rightnr{
+        flex: 1;
+        text-align: right;
+        padding-right: 16px;
+        padding-top: 12px;
+    }
+    .list_jilu li.yinsi .time1{
+        color: #a7a7a7;
+        font-size: 14px;
+        margin-top: 8px;
+    }
+    .rightnr.sucess{
+        color: #ee3d47;
+    }
+    /*隐私模式*/
+    </style>
+</head>
+<body>
+    <ul class="order_ul" id="list_data" style="border-top: 5px solid #f2f2f2;">
+                    </ul>
+                    <div style="clear:both"></div>
+    <div id="loading"><span class="loading-img"></span>数据加载中</div>
+                </body>
+                </html>
+<script>
+var id=0;
+
+function view(id,type){
+	if(type==1){
+		ddevent.taobaoView(id);
+	}else if(type==2){
+        ddevent.jdView(id);
+	}else if(type==3){
+		ddevent.pddView(id);
+	}
+}
+
+function dataTpl(){/*<% for(var i = 0; i < this.length; i++) {var data = this[i]; %>
+						<%if(data.type==1){%>
+						<li onclick="view('<%data.num_iid%>',1)">
+						<%}%>
+						<%if(data.type==2){%>
+						<li onclick="view('<%data.sku_id%>',2)">
+						<%}%>
+						<%if(data.type==3){%>
+						<li onclick="view('<%data.goods_id%>',3)">
+						<%}%>
+                        <span class="time">下单时间：<%data.create_time%>[<%String.fromCharCode(64+parseInt(data.level))%>级订单]</span>
+                        <img class="lazyimg" src="../../img/loading_300_300.png" data-img="<%data.pic_url%>">
+                        <div class="mypei">
+                            <p class="first"><%data.title%></p>
+                            <p class="two">订单号：<%data.trade_id%></p>
+                            <p class="three"><span class="xianjia">￥<%data.real_pay_fee%></span><span class="right_num fr"><em class="jfb_num">奖<%data.money%>元</em></span></p>
+                            <p class="four"><span class="xianjia">奖励时间：<%data._pay_time%></span><span class="right_num fr"><em class="fukuanbtn"><%data.status_tip%></em></span></p>
+                            <div class="clear"></div>
+                        </div>
+                    </li><% } %>*/;}
+
+function dataTpl1(){/*<% for(var i = 0; i < this.length; i++) {var data = this[i]; %><li class="yinsi">
+                            <div class="leftnr">
+                                <p>
+								<%if(data.type==1){%>
+							【淘宝】
+							<%}%>
+							<%if(data.type==2){%>
+							【京东】
+							<%}%>
+							<%if(data.type==3){%>
+							【拼多多】
+							<%}%>
+							<%data.trade_id%>
+								</p>
+                                <p class="time1"><%data.create_time%></p>
+                            </div>
+                            <div class="rightnr sucess"><%data.name%>[<%String.fromCharCode(64+parseInt(data.level))%>级]<br/>奖励：<%data.money%></div>
+                        </li><% } %>*/;}
+
+function getData(unlock){
+	unlock=unlock||0;
+    var _this=this;
+    if(unlock==1){
+        this.lock=0;
+        this.page=0;
+		$('#loading').show();
+    }
+    if(typeof this.lock!='undefined' && this.lock==1){
+        return false;
+    }
+    if(typeof this.page=='undefined'){
+        this.page=0;
+    }
+    this.page++;
+	this.lock=1;
+    var url=createUrl('caiwu',{'fun':'duoji_order','page':this.page,'id':id});
+    getJson(url,'数据获取中',function(data){
+		_this.lock=0;
+        if(data.s==1){
+			if(_this.page==1){
+				$('#list_data').html('');
+			}
+			if(appInfo.yinsi==1){
+				var html=barretTpl(dataTpl1,data.r);
+			}else{
+				var html=barretTpl(dataTpl,data.r);
+			}
+            if(html==''){
+                if(page==1){
+                    html=emptyData('暂无数据~~~');
+                }else{
+                    toastOpen('没有啦');
+                }
+            }
+            $('#list_data').append(html);
+            $('.lazyimg').picLazyLoad();
+			if(html=='' || size(data.r)<20){
+				_this.lock=1;
+				$('#loading').hide();
+			}
+        }else{
+            toastOpen('数据获取失败');
+        }
+    });
+}
+
+function start(){
+    setBounce(reStart);
+    id=ddInt(get('id'));
+    getData();
+	infinite(function(){
+        getData();
+    });
+}
+
+ready(function(){
+    setTitle('粉丝订单');
+    start();
+},2);
+</script>

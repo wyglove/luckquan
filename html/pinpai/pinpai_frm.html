@@ -1,0 +1,530 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="../../css/api.css"/>
+    <style>
+        section.header {
+            background: url('../../img/bg_pinpai.png') no-repeat #FFF;
+            background-size: 100%;
+        }
+        section.header::before {
+            content: '';
+            display: block;
+            height: 80px;
+        }
+        .wrap {
+            -webkit-flex-wrap: wrap;
+            flex-wrap: wrap;
+        }
+
+        .pinpai-icon-box {
+            margin: 0 20px; padding: 10px 0;
+            border-radius: 10px 10px 0 0;
+            box-shadow: 0 -1px 1px rgba(233,201,154,0.3);
+            background: #FFF;
+            overflow: hidden;
+        }
+        .pinpai-icon {
+            width: 25%;
+            padding: 10px 0;
+            text-align: center;
+        }
+        .pinpai-icon-img {
+            width: 44px; height: 44px;
+            margin: auto;
+            border: 1px solid #f5f5f5;
+            border-radius: 50%;
+            overflow: hidden;
+        }
+        .pinpai-icon-img img {
+            width: 100%; min-height: 100%;
+        }
+        p.pinpai-icon-name {
+            margin-top: 8px;
+            font-size: 13px; line-height: 20px; color: #333; font-weight: bold;
+        }
+        p.pinpai-icon-text {
+            font-size: 0.7em; color: #999;
+        }
+
+        #scroller-fix-box {
+            height: 40px;
+        }
+        .pinpai-tab {
+            width: 100%; height: 40px;
+            border-bottom: 1px solid #ebebeb;
+            background: #FFF;
+            overflow-x: scroll; overflow-y: hidden;
+        }
+        .pinpai-tab.active {
+            position: fixed; top: 0;
+            z-index: 100;
+        }
+        ul.pinpai-tab-box {
+            float: left;
+            height: 40px; width: 600px;
+        }
+        li.pinpai-tab-btn {
+            float: left;
+            margin: 0 15px;
+            line-height: 38px; font-size: 15px; color: #999;
+            border-bottom: 2px solid #fff;
+        }
+        li.pinpai-tab-btn.active {
+            font-weight: bold; color: #F14436;
+            border-color: #ED3980;
+        }
+
+        .fmix-align-sb {
+            display: -webkit-box;
+            display: -webkit-flex;
+            display: flex;
+            -webkit-justify-content: space-between;
+            justify-content: space-between;
+            -webkit-align-items: center;
+            align-items: center;
+        }
+        .pinpai-pindao {
+            /*display: none;*/
+            background: #f6f6f6;
+        }
+        .pinpai-pindao::before {
+            content: '';
+            display: block;
+            height: 1px;
+        }
+        .pinpai-pindao::after {
+            content: '—  我是有底线的  —';
+            display: block;
+            height: 50px;
+            font-size: 13px; line-height: 50px; text-align: center; color: #999;
+        }
+
+        .pinpai-pindao .pinpai-icon {
+            border: 1px solid #f6f6f6;
+            box-sizing: border-box;
+            background: #fff;
+        }
+        .pinpai-card {
+            margin: 15px;
+            background: #fff;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        .pinpai-card-head {
+            height: 40px;
+            padding: 0 15px 0 10px;
+            background: url(../../img/bg_pinpai_row.png) no-repeat;
+            background-size: 100% auto;
+        }
+        .pinpai-card-logo img {
+            height: 24px;
+            border-radius: 5px;
+            margin-right: 10px;
+        }
+        .pinpai-card-logo span {
+            font-size: 15px; color: #4A2F0A; font-weight: bold;
+        }
+        .pinpai-card-more {
+            color: #c97e1f;
+        }
+        .pinpai-card-more i.iconfont {
+            width: 16px; height: 16px;
+            margin-left: 3px;
+            font-size: 0.5em; line-height: 16px; text-align: center; font-weight: bold; color: #EEE;
+            background: #c97e1f;
+            border-radius: 50%;
+        }
+        .pinpai-card-body {
+            padding: 10px 5px;
+        }
+        .pinpai-good-img {
+            position: relative;
+            width: 90px; height: 90px;
+            overflow: hidden;
+        }
+        .pinpai-good-img img {
+            width: 100%; min-height: 100%;
+        }
+        .pinpai-good-quan {
+            height: 18px;
+            padding: 0 8px;
+            position: absolute; bottom: 5px; left: 5px;
+            font-size: 0.7em; line-height: 18px; color: #fff;
+            background: url('../../img/good_quan.png') no-repeat;
+            background-size: 100% 100%;
+        }
+        p.pinpai-good-price {
+            font-size: 16px; line-height: 30px; font-weight: bold; color: #EC0467;
+        }
+        .pinpai-good span.yugu {
+            display: inline-block;
+            margin: 3px 0 5px; padding: 3px 5px;
+            border-radius: 5px;
+            background: -webkit-linear-gradient(150deg, #EC0467, #FF7E52);
+            background: linear-gradient(150deg, #EC0467, #FF7E52);
+            font-size: 0.7em; color: #fff;
+        }
+    </style>
+</head>
+
+<body>
+    <section class="header">
+        <div id="pinpaibox" class="pinpai-icon-box flex-wrap wrap" style="display:none">
+              <!-- <div class="pinpai-icon">
+                  <div class="pinpai-icon-img">
+                      <img src="../../img/icon_1.png" alt="">
+                  </div>
+                  <p class="pinpai-icon-name">韩都衣舍</p>
+                  <p class="pinpai-icon-text">平均返佣10%</p>
+              </div> -->
+        </div>
+        <div id="scroller-fix-box">
+            <div id="pinpai-tab" class="pinpai-tab swiper-container" style="box-sizing: border-box;position: relative">
+                <ul id="scroller" class="pinpai-tab-box swiper-wrapper">
+                    <!-- <li class="pinpai-tab-btn active" tapmode>精选</li> -->
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- <div class="pinpai-pindao">
+        <div class="pinpai-card">
+            <div class="pinpai-card-head fmix-align-sb">
+                <div class="pinpai-card-logo flex-wrap flex-align">
+                    <img src="../../img/default_head_img.jpg" alt="">
+                    <span>京东</span>
+                </div>
+                <div class="pinpai-card-more flex-wrap flex-align">
+                    <span>更多</span>
+                    <i class="iconfont">&#xe610;</i>
+                </div>
+            </div>
+            <div class="pinpai-card-body fmix-align-sb">
+                <div class="pinpai-good">
+                    <div class="pinpai-good-img">
+                        <img src="../../img/default_head_img.jpg" alt="">
+                        <div class="pinpai-good-quan">100元券</div>
+                    </div>
+                    <p class="pinpai-good-price">￥201.1</p>
+                    <span class="yugu">预估赚￥2.1</span>
+                </div>
+            </div>
+        </div>
+    </div> -->
+
+    <div id="pindao" class="pinpai-pindao">
+        <!-- <div class="flex-wrap wrap">
+            <div class="pinpai-icon">
+                <div class="pinpai-icon-img">
+                    <img src="../../img/icon_1.png" alt="">
+                </div>
+                <p class="pinpai-icon-name">韩都衣舍</p>
+                <p class="pinpai-icon-text">平均返佣10%</p>
+            </div>
+        </div> -->
+    </div>
+
+</body>
+
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript">
+    function toShopView(id,q) {
+        setPageParam('id',id);
+        setPageParam('q',q);
+        openPage('pinpai', 'list', '', 0);
+    }
+
+    function toGoodsView(id) {
+        ddevent.taobaoView(id);
+    }
+
+    function setTuiJian() {
+        var url=createUrl('goods',{'fun':'activity'});  
+        getJson(url,'',function(ret){
+            if (ret.data) {
+                var html = '';
+                var obj = ret.data;
+                for (var i = 0, ln = obj.length; i < ln; i++) {
+                    html += '<div class="pinpai-icon" onclick="toBaichuan(\''+ obj[i].scene_id +'\')">';
+                    html += '  <div class="pinpai-icon-img">';
+                    html += '    <img src="'+ obj[i].img +'" alt="">';
+                    html += '  </div>';
+                    html += '  <p class="pinpai-icon-name">'+ obj[i].title +'</p>';
+                    html += '  <p class="pinpai-icon-text">平均返佣'+ obj[i].rate +'%</p>';
+                    html += '</div>';
+                }
+                $api.byId('pinpaibox').innerHTML = html;
+            }
+        })
+    }
+
+    function toBaichuan(id) {
+        var url = createUrl('goods',{'fun':'huodong_kouling','scene_id':id,'title':'','img':''});
+        getJson(url,'',function(ret) {
+            if (ret.s == 1) {
+                baichuan.open(ret.r.url);
+            }
+        })
+
+    }
+
+    function setCat() {
+        var url=buildUrl('cid');
+        getJson(url,'',function(ret){
+            if (ret.s == 1) {
+                var html = '';
+                var obj = ret.data;
+                html += '<li class="swiper-slide pinpai-tab-btn active" tapmode onclick="getCatShop(0,0)">精选</li>';
+                var index = 0;
+                for (var i in obj) {
+                    ++index;
+                    html += '<li class="swiper-slide pinpai-tab-btn" tapmode onclick="getCatShop('+ obj[i].cid +','+ index +')">'+ obj[i].title +'</li>';
+                }
+                $api.byId('scroller').innerHTML = html;
+                setTimeout(function(){
+                    fixDiv('#pinpai-tab',0);
+                },1000);
+
+                // loadScript.go('/script/swiper_min.js',function() {
+                //     new Swiper('.pinpai-tab', {
+                //         slidesPerView: 'auto',
+                //         freeMode: true
+                //     });
+                // },'/css/swiper_min.css');
+            }
+        })
+    }
+
+    var _cid = 0, _index = 0,
+        page = 1,
+        jxsize = 5,
+        catsize = 20,
+        islock = false,
+        isloading = false;
+    function getCatShop(cid,index) {
+        _cid = cid;
+        _index = index;
+        console.log(index);
+        page = 1;
+        islock = false,
+        isloading = true;
+        $api.byId('pindao').innerHTML = '';
+        // 切换
+        tabNavBtn(index);
+
+        if (cid == 0) {
+            jxShopTpl(cid);
+        } else {
+            catShopTpl(cid);
+        }
+
+
+        infinite(function() {
+            if (!!islock || !!isloading) {
+                return false;
+            }
+            ++page;
+            if (cid == 0) {
+                jxShopTpl(cid);
+            } else {
+                catShopTpl(cid);
+            }
+        });
+
+    }
+
+    function tabNavBtn(index) {
+        console.log(index);
+        var btn = $api.domAll('.pinpai-tab-btn');
+        var btnLen = btn.length;
+        for (var i = 0; i < btnLen; i++) {
+            if ($api.hasCls(btn[i], 'active')) {
+                $api.removeCls(btn[i], 'active');
+            }
+            $api.addCls(btn[index], 'active');
+        }
+    }
+
+    function catShopTpl(cid) {
+        var url=buildUrl('brand',{'pagesize':catsize,'is_tuijian':0,'cid':cid, 'page':page});
+        getJson(url,'',function(ret){
+            isloading = false;
+            if (ret.s == 1) {
+                var html = '';
+                var obj = ret.data;
+                var ln = obj.length;
+                if (ln < catsize) {
+                    islock = true;
+                }
+                for (var i = 0; i < ln; i++) {
+                    html += '<div class="pinpai-icon" onclick="toShopView(\''+ obj[i].id +'\',\''+ obj[i].keyword +'\')">';
+                    html += '  <div class="pinpai-icon-img">';
+                    html += '    <img src="'+ obj[i].pic_url +'_200x200.jpg" alt="">';
+                    html += '  </div>';
+                    html += '  <p class="pinpai-icon-name">'+ obj[i].title +'</p>';
+                    html += '  <p class="pinpai-icon-text">平均返佣'+ Math.floor(obj[i].bili) +'%</p>';
+                    html += '</div>';
+                }
+                $api.append($api.byId('pindao'), '<div class="flex-wrap wrap">'+html+'</div>');
+                $('.lazyimg').picLazyLoad();
+            }
+        })
+    }
+
+    function jxShopTpl(cid) {
+        var url=buildUrl('brand',{'pagesize':jxsize,'is_tuijian':1,'cid':cid,'page':page});
+        getJson(url,'努力加载中...',function(ret){
+            isloading = false;
+            if (ret.s == 1) {
+                var obj = ret.data;
+                var ln = obj.length;
+                if (ln < jxsize) {
+                    islock = true;
+                }
+                var arr = [];
+                for (var i = 0; i < ln; i++) {
+                    var thtml = '', bhtml = '';
+                    thtml += '<div class="pinpai-card">';
+                    thtml += '     <div class="pinpai-card-head fmix-align-sb" onclick="toShopView(\''+ obj[i].id +'\',\''+ obj[i].keyword +'\')">';
+                    thtml += '<div class="pinpai-card-logo flex-wrap flex-align">';
+                    thtml += '    <img src="'+ obj[i].pic_url +'" alt="">';
+                    thtml += '    <span>'+ obj[i].title +'</span>';
+                    thtml += '</div>';
+                    thtml += '<div class="pinpai-card-more flex-wrap flex-align">';
+                    thtml += '    <span>更多</span>';
+                    thtml += '    <i class="iconfont">&#xe610;</i>';
+                    thtml += '</div>';
+                    thtml += '     </div>';
+                    thtml += '     <div class="pinpai-card-body fmix-align-sb">';
+
+                    bhtml += '     </div>';
+                    bhtml += '</div>';
+
+                    var tmp = {
+                        thtml: thtml,
+                        bhtml: bhtml,
+                        q: obj[i].keyword
+                    };
+
+                    arr.push(tmp);
+                }
+                setTimeout(function() {
+                    var aln = arr.length;
+                    var html = '';
+                    do {
+                        --aln;
+                        if (aln < 0) {
+                            return false;
+                        }
+                        var t_url = buildUrl('goods',{'pagesize':3,'q': arr[aln].q});
+                        var t_obj = arr[aln];
+                        (function(t_obj) {
+                            getJson(t_url,'努力加载中...',function(ret){
+                                // console.log(JSON.stringify(ret));
+                                var obj = ret.data.goods;
+                                var html = '';
+                                var user = checkLogin();
+                                var fltip = user.fltip || '奖励';
+                                if (ret.s == 1 && typeof obj != 'undefined') {
+                                    html += t_obj.thtml;
+                                    ln = obj.length;
+                                    ln = ln>3?3:ln;
+                                    for (var i = 0; i < ln; i++) {
+                                        var fanli = toFixed(obj[i].quan_price * obj[i].fanli_bl / 100);
+                                        html += '<div class="pinpai-good" onclick="toGoodsView('+obj[i].num_iid+')">';
+                                        html += '    <div class="pinpai-good-img">';
+                                        html += '        <img class="lazyimg" src="../../img/blank.png"  data-img="'+ obj[i].img +'_200x200.jpg" alt="">';
+                                        html += '        <div class="pinpai-good-quan">'+ Math.floor(obj[i].price_jian) +'元券</div>';
+                                        html += '    </div>';
+                                        html += '    <p class="pinpai-good-price">￥'+ obj[i].quan_price +'</p>';
+                                        html += '    <span class="yugu ios_hide_new">'+ fltip +'￥'+ fanli +'</span>';
+                                        html += '</div>';
+                                    }
+                                    html += t_obj.bhtml;
+                                    $api.append($api.byId('pindao'), html);
+                                    $('.lazyimg').picLazyLoad();
+                                    if (iosShenhe() == 1) {
+                                        $('.ios_hide_new').hide();
+                                    }
+
+                                }
+                            })
+                        })(t_obj);
+                    } while (aln);
+                })
+            }
+        })
+    }
+
+    function fixDiv(div_id,offsetTop){
+    	var offset=arguments[1]?arguments[1]:0;
+        var Obj=$(div_id);
+    	if(Obj.length==0){
+    		return false;
+    	}
+        var ObjTop=Obj.offset().top;
+    	var position=Obj.css('position');
+        if(api.systemType=='ios'){
+            var moshi='scroll';
+        }else{
+            var moshi='scroll';//'touchmove';
+        }
+        $(window).on(moshi, function() {
+            if($(window).scrollTop()<=ObjTop){
+                Obj.css({
+                    'position':position,
+                    'top':0
+                });
+            }else{
+                Obj.css({
+                    'position':'fixed',
+                    'top':0+offsetTop+'px',
+                    'z-index':999,
+                    'width':'100%'
+                });
+            }
+        });
+    }
+
+
+    function start() {
+        // setTuiJian();
+        setCat();
+        getCatShop(_cid,_index);
+    }
+    function reStart() {
+        getCatShop(_cid,_index);
+    }
+    ready(function() {
+
+      if (iosShenhe() == 1) {
+          $('.ios_hide_new').hide();
+      }
+
+        api.setGlobalData({
+            key: 'safeAreaTop',
+            value: api.safeArea.top
+        });
+        api.parseTapmode();
+        // setTitle('品牌');
+        start();
+
+        setBounce(reStart);
+
+        // tab = $api.dom('.pinpai-tab-box');
+        // changeHeight = tab.offsetTop;
+        // isFixed = false;
+
+
+        // refresh({
+        //     bg: '#EBC596',
+        //     text: '#4C2F05'
+        // })
+    },2);
+</script>
+</html>

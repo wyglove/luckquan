@@ -1,0 +1,129 @@
+/*新列表*/
+.iconfont.tmall,.iconfont.taobao{
+    margin-right: 0.1rem;
+}
+.iconfont.tmall{
+    color: #d81e06;
+}
+.iconfont.taobao{
+    color: #f60;
+}
+
+.xxnlist {
+    padding: 10px;
+    border-bottom: 1px solid #ebebeb;
+}
+.nlimg {
+    position: relative;
+    width: 11em; height: 11em;
+    margin-right: 10px;
+    border-radius: 3px;
+    box-shadow: 0 0 1px rgba(0,0,0,0.1);
+    overflow: hidden;
+}
+.nlimg img {
+    width: 100%; min-height: 100%;
+    background: #fff;
+}
+.nlright {
+    width: 100%;
+}
+.nltitle {
+    height: 44px;
+    font-size: 15px; line-height: 22px; color: #222;
+    padding-bottom: 1.4em;
+}
+.shopname {
+    height: 16px;
+    margin-bottom: 10px;
+    font-size: 0.9em; color: #999;
+     white-space: nowrap; text-overflow: ellipsis;
+}
+.redtip {
+    background:#feebca; padding:0 0.5em; color:#9b6a32; font-size:0.875em;border-radius: 0.3em;height: 1.5em;display: inline-block;line-height: 1.5em; margin-top:0.65em;
+}
+.nlprice {
+    margin-top: 5px;
+}
+.weak-tip {
+    margin-bottom: 1px;
+    font-size: 12px; color: #666;
+    margin-top: 0.4em;
+}
+.left-yuan{
+
+}
+.quanhou {
+    display: flex;
+    align-items: center;
+    font-size: 22px; color: #fc5039;
+
+}
+.quanhj {
+    margin-top: 3px; margin-right: 3px;
+    padding: 1px 0px;
+    font-size: 12px; color: #333;
+    border-radius: 2px;
+
+}
+.quanhou em {
+    margin-top: 4px; margin-right: 1px;
+    font-size: 0.6em;
+}
+.quanzhi {
+    background: #ff464e;border: 1px solid #ff464e;border-radius: 3px;display:flex;line-height: 1.5; margin-top:0.8em;font-size:0.875em;
+}
+.baiyuandian {
+    width: 8px; height: 8px;
+    position: absolute; top: 50%; left: -4px;
+    background: #fff;
+    border-radius: 50%;
+    transform: translate(0,-50%);
+}
+.baiyuandian.right {
+    left: auto; right: -4px;
+}
+
+.startzhezhao{
+  	width: 100%; height: 100%;
+  	position: absolute; top: 0; left: 0;
+  	font-size: 16px; text-align: center; line-height: 10em; color: #fff;
+  	background-color: rgba(0,0,0,0.5);
+    z-index: 99
+}
+
+.video-btn {
+    width: 4em; height: 4em;
+    position: absolute; top: 50%; left: 50%;
+    margin-top: -2em; margin-left: -2em;
+    border: 2px solid hsla(0,0%,100%,.5);
+    border-radius: 50%;
+    background: rgba(0,0,0,.4);
+}
+.video-btn img {
+    display: block;
+    min-height: 0;
+    width: 1.4em; height: 1.6em;
+    margin: auto;
+    background: rgba(0,0,0,0);
+}
+
+/*kaola list*/
+.kaola_p {
+    width: 160px; height: 24px;
+    margin-bottom: 10px;
+    font-size: 14px; color: #fff; line-height: 24px;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.lingquan {
+    width: 40px;
+    background: #FF4867;
+    text-align: center; font-size: 1em;
+}
+.lingprice {
+    background: #FFA4B9;
+    font-size: 13px; line-height: 26px; text-align: center; white-space: nowrap; text-overflow: ellipsis;
+    overflow: hidden;
+}

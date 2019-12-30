@@ -1,0 +1,624 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="../../css/api.css"/>
+<style>
+.weixuanzhong {
+	color: #D4D3D3
+}
+
+.wechat_list {
+	margin-bottom: 56px;
+}
+
+.wechat_list li {
+	text-align: center;
+	overflow: hidden;
+	-webkit-animation-name: fadeIn;
+	animation-name: fadeIn;
+	-webkit-animation-duration: 1s;
+	animation-duration: 1s;
+	margin-bottom: 8px;
+	border-bottom:8px solid #eeeeee;
+	padding-bottom:15px;
+}
+
+.wechat_list li span.toptitle {
+	display: inline-block;
+	height: 48px;
+	width: 100%;
+}
+
+.wechat_list li span.toptitle img {
+	border-radius: 100%;
+	width: 40px;
+	margin-bottom: -14px;
+}
+
+.wechat_list li .xxq_a {
+	display: block;
+	background: #ffffff;
+	padding: 14px 14px 8px 14px;
+	text-align: left;
+	color: #959595;
+}
+
+.wechat_list li .xxq_a h4 {
+	margin: 0;
+	color: #282828;
+	font-size: 14px;
+	font-weight:bold
+}
+
+.wechat_list li .xxq_a span.time {
+	display: block;
+	font-size: 14px;
+	line-height: 32px;
+	margin: 10px 0;
+	color: #272727;
+}
+
+.wechat_list li .xxq_a p.desc {
+	color: #959595;
+	line-height: 1.4;
+	margin-bottom: 10px;
+}
+
+.wechat_list li .xxq_a span.more {
+	color: #000000;
+}
+
+.xxqbiaoti {
+	display: inline-block;
+	font-size: 12px;
+	margin-left: 8px;
+}
+
+.xxqbiaoti p.first {
+	color: #000;
+}
+
+.sharebtn {
+	border: 1px solid #ff3b7f;
+	color: #ff3b7f;
+	border-radius: 80px;
+	font-size: 12px;
+	float: right;
+	padding: 4px 8px;
+}
+
+.zhanshipic {
+	width: 100%;
+	margin-top: 8px;
+}
+
+.zhanshipic a {
+	display: inline-block;
+	width: 33%;
+	position: relative;
+	text-decoration: none;
+	overflow: hidden;
+}
+
+.zhanshipic a img {
+	display: block;
+	margin: 0 auto;
+	width: 96%;
+	object-fit: cover;
+	min-height: 64px;
+	border-radius: 8px;
+}
+
+.xxq_price {
+	background-color: #f60;
+	color: #fff;
+	padding: 4px 8px;
+	position: absolute;
+	right: 4px;
+	bottom: 0;
+	border-radius: 8px 0;
+	font-size: 12px;
+}
+
+.sharetime {
+	font-size: 12px;
+}
+
+.sharetime span:nth-child(2) {
+	margin-left: 32px;
+}
+
+.shareprice {
+	color: #f60;
+	margin-top: 8px;
+	font-size: 16px;
+	text-decoration: underline;
+}
+
+.caozuobtn {
+	display: flex;
+	background: #fff;
+}
+
+.caozuobtn span.item {
+	flex: 1;
+}
+.caozuobtn span.item div{
+	background:#feeef1; border-radius:15px; margin:auto; display:inline-block; padding:4px 15px
+}
+
+.copypl {
+	display: flex;
+	margin: 12px 0;
+}
+
+.plcon {
+	flex: 3;
+	font-size: 14px;
+	margin-right: 8px;
+}
+
+.copybtn {
+	flex: 0.5;
+}
+
+.copybtn span {
+	font-size: 14px;
+	display: inline-block;
+	background: linear-gradient(top,#fb4c83,#fc1c35);
+	background: -webkit-linear-gradient(top,#fb4c83,#fc1c35);
+	background: -o-linear-gradient(top, #fb4c83, #fc1c35);
+	background: -moz-linear-gradient(top, #fb4c83, #fc1c35);
+	color: #fff;
+	line-height: 20px;
+	text-align: center;
+	margin-right: 8px;
+	border-radius: 4px;
+	padding: 8px;
+	width: 90%;
+}
+
+.xxq_title {
+	font-size: 12px;
+	font-weight: 700;
+}
+
+.xxq_tab {
+	display: flex;
+	background: #fff;
+	margin-bottom: 4px;
+}
+
+.xxq_flex {
+	flex: 1;
+	text-align: center;
+	padding: 10px;
+	border-bottom: 5px solid #f2f2f2;
+	color:#a6a6a6;
+	font-size:16px;
+}
+
+.xxq_flex.cur {
+	color:#333333;
+    font-weight: bold;
+}
+</style>
+</head>
+<body>
+
+<div class="bc-bg bgccc">
+   <div style="position: fixed; top: 0; left: 0; height: 42px; width: 100%; z-index: 999; background: #fff;">
+		<div class="xxq_tab">
+			<span tapmode onClick="set_tab($(this),'0');" class="xxq_flex cur">爆款必发</span>
+			<span tapmode onClick="set_tab($(this),'1');" class="xxq_flex">宣传素材</span>
+		</div>
+   	</div>
+    <div class="container container-fill" id="zhuti" style="margin-top: 47px;">
+        <ul class="wechat_list" id="goods">
+
+        </ul>
+    </div>
+    <div id="loading"><span class="loading-img"></span>数据加载中</div>
+</div>
+
+</body>
+</html>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript">
+var code=0;
+var goodsData=[];
+var iosAudit=0;
+var weixinShareType=0;
+var imgW=0;
+
+var _user={'type':0,'level':-1},iosAudit=0;
+
+ready(function(){
+    iosAudit=iosShenhe();
+    setBounce(reStart);
+    start();
+},2,function(){
+    setTitle('好货圈');
+});
+
+var getHaohuo = {
+    'lock': 0,
+    'infinite':0,
+    'page': 0,
+    'url': '',
+    'id':'goods',
+    'reset':function(){
+        $('#'+this.id).html('');
+        this.page=0;
+        this.lock=0;
+        this.infinite=0;
+    },
+    'go': function(url) {
+        var _this = this;
+        if (_this.page == 0 && _this.infinite==0) {
+            _this.infinite=1;
+            infinite(function() {
+                _this.go();
+            });
+        }
+        url = url || '';
+        if (url == '') {
+            url = _this.url;
+        } else {
+            _this.url = url;
+        }
+        if (_this.lock == 1) {
+            return false;
+        }
+        _this.page++;
+        var url=url+'&page='+_this.page;
+        _this.lock = 1;
+        getAjax(url, function(data) {
+            _this.lock = 0;
+            var count = size(data.r);
+            if (count > 0) {
+                _this.goodsSet(data);
+                if(count<20){
+                    $api.dom('#loading').innerHTML = '————我是有底线的————';
+                    api.removeEventListener({
+                        name: 'scrolltobottom'
+                    });
+                }
+            } else {
+                _this.lock = 1;
+                if (_this.page == 1) {
+                    $api.dom('#goods').innerHTML = emptyData('暂无数据');
+                    $api.dom('#loading').innerHTML = '';
+                } else {
+                    $api.dom('#loading').innerHTML = '————我是有底线的————';
+                }
+                api.removeEventListener({
+                    name: 'scrolltobottom'
+                });
+            }
+        }, '数据加载中', 3600);
+    },
+    'goodsSet':function(data) {
+        if(code==0){
+            for(var i in data.r){
+                var row=data.r[i];
+                var imgs=row.images.split(',');
+                data.r[i].images='';
+                for(var j in imgs){
+                    imgs[j]=imgs[j].replace('_250x250.jpg','');
+                    data.r[i].images+="<a onClick=\"showPics('"+row.data_id+"',"+j+");\"><img data-img='"+imgs[j]+"_300x300.jpg' class='tspic lazyimg'></a>";
+                }
+                var price=row.discount_price-row.price_jian;
+                data.r[i].fenxiang=toFixed(row.fanli_bl*price*siteInfo.fxbl[user.type]/100);
+            }
+            var html=barretTpl(shangpinTpl,data.r);
+        }else{
+            for(var i in data.r){
+                var row=data.r[i];
+                var imgs=row.imgs;
+                data.r[i].images='';
+                for(var j in imgs){
+                    data.r[i].images+="<a onClick=\"showPics('"+row.data_id+"',"+j+");\"><img data-img='"+imgs[j]+"' class='tspic lazyimg'></a>";
+                }
+            }
+            var html=barretTpl(sucaiTpl,data.r);
+        }
+        $('#'+this.id).append(html);
+        loadLazyImg();
+    }
+};
+
+function goodsUrl(){
+	if(code==0){
+		var url=createUrl('tbgoods',{'fun':'listdata','pagesize':20});
+	}else{
+		var url=createUrl('sucai',{'fun':'listdata','pagesize':20});
+	}
+    return url;
+}
+
+function reStart(){
+    clear(1);
+    getHaohuo.reset();
+	getHaohuo.go(goodsUrl());
+}
+
+function start(){
+	user=checkLogin();
+	if(user==false){
+		user=_user;
+	}
+    getHaohuo.go(goodsUrl());
+}
+
+function loadLazyImg(){
+	imgW=$('.wechat_list .zhanshipic img').eq(0).width();
+	if(code==0){
+		$('.zhanshipic a img').height(imgW);
+	}
+	$('img.lazyimg').picLazyLoad();
+}
+
+function set_tab(tb,t){
+	$('.xxq_flex').removeClass('cur');
+	tb.addClass('cur');
+	code = t;
+    getHaohuo.reset();
+	getHaohuo.go(goodsUrl());
+}
+
+/*查看大图*/
+function showPics(id,k){
+	var imgs=[];
+	var img=[];
+	$('#li'+id).find('.zhanshipic img').each(function(){
+		imgs.push($(this).attr('src'));
+	});
+	img[0]=imgs[k];
+	imgs = img.concat(imgs);
+	var new_arr=[];
+	for(var i=0;i<imgs.length;i++) {
+		var items=imgs[i];
+		if($.inArray(items,new_arr)==-1) {
+		    new_arr.push(items);
+		}
+	}
+    openWin({'mod':'page','act':'imgs','pageParam':{'topColor':'dark','imgs':JSON.stringify(new_arr)}});
+}
+
+function baocun(id){
+	var user=checkLogin(1);
+	if(user==false){
+		return false;
+	}
+	var imgs=[];
+	if(code==0){
+		$('#li'+id).find('.zhanshipic img').each(function(){
+			imgs.push($(this).attr('src'));
+		});
+	}else{
+		$('#li'+id).find('.zhanshipic img').each(function(i){
+			imgs.push(addUrlParam(createUrl('sucai',{'fun':'hecheng','id':id,'img_index':i})));
+		});
+	}
+	xiazaitupian(imgs,function(datas){
+		for(var i in datas){
+			saveImage(datas[i],function(data){
+				if(i==datas.length-1){
+					toastOpen('保存完成');
+				}
+			});
+		}
+	});
+}
+
+function zhuanfa(id){
+	var user=checkLogin(1);
+	if(user==false){
+		return false;
+	}
+	var imgs=[];
+	if(code==0){
+		$('#li'+id).find('.zhanshipic img').each(function(index){
+			imgs.push(addUrlParam(createUrl('img',{'fun':'goods','iid':id,'zhannei':1})));
+			return false;
+		});
+	}else{
+		imgs.push(addUrlParam(createUrl('sucai',{'fun':'hecheng','id':id,'img_index':0})));
+	}
+	xiazaitupian(imgs,function(datas){
+		var content=$('#li'+id).find('.time').text();
+		getTkl(id,function(kl){
+			if(kl!=''){
+				content+="\r\n"+kl;
+			}
+			clipboardSet(content);
+            toastOpen('内容已复制', 1000);
+            api.actionSheet({
+                title: '分享到',
+                cancelTitle: '取消',
+                destructiveTitle: '',
+                buttons: ['微信', '朋友圈', 'QQ', '空间']
+            }, function(ret, err) {
+                var index = ret.buttonIndex - 1;
+                var a = ['weixin', 'pyq', 'qq', 'taobao'];
+                if (typeof a[index] != 'undefined') {
+                    shareImgPage(datas,a[index]);
+                }
+            });
+		});
+	});
+}
+
+function xiazaitupian(imgs,callback,suoyin){
+	suoyin=suoyin||0;
+	if(suoyin==0){
+		toastOpen('图片下载',-1);
+	}
+	if(typeof imgs[suoyin]=='undefined'){
+		toastClose();
+		if(typeof callback=='function'){
+			callback(imgs);
+		}
+	}else{
+		down(imgs[suoyin],function(data){
+			imgs[suoyin]=data;
+			suoyin++;
+			xiazaitupian(imgs,callback,suoyin);
+		},"fs://down/"+time()+"_"+suoyin+".jpg");
+	}
+}
+
+function fuzhi(id){
+	var user=checkLogin(1);
+	if(user==false){
+		return false;
+	}
+	var wenben=$('#li'+id).find('.plcon').text();
+	getTkl(id,function(kl){
+		wenben=wenben.replace('{淘口令}',kl);
+		$('#li'+id).find('.plcon').text(wenben);
+		clipboardSet(wenben);
+		toastOpen('已复制',1000);
+	});
+}
+
+function getTkl(iid,callback){
+	if(code==1){
+		callback('');
+		return false;
+	}
+	var url=createUrl('goods','wenan',{'iid':iid,'ver':1});
+    getAjax(url,function(data){
+		if(data.s==0){
+            clear(2);
+			openAlert(data.r);
+		}else if(data.s==2){
+            qudaoShouquan(data);
+        }else{
+			callback(data.r.kouling);
+		}
+	},'数据获取中');
+}
+
+function view(id){
+	id=id||'';
+	if(id==''){
+		toastOpen('素材文件无需转发');
+		return false;
+	}
+	ddevent.taobaoView(id);
+}
+
+function fuzhiwenan(id){
+	var wenben=$('#li'+id+' .time').text();
+	clipboardSet(wenben);
+	toast('文案复制完成');
+}
+
+function mousedown(iid){
+	window.timer = setTimeout(function () {
+		fuzhiwenan(iid);
+    }, 1000);
+}
+
+function mouseup($t){
+	clearTimeout(window.timer);
+}
+
+function shangpinTpl(){/*<% for(var i = 0; i < this.length; i++) {var data = this[i]; %>
+           <li id="li<%data.data_id%>" class="animated">
+                <div class="xxq_a">
+                <span class="toptitle">
+                    <div style="display:flex">
+                       <div>
+                        <img src="<%appInfo.logo%>" class="xxq_img" />
+                       </div>
+                       <div style="text-align:left">
+                        <span class="xxqbiaoti"> <p class="first xxq_title"><%appInfo.name%></p>
+                         <div style="margin-top:5px">
+                          <span><%data.time%></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                          <span>已被转发<span id="num_<%data.data_id%>"><%data.share_num%></span>次</span>
+                         </div> <p></p> </span>
+                       </div>
+                      </div>
+                </span>
+				  <%if(data.title!=''){%>
+                  <h4><%data.title%></h4>
+				  <%}%>
+                  <% if(iosAudit==0 && 0<data.price_jian){ %>
+                  <div style="color: #ff0036;margin-top: 10px;font-size: 12px;font-weight: bold;"><%data.price_jian%>元优惠券 | 分享赚<%data.fenxiang%></div>
+                  <% }%>
+                  <span class="time" onclick="fuzhiwenan('<%data.data_id%>')"><%data.content%></span>
+                  <div class="zhanshipic">
+                    <%data.images%>
+                  </div>
+
+			  </div>
+              <div class="caozuobtn">
+                <span class="item" tapmode onclick="baocun('<%data.data_id%>')">
+                  <div><i class="iconfont">&#xe601;</i>保存图片</div>
+                </span>
+                <span class="item" tapmode onclick="fuzhiwenan(<%data.data_id%>)">
+                  <div><i class="iconfont">&#xe68f;</i>复制评论</div>
+                </span>
+                <% if(iosAudit==0){ %>
+                <span class="item" tapmode onclick="zhuanfa('<%data.data_id%>')">
+                  <div style="background-color:#fc3e6c; color:#FFFFFF"><i class="iconfont">&#xe60a;</i>一键转发</div>
+                </span>
+                <% }else{%>
+                <span class="item" tapmode onclick="view('<%data.data_id%>')">
+                  <div style="background-color:#fc3e6c; color:#FFFFFF"><i class="iconfont">&#xe60a;</i>一键购买</div>
+                </span>
+                <% }%>
+              </div>
+		  </li><% } %>*/;}
+
+function sucaiTpl(){/*<% for(var i = 0; i < this.length; i++) {var data = this[i]; %>
+           <li id="li<%data.data_id%>" class="animated">
+                <div class="xxq_a">
+                <span class="toptitle">
+                    <div style="display:flex">
+                       <div>
+                        <img src="<%appInfo.logo%>" class="xxq_img" />
+                       </div>
+                       <div style="text-align:left">
+                        <span class="xxqbiaoti"> <p class="first xxq_title"><%appInfo.name%></p>
+                         <div style="margin-top:5px">
+                          <span><%data.time%></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                          <span>已被转发<span id="num_<%data.data_id%>"><%data.share_num%></span>次</span>
+                         </div> <p></p> </span>
+                       </div>
+                      </div>
+                </span>
+				  <%if(data.title!=''){%>
+                  <h4><%data.title%></h4>
+				  <%}%>
+                  <span class="time" onclick="fuzhiwenan('<%data.data_id%>')" ontouchstart="mousedown('<%data.data_id%>')" ontouchend="mouseup('<%data.data_id%>')"><%data.content%></span>
+                  <div class="zhanshipic">
+                    <%data.images%>
+                  </div>
+			  </div>
+			  <div class="caozuobtn">
+                <span class="item" tapmode onclick="baocun('<%data.data_id%>')">
+                  <div><i class="iconfont">&#xe601;</i>保存图片</div>
+                </span>
+                <span class="item" tapmode onclick="fuzhiwenan(<%data.data_id%>)">
+                  <div><i class="iconfont">&#xe68f;</i>复制评论</div>
+                </span>
+                <% if(iosAudit==0){ %>
+                <span class="item" tapmode onclick="zhuanfa('<%data.data_id%>')">
+                  <div style="background-color:#fc3e6c; color:#FFFFFF"><i class="iconfont">&#xe60a;</i>一键转发</div>
+                </span>
+                <% }else{%>
+                <span class="item" tapmode onclick="view('<%data.data_id%>')">
+                  <div style="background-color:#fc3e6c; color:#FFFFFF"><i class="iconfont">&#xe60a;</i>一键购买</div>
+                </span>
+                <% }%>
+              </div>
+		  </li><% } %>*/;}
+</script>

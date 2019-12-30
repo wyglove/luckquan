@@ -1,0 +1,94 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="../../css/api.css"/>
+    <script src="../../script/api.js"></script>
+</head>
+<body>
+
+</body>
+
+<script>
+    var title,url,img,desc,winName;
+
+    ready(function(){
+        title=api.pageParam.title;
+        url=api.pageParam.url;
+        img=api.pageParam.img;
+        desc=api.pageParam.desc;
+        winName=api.pageParam.winName;
+
+        var MNActionButton = api.require('MNActionButton');
+        var xishu=1;
+        if(api.systemType=='ios'){
+            xishu=1.5;
+        }
+
+        MNActionButton.open({
+            autoHide:false,
+            layout: {
+                row: 2,
+                col: 3,
+                rowSpacing: 20*xishu,
+                colSpacing: 35*xishu,
+                offset: 0
+            },
+            styles: {
+                maskBg: 'rgba(0,0,0,0.2)',
+                bg: '#fff',
+                cancelButton: {
+                    size: 30,
+                    bg: '#fff'
+                },
+                item: {
+                    titleColor: '#888',
+                    titleHighlight: 'dd2727',
+                    titleSize: 12
+                },
+                indicator: {
+                    color: '#c4c4c4',
+                    highlight: '#9e9e9e'
+                }
+            },
+            items: [{
+                icon: 'widget://res/img/weixin.png',
+                highlight: 'widget://res/img/weixin.png',
+                title: '微信'
+            }, {
+                icon: 'widget://res/img/weixin2.png',
+                highlight: 'widget://res/img/weixin2.png',
+                title: '朋友圈'
+            }, {
+                icon: 'widget://res/img/fuzhi1.png',
+                highlight: 'widget://res/img/fuzhi1.png',
+                title: '复制链接'
+            }, {
+                icon: 'widget://res/img/qq.png',
+                highlight: 'widget://res/img/qq.png',
+                title: 'QQ'
+            }, {
+                icon: 'widget://res/img/qq2.png',
+                highlight: 'widget://res/img/qq2.png',
+                title: '空间'
+            }, {
+                icon: 'widget://res/img/share.png',
+                highlight: 'widget://res/img/share.png',
+                title: '系统分享'
+            }]
+        }, function(ret) {
+            if(ret.eventType=='cancel'){
+                api.execScript({
+                    name: winName,
+                    script: 'closeFrm("page_share_frm")'
+                });
+            }else{alert(444);
+                alert(JSON.stringify(ret));
+            }
+        });
+    },0);
+</script>
+</html>

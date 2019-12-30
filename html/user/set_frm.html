@@ -1,0 +1,165 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="../../css/api.css"/>
+    <script src="../../script/api.js"></script>
+    <style>
+    .iconfont{font-size: 19px}
+    .aui-list-item-right span{font-size: 15px}
+    </style>
+</head>
+<body>
+<ul class="aui-list aui-list-in">
+    <li class="aui-list-item" tapmode onClick="uploadAvatar()">
+        <div class="aui-list-item-label-icon">
+            <i class="iconfont">&#xe616;</i>
+        </div>
+        <div class="aui-list-item-inner aui-list-item-arrow">
+            <div class="aui-list-item-title">头像</div>
+            <div class="aui-list-item-right"><div style="padding:5px 0px 0px 0px"><img id="avatar" style="width:50px; height:50px; border-radius:50%" src="../../image/default_head_img.jpg"></div></div>
+        </div>
+    </li>
+    <li class="aui-list-item" tapmode onClick="openPage(['user','alipay','支付宝设置'])">
+        <div class="aui-list-item-label-icon">
+            <i class="iconfont">&#xe662;</i>
+        </div>
+        <div class="aui-list-item-inner aui-list-item-arrow">
+            <div class="aui-list-item-title">支付宝</div>
+            <div class="aui-list-item-right"><span id="alipay"></span></div>
+        </div>
+    </li>
+    <li class="aui-list-item" tapmode onClick="setMobile()">
+        <div class="aui-list-item-label-icon">
+            <i class="iconfont">&#xe650;</i>
+        </div>
+        <div class="aui-list-item-inner aui-list-item-arrow">
+            <div class="aui-list-item-title">手机</div>
+            <div class="aui-list-item-right"><span id="mobile"></span></div>
+        </div>
+    </li>
+    <li class="aui-list-item" tapmode onClick="updateEmail()">
+        <div class="aui-list-item-label-icon">
+            <i class="iconfont">&#xe63f;</i>
+        </div>
+        <div class="aui-list-item-inner aui-list-item-arrow">
+            <div class="aui-list-item-title">邮箱</div>
+            <div class="aui-list-item-right"><span id="email"></span></div>
+        </div>
+    </li>
+    <li class="aui-list-item" tapmode onClick="updateNick()">
+        <div class="aui-list-item-label-icon">
+            <i class="iconfont">&#xe61f;</i>
+        </div>
+        <div class="aui-list-item-inner aui-list-item-arrow">
+            <div class="aui-list-item-title">昵称</div>
+            <div class="aui-list-item-right"><span id="nick"></span></div>
+        </div>
+    </li>
+    <!--<li class="aui-list-item" tapmode onClick="openPage(['user','pwd'])">
+        <div class="aui-list-item-label-icon">
+            <i class="iconfont">&#xe644;</i>
+        </div>
+         <div class="aui-list-item-inner aui-list-item-arrow">
+            <div class="aui-list-item-title">登陆密码</div>
+            <div class="aui-list-item-right"><span>修改</span></div>
+        </div>
+    </li>-->
+</ul>
+<div tapmode="hover" onClick="exit()" class="aui-btn aui-btn-block" style="width:90%;margin:auto; margin-top:30px;background-color:red;color:#FFFFFF">退出</div>
+<div style="width:80%;margin:auto; margin-top:30px;background-color:#fffced;color:#333;border: 1px solid #ffbe7a; padding:1em;">如果您注册时用了淘宝，系统会随机分配一个手机号给您，您可以修改或忽略。</div>
+</body>
+<script>
+function setMobile(){
+    set('from','userSet');
+    set('winName',api.winName);
+    set('popName',api.frameName);
+    openPage(['user','mobile','手机设置']);
+}
+
+function start(){
+    $api.dom('#alipay').innerHTML=user.alipay;
+    $api.dom('#mobile').innerHTML=user.mobile;
+    $api.dom('#nick').innerHTML=user.nick;
+    $api.dom('#email').innerHTML=user.email;
+    $api.attr($api.dom('#avatar'),'src',user.avatar);
+}
+
+function updateNick(){
+    api.prompt({
+        title:'请输入昵称',
+        buttons: ['取消','确定']
+    }, function(ret, err) {
+        if(ret.buttonIndex==2){
+            var url=createUrl('user',{'fun':'nickUpdate','nick':ret.text});
+			getAjax(url,function(_data){
+				if(_data.s==1){
+					$api.dom('#nick').innerHTML=ret.text;
+                    updateUser('nick',ret.text);
+					updateUserIndex();
+				}else{
+					openAlert(_data.r);
+				}
+			});
+        }
+    });
+}
+
+function updateEmail(){
+    api.prompt({
+        title:'请输入邮箱',
+        buttons: ['取消','确定']
+    }, function(ret, err) {
+        if(ret.buttonIndex==2){
+            var url=createUrl('user',{'fun':'emailUpdate','email':ret.text});
+			getAjax(url,function(_data){
+				if(_data.s==1){
+					$api.dom('#email').innerHTML=ret.text;
+                    updateUser('email',ret.text);
+					updateUserIndex();
+				}else{
+					openAlert(_data.r);
+				}
+			});
+        }
+    });
+}
+
+function uploadAvatar(){
+    getPic(function(ret){
+        var url=createUrl('user',{'fun':'avatarUpdate'});
+        postAjax(url,{},function(data){
+            if(data.s==0){
+                openAlert(data.r);
+            }else{
+                $api.attr($api.dom('#avatar'),'src',data.r);
+                updateUser('avatar',data.r);
+                updateUserIndex();
+            }
+        },'头像上传中','json',{'upload_file':ret.data});
+    });
+}
+
+function exit(){
+    del('userInfo');
+    del('DD_DDUSERID');
+    del('DD_PASSWORD');
+    api.sendEvent({
+        name: 'reStart',
+        extra: {}
+    });
+    toast('退出成功', 1000, function() {
+        closeWin();
+    });
+}
+
+ready(function(){
+    setTitle("个人设置");
+    start();
+});
+
+</script>
+<html>

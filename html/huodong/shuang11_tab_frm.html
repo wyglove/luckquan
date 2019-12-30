@@ -1,0 +1,226 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="../../css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/new_list0.css"/>
+    <script src="../../script/rem.js"></script>
+    <script src="../../script/api.js"></script>
+    <style>
+        body {
+    			  background: #eee;
+    		}
+        body::before {
+            content: '';
+            display: block;
+            height: .4rem;
+        }
+        .tab ul {
+            width: 100%; height: .4rem;
+            position: fixed; top: 0;
+            background: rgba(255,255,255,0.8);
+            z-index: 999;
+        }
+        .tab ul li {
+            height: .38rem;
+            line-height: .38rem;
+            color: #333;
+            border-bottom: .02rem solid rgba(0,0,0,0);
+        }
+        .tab ul li.active {
+            color: #000; font-weight: bold;
+            border-bottom: .02rem solid #F30964;
+        }
+        .list {
+          padding: 0 .1rem;
+        }
+        .goods11 {
+            /*height: 1.3rem;*/
+            margin: 0.1rem 0; padding: 0.1rem;
+            background: #fff;
+            border-radius: 0.05rem;
+        }
+        .goods-foot span {
+            margin-top: .1rem; margin-right: .1rem; padding: 0 .04rem;
+           font-size: .13rem; line-height: .2rem; color: #FE0051;
+           border: .01rem solid;
+           border-radius: .03rem;
+        }
+        img.goods-imgtop {
+          width: 50%;
+          position: absolute; top: 0; left: 0;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="tab">
+        <ul class="flex-wrap flex-align flex-justify-sa">
+            <li class="active" tapmode onclick="tapList(0,7)">双11精选</li>
+            <li tapmode onclick="tapList(1,6)">预售有礼</li>
+            <li tapmode onclick="tapList(2,9)">定金预售</li>
+        </ul>
+    </div>
+    <div class="banner"></div>
+    <div class="list"></div>
+
+</body>
+<script>
+    var activityId = 7,
+        page = 1,
+        pagesize = 20,
+        user = false,
+        lock = false,
+        titles = ['双11精选', '双11预售有礼', '双11定金预售'];
+
+    function tapList(index, aid) {
+        var btns = $('.tab ul li');
+        btns.each(function(i,it) {
+            if (btns.eq(i).hasClass('active')) {
+                btns.eq(i).removeClass('active');
+            }
+        })
+        btns.eq(index).addClass('active');
+        activityId = aid;
+        setTitle(titles[index]);
+        resetData();
+        getData();
+    }
+    function resetData() {
+        page = 1;
+        lock =false;
+        $('.list').html('');
+    }
+    function getData() {
+      if (lock) {
+        toast('没有了哦~');
+        return;
+      }
+      var url = 'http://api.taoqueqiao.com/page/dtk.php?do=activity_goods&url=cms.luckq.com&activityId='+activityId+'&pageId='+page;
+      getJson(url, '', function(ret) {
+        if (ret && ret.list && typeof ret.list == 'object') {
+            var data = ret.list;
+            var ln = data.length;
+            if (ln == pagesize) {
+              page++;
+            } else {
+              lock =true;
+            }
+            for (var i = 0; i < ln; i++) {
+                var commission = data[i].fanli_bl * data[i].quan_price / 100;
+                var fanli = toFixed(user['flrate']['tb'] * commission);
+                data[i].yj_msg = user.fltip + '  ¥ ' + fanli;
+            }
+            var html = barretTpl(shuang11TBTpl, data);
+            if (html) {
+                $('.list').append(html);
+                $('.lazyimg').picLazyLoad();
+            }
+        } else {
+          lock = true;
+        }
+
+      }, 60)
+
+    }
+    function shuang11TBTpl() {
+        /*<% for(var i = 0; i < this.length; i++) {var data = this[i];%>
+            <div class="goods11" tapmode onclick="toview(<%data.iid%>);">
+                <div class="flex-wrap">
+                <div class="goods-img">
+                    <img class="lazyimg" src="../../img/loading_300_300.gif" data-img="<%data.img%>_300x300.jpg">
+                    <img class="goods-imgtop" src="../../img/shuang11_imgtop.png">
+                    <%if(data.isWait){%>
+                        <div class="startzhezhao">即将开始</div>
+                    <%}%>
+                </div>
+                <div class="goods-info flex-con">
+                    <div class="goods-title text-wrap-2">
+                        <i class="iconfont" style="color:#ff4200;"></i> <%data.title%>
+                    </div>
+                    <div class="goods-shop"><%data.nick%></div>
+                    <div class="goods-dingjin"></div>
+                    <div class="goods-price">
+                        <%if(0<data.price_jian){%>券后<%} else {%>促销<%}%>
+                        <span class="goods-price-mark">¥<strong><%parseFloat(data.quan_price)%></strong></span>
+                        <%if(0<data.sell){%>热销<%data.sell%>件<%}%>
+                    </div>
+                    <div class="goods-youhui flex-wrap flex-align">
+                        <%if(0<data.price_jian){%>
+                            <div class="goods-quan">
+                                <span class="quan-left">券</span>
+                                <span class="quan-right">¥<%parseFloat(data.price_jian)%></span>
+                            </div>
+                        <%}%>
+                        <%if(data.yj_msg!='' && data.yj_msg!=null){%>
+                            <div class="goods-yongjin"><%data.yj_msg%></div>
+                        <%}%>
+                    </div>
+                </div>
+                </div>
+                <div class="goods-foot flex-wrap">
+                  <%if(0<data.quanMLink){%>
+                    <span>定金<%data.quanMLink%>元
+                    <%if(0<data.hzQuanOver){%>
+                      立减<%data.hzQuanOver%>元
+                    <%}%>
+                    </span>
+                  <%}%>
+
+                  <%if(0<data.estimateAmount){%>
+                    <span class="mark">付定返<%data.estimateAmount%>元红包</span>
+                  <%}%>
+                </div>
+
+            </div>
+        <% } %>*/
+        ;
+    }
+    function toview(id) {
+      if(iosShenhe()==1){
+          ddevent.url('https://h5.m.taobao.com/awp/core/detail.htm?id='+id);
+          return false;
+      }
+      var user = checkLogin(1);
+      if (user === false) {
+          return false;
+      }
+      var url = createUrl('goods', {
+          'fun': 'clickUrl',
+          'iid': id,
+          'ver': 1
+      });
+      getAjax(url, function(data) {
+          if (data.s == 1) {
+              baichuan.open(data.r.url);
+          } else if(data.s==2){
+              qudaoShouquan(data);
+          }else {
+              clear(2);
+              openAlert(data.r);
+          }
+      });
+    }
+    function start() {
+        user = checkLogin(1);
+        if (user == false) {
+          return false;
+        }
+        getData();
+    }
+    ready(function(){
+        setTitle('双11精选');
+        start();
+
+        setBounce(function() {
+            start();
+        });
+        infinite(function() {
+            getData();
+        });
+    },2);
+</script>
+</html>

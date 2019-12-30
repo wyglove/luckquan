@@ -1,0 +1,134 @@
+
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="../../css/api.css"/>
+    <script src="../../script/api.js"></script>
+    <style>
+.dmingxi{
+    background: #fff;
+}
+.tongji{
+    padding: 16px 0;
+    text-align: center;
+}
+.tongji .tiotle{
+    font-size: 14px;
+    margin-bottom: 8px;
+}
+.yue{
+    color: #ee3d47;
+    font-size: 20px;
+}
+.list_jilu li{
+    display: flex;
+    padding: 8px 0;
+    border-top: 1px solid #dfdfdf;
+}
+.list_jilu li:first-child{border-top: 0}
+.list_jilu li .leftnr{
+    flex: 1;
+    text-align: left;
+    padding-left: 16px;
+}
+.list_jilu li .rightnr{
+    flex: 1;
+    text-align: right;
+    padding-right: 16px;
+    padding-top: 12px;
+}
+.time{
+    color: #a7a7a7;
+    font-size: 14px;
+    margin-top: 8px;
+}
+.rightnr.sucess{
+    color: #ee3d47;
+}
+    </style>
+</head>
+<body>
+<div class="bc-bg bgccc">
+
+            <div class="dmingxi">
+                <div class="list_jilu">
+                    <ul id="list_data">
+                    </ul>
+                </div>
+                <div id="loading"><span class="loading-img"></span>数据加载中</div>
+            </div>
+        </div>
+                </body>
+                </html>
+<script>
+var statusArr={'-1':'<span style="color:red">无效</span>','0':'未确认','1':'<span style="color:green">确认</span>'};
+
+function dataTpl(){/*<% for(var i = 0; i < this.length; i++) {var data = this[i]; %><li>
+                            <div class="leftnr">
+                                <p><%data.mall_name%>[<%statusArr[data.status]%>]
+								<div style=" margin-top:8px">订单号：<%data.order_code%></div>
+								</p>
+                                <p class="time"><%date('Y-m-d H:i:s',data.order_time)%></p>
+                            </div>
+                            <div class="rightnr sucess">+<%data.fxje%></div>
+                        </li><% } %>*/;}
+
+function getData(unlock){
+	unlock=unlock||0;
+    var _this=this;
+    if(unlock==1){
+        this.lock=0;
+        this.page=0;
+		$('#loading').show();
+    }
+    if(typeof this.lock!='undefined' && this.lock==1){
+        return false;
+    }
+    if(typeof this.page=='undefined'){
+        this.page=0;
+    }
+    this.page++;
+	this.lock=1;
+    var url=createUrl('caiwu',{'fun':'malls','page':this.page});
+    getJson(url,'数据获取中',function(data){
+		_this.lock=0;
+        if(data.s==1){
+            if(page==1){
+				$('#list_data').html('');
+            }
+            var html=barretTpl(dataTpl,data.r);
+            if(html==''){
+                if(page==1){
+                    html=emptyData('暂无数据~~~');
+                }else{
+                    toastOpen('没有啦');
+                }
+            }
+            $('#list_data').append(html);
+			if(html=='' || size(data.r)<20){
+				_this.lock=1;
+				$('#loading').hide();
+			}
+        }else{
+            toastOpen('数据获取失败');
+        }
+    });
+}
+
+function start(){
+    getData();
+    infinite(function(){
+        getData();
+    });
+}
+
+ready(function(){
+    setTitle('商城订单');
+    start();
+    setBounce(reStart);
+},1);
+</script>

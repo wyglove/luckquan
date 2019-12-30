@@ -1,0 +1,55 @@
+<html style="-webkit-touch-callout: default;">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0">
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="../../css/api.css">
+    <style>
+      body{background: #f5f7fa;}
+      .divmagn{padding: 10px 60px; background: #fff;}
+    .charge{width: 100%;}
+    .chargediv{font-size: 16px; padding: 5px 0; border-radius: 20px; text-align: center; color: #666666;border: 1px solid #cccccc;}
+    .chargediv:nth-child(2){margin: 0 20px;}
+    .czlist{background: #fff; padding: 10px 0; margin-top: 10px; font-size: 16px;}
+    .czlist .czlistd{text-align: center;}
+    .czlist .czlistd.current{color: #da9c29;}
+    .czcon{background: #fff; width: 100%;}
+    .flex-container {flex-direction: row;flex-wrap: wrap;}
+    .czcon .divli{width: 29%; font-size: 16px; margin-bottom: 10px; margin-left: 3%; padding: 15px 0; border-radius: 5px; text-align: center; color: #666666;border: 1px solid #cccccc;}
+    .chargediv.active,.divli.active{color: #da9c29; border: 1px solid #da9c29; background: #fff1d7;}
+    .xyqmap{background: #fff; padding: 10px 0; margin-top: 10px; font-size: 18px;}
+    .xyqmap img{margin-left: 10px; margin-bottom: -2px; margin-right: 10px;}
+    .surebtn{background: -webkit-linear-gradient(left, #f7cc7d , #ba9756);background: -o-linear-gradient(right, #f7cc7d , #ba9756); background: -moz-linear-gradient(right, #f7cc7d , #ba9756); background: linear-gradient(to right, #f7cc7d , #ba9756); color: #fff; padding: 8px 0; border-radius: 5px; width: 90%; display: block; margin: 30px auto 0; text-align: center; font-size: 16px;}
+    </style>
+</head>
+
+<body>
+  <div class="divmagn">
+    <div class="flex-wrap charge">
+      <div class="flex-con chargediv active">移动</div>
+      <div class="flex-con chargediv">联通</div>
+      <div class="flex-con chargediv">电信</div>
+    </div>
+  </div>
+  <div class="flex-wrap czlist">
+    <div class="flex-con czlistd current">充话费</div>
+    <div class="flex-con czlistd">充流量</div>
+  </div>
+  <div class="flex-wrap flex-container czcon">
+      <div class="divli active">10元</div>
+      <div class="divli">20元</div>
+      <div class="divli">30元</div>
+      <div class="divli">50元</div>
+      <div class="divli">100元</div>
+      <div class="divli">200元</div>
+      <div class="divli">300元</div>
+      <div class="divli">500元</div>
+  </div>
+  <div class="xyqmap">
+    <img src="../../img/mapicon.png" width="20">内蒙古自治区<img src="../../img/xyqjt.png" style="float: right; margin-top: 3px;" width="20">
+  </div>
+  <div class="surebtn">确认</div>
+</body>
+</html>

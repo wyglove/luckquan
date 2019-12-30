@@ -1,0 +1,54 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="../../css/api.css"/>
+    <script src="../../script/api.js"></script>
+</head>
+<body>
+    <div id="regHtml">
+    <form id="regsubfrom" onsubmit="return sub();">
+                    <div class="mdmlogin">
+                        <div class="zhanghao"><input value="" type="number" name="mobile" id="mobile" placeholder="请输入手机号码"></div>
+                        <div class="zhanghao"><input type="text" placeholder="短信码" style="width:6em" name="dxm" id="dxm" ><input data="0" type="button" value="发送短信码" class="loginbtn" id="jym" getYzmTime="0" YZM_EFFE="60" YZM_EFFE_USE="60" onClick="yzm_dxm.getDxm()"></div>
+                        <div class="zhanghao"><input value="" type="password" name="password" id="password" placeholder="请输入6-20位密码"></div>
+
+                        <input type="submit" value="设置密码" tapmode class="loginbtn">
+
+                     <input type="hidden" name="act" value="user">
+                     <input type="hidden" name="do" value="getpwd">
+                    </div>
+                    </form>
+                </div>
+                </body>
+                </html>
+<script>
+function sub(){
+    var mobile=$('#mobile').val();
+    var dxm=$('#dxm').val();
+    var password=$('#password').val();
+    var url=createUrl('user',{'fun':'getPwd','mobile':mobile,'dxm':dxm,'newPwd':password});
+    getJson(url,'数据提交中',function(data){
+        if(data.s==1){
+            toast('修改成功',1000,function(){
+                api.execScript({
+                    name: 'user_login',
+                    frameName: 'user_login_frm',
+                    script: "$('#ddusername').val('"+mobile+"');$('#ddpassword').val('"+password+"');"
+                });
+                closeWin();
+            });
+        }else{
+            openAlert(data.r);
+        }
+    },0);
+    return false;
+}
+
+ready(function(){
+    setTitle('找回密码');
+},1);
+</script>
